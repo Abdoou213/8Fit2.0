@@ -1,23 +1,20 @@
 import React from 'react';
-import {Text, View} from 'react-native';
 import 'react-native-gesture-handler';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import CreateRoutine from './src/screens/CreateRoutine';
-import ViewRoutine from './src/screens/ViewRoutine';
 import Log from './src/screens/Log';
 import Profile from './src/screens/Profile';
 import ViewRoutineStack from './src/screens/ViewRoutineStack';
 
+//Set page
 const profileName = 'Profile';
 const viewRoutineName = 'Routine';
 const logName = 'Log';
 
-
+//Define the type of the routes
 export type RootStackParamList = {
   CreateRoutine: undefined,
   ViewRoutine: undefined,
@@ -26,15 +23,17 @@ export type RootStackParamList = {
   Log: undefined;
 };
 
+//Create bottom tab navigator
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
+//Define App component
 const App = () => {
-  
   return (
     <NavigationContainer>
     <Tab.Navigator
       initialRouteName={viewRoutineName}
       screenOptions={({ route }) => ({
+        //Define the tab icons
         tabBarIcon: ({ focused, color, size}) => {
         let iconName: string='';
         let rn = route.name;
@@ -50,6 +49,7 @@ const App = () => {
         },
         
       })}>
+        {/* Define the screens for the Bottom Tab Navigator */}
         <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
         <Tab.Screen name="Routine" component={ViewRoutineStack} options={{ headerShown: false }}/>
         <Tab.Screen name="Log" component={Log} options={{ headerShown: false }}/>

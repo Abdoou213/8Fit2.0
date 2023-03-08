@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 
+//Define Log component
 const Log = () => {
   return (
     <View style={styles.container}>
@@ -9,6 +10,7 @@ const Log = () => {
   );
 }
 
+//Add style to the component
 const styles = StyleSheet.create({
   container: {
     flex: 1,

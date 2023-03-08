@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 
+//Define CreateRoutine component
 const CreateRoutine = () => {
   return (
     <View style={styles.container}>
@@ -9,7 +10,7 @@ const CreateRoutine = () => {
   );
 }
 
-
+//Add style to the component
 const styles = StyleSheet.create({
   container: {
     flex: 1,

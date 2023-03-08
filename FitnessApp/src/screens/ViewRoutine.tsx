@@ -1,19 +1,18 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'; // Replace Button with TouchableOpacity
-import { RootStackParamList } from './../../App';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-type NavigationProp = StackNavigationProp<RootStackParamList,'ViewRoutine'>;
-
+//Set navigation type
 type Props = {
   navigation: any;
 };
 
+//Define ViewRoutine component
 const ViewRoutine = ({navigation}: Props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>View Routine Screen</Text>
+      {/* Add button to redirect to CreateRoutine*/}
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CreateRoutine')}>
         <Ionicons name="add" size={30} color="#FFFFFF" />
       </TouchableOpacity>
@@ -21,6 +20,7 @@ const ViewRoutine = ({navigation}: Props) => {
   );
 }
 
+//Add style to the component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
