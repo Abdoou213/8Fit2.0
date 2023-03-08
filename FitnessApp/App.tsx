@@ -1,16 +1,17 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-
 import 'react-native-gesture-handler';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import CreateRoutine from './src/screens/CreateRoutine';
 import ViewRoutine from './src/screens/ViewRoutine';
 import Log from './src/screens/Log';
 import Profile from './src/screens/Profile';
+import ViewRoutineStack from './src/screens/ViewRoutineStack';
 
 const profileName = 'Profile';
 const viewRoutineName = 'Routine';
@@ -18,7 +19,8 @@ const logName = 'Log';
 
 
 export type RootStackParamList = {
-  CreateRoutine: undefined, 
+  CreateRoutine: undefined,
+  ViewRoutine: undefined,
   Routine: undefined,
   Profile: undefined,
   Log: undefined;
@@ -26,7 +28,7 @@ export type RootStackParamList = {
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
-export default function App() {
+const App = () => {
   
   return (
     <NavigationContainer>
@@ -48,11 +50,13 @@ export default function App() {
         },
         
       })}>
-        <Tab.Screen name="Profile" component={Profile} />
-        <Tab.Screen name="Routine" component={ViewRoutine}/>
-        <Tab.Screen name="Log" component={Log} />
-    </Tab.Navigator>
+        <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
+        <Tab.Screen name="Routine" component={ViewRoutineStack} options={{ headerShown: false }}/>
+        <Tab.Screen name="Log" component={Log} options={{ headerShown: false }}/>
+    </Tab.Navigator> 
   </NavigationContainer>
 
   );
-};
+}
+
+export default App;

@@ -1,20 +1,25 @@
 import * as React from 'react';
-import {Text, View, Button} from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from './../../App';
+import {Text, View, StyleSheet} from 'react-native';
 
-
-type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList,'Profile'>;
-
-type Props = {
-  navigation: ProfileScreenNavigationProp;
-};
-
-export  default function Profile ({navigation}: Props) {
+const Profile = () => {
   return (
-    <View>
-        <Text onPress={() => navigation.navigate('Profile')}> Profile Screen</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Profile screen</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+});
+
+export default Profile;
 

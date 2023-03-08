@@ -1,20 +1,24 @@
 import * as React from 'react';
-import {Text, View, Button} from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from './../../App';
+import {Text, View, StyleSheet} from 'react-native';
 
-
-type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList,'Log'>;
-
-type Props = {
-  navigation: ProfileScreenNavigationProp;
-};
-
-export  default function  Log ({navigation}: Props) {
+const Log = () => {
   return (
-    <View>
-        <Text onPress={() => navigation.navigate('Log')}> Log Screen</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Log screen</Text>
     </View>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+});
+
+export default Log;

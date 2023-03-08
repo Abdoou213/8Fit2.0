@@ -1,20 +1,26 @@
 import * as React from 'react';
-import {Text, View, Button} from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from './../../App';
+import {Text, View, StyleSheet} from 'react-native';
 
-
-type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList,'CreateRoutine'>;
-
-type Props = {
-  navigation: ProfileScreenNavigationProp;
-};
-
-export  default function  CreateRoutine ({navigation}: Props) {
+const CreateRoutine = () => {
   return (
-    <View>
-        <Text onPress={() => navigation.navigate('CreateRoutine')}> Create Routine Screen</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Create Routine Screen</Text>
     </View>
   );
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+});
+
+export default CreateRoutine;
 
