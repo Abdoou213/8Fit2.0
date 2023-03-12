@@ -8,11 +8,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Log from './src/screens/Log';
 import Profile from './src/screens/Profile';
 import ViewRoutineStack from './src/screens/ViewRoutineStack';
+import CurrentWorkout from './src/screens/CurrentWorkout';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 //Set page
 const profileName = 'Profile';
 const viewRoutineName = 'Routine';
 const logName = 'Log';
+const currentWorkoutName = 'CurrentWorkout';
 
 //Define the type of the routes
 export type RootStackParamList = {
@@ -21,6 +24,7 @@ export type RootStackParamList = {
   Routine: undefined,
   Profile: undefined,
   Log: undefined;
+  CurrentWorkout: undefined;
 };
 
 //Create bottom tab navigator
@@ -44,6 +48,8 @@ const App = () => {
           iconName = focused ? 'person' : 'person';
         } else if (rn === logName){
           iconName = focused ? 'fitness' : 'fitness';
+        }else if (rn === currentWorkoutName) { // Add the new screen to the tab bar
+          iconName = focused ? 'ios-add-circle' : 'ios-add-circle-outline'; // Set the icon for the new screen
         }
         return <Ionicons name={iconName} size={size} color={color}/>
         },
@@ -53,6 +59,7 @@ const App = () => {
         <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
         <Tab.Screen name="Routine" component={ViewRoutineStack} options={{ headerShown: false }}/>
         <Tab.Screen name="Log" component={Log} options={{ headerShown: false }}/>
+        <Tab.Screen name="CurrentWorkout" component={CurrentWorkout} options={{ headerShown: false }} />
     </Tab.Navigator> 
   </NavigationContainer>
 
