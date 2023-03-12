@@ -48,7 +48,7 @@ const App = () => {
         }
         return <Ionicons name={iconName} size={size} color={color}/>
         },
-        
+
       })}>
         {/* Define the screens for the Bottom Tab Navigator */}
         <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
