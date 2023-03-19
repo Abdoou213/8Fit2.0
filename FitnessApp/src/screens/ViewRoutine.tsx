@@ -87,6 +87,9 @@ const ROUTINES = [
               </View>
             </TouchableOpacity>
           ))}
+        <TouchableOpacity style={styles.createRoutineButton} onPress={() => navigation.navigate('CreateRoutine')}>
+        <Text style={styles.createRoutineButtonText}>Create a new Routine</Text>
+        </TouchableOpacity>
         </ScrollView>
         {selectedRoutineIndex !== null && (
           <TouchableOpacity style={styles.startWorkoutButton} onPress={() => navigation.navigate('StartWorkout')}>
@@ -94,9 +97,7 @@ const ROUTINES = [
           </TouchableOpacity>
         )}
         {/* Add button to redirect to CreateRoutine*/}
-        <TouchableOpacity style={styles.createRoutineButton} onPress={() => navigation.navigate('CreateRoutine')}>
-          <Ionicons name="add" size={30} color="#FFFFFF" />
-        </TouchableOpacity>
+        
       </View>
     );
   };
@@ -224,17 +225,18 @@ const ROUTINES = [
       fontSize: 18,
     },
     createRoutineButton: {
-      position: 'absolute',
-      bottom: 100,
-      right: 20,
-      width: 56,
-      height: 56,
-      borderRadius: 28,
+      height: 50,
+      borderRadius: 10,
       backgroundColor: '#007AFF',
       alignItems: 'center',
       justifyContent: 'center',
       elevation: 5,
       flex: 0,
+    },
+    createRoutineButtonText: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: 18,
     },
   });
   
