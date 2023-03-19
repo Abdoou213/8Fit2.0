@@ -94,7 +94,7 @@ const ROUTINES = [
           </TouchableOpacity>
         )}
         {/* Add button to redirect to CreateRoutine*/}
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CreateRoutine')}>
+        <TouchableOpacity style={styles.createRoutineButton} onPress={() => navigation.navigate('CreateRoutine')}>
           <Ionicons name="add" size={30} color="#FFFFFF" />
         </TouchableOpacity>
       </View>
@@ -152,16 +152,18 @@ const ROUTINES = [
   };
 
   //Add style to the component
+  
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#fff',
       padding: 20,
+      paddingBottom: 70, // Add paddingBottom to make space for the button
     },
     button: {
       position: 'absolute',
       bottom: 16,
-      left: 100,
+      alignSelf: 'center', // Center the button horizontally
       width: 56,
       height: 56,
       borderRadius: 28,
@@ -175,11 +177,10 @@ const ROUTINES = [
       borderColor: '#ccc',
       borderRadius: 10,
       marginBottom: 20,
-      padding: 10,
+      padding: 20,
     },
     selectedRoutineBox: {
-      borderColor: '#007AFF',
-      borderWidth: 2,
+      backgroundColor: '#f0f0f0',
     },
     routineName: {
       fontSize: 20,
@@ -198,36 +199,47 @@ const ROUTINES = [
       marginBottom: 5,
     },
     setList: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
+      marginLeft: 20,
     },
     setBox: {
-      borderWidth: 1,
-      borderColor: '#ccc',
-      borderRadius: 10,
-      marginRight: 10,
-      marginBottom: 10,
-      padding: 5,
+      marginBottom: 5,
     },
     setInfo: {
       fontSize: 14,
     },
     startWorkoutButton: {
-      backgroundColor: '#007AFF',
       position: 'absolute',
-      bottom: 20,
+      bottom: 16,
       left: 20,
       right: 20,
+      height: 50,
+      backgroundColor: '#007AFF',
       borderRadius: 10,
-      padding: 20,
       alignItems: 'center',
+      justifyContent: 'center',
     },
     startWorkoutButtonText: {
       color: '#fff',
       fontWeight: 'bold',
       fontSize: 18,
     },
+    createRoutineButton: {
+      position: 'absolute',
+      bottom: 100,
+      right: 20,
+      width: 56,
+      height: 56,
+      borderRadius: 28,
+      backgroundColor: '#007AFF',
+      alignItems: 'center',
+      justifyContent: 'center',
+      elevation: 5,
+      flex: 0,
+    },
   });
+  
+
+  
 
 
   export default ViewRoutine;
