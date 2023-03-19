@@ -195,12 +195,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
-    paddingBottom: 70, // Add paddingBottom to make space for the button
+    paddingBottom: 70,
   },
   button: {
     position: 'absolute',
     bottom: 16,
-    alignSelf: 'center', // Center the button horizontally
+    alignSelf: 'center',
     width: 56,
     height: 56,
     borderRadius: 28,
