@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -6,84 +6,63 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 type Props = {
   navigation: any;
 };
-// Array of routines for display
-const ROUTINES: Routine[] = [
-  {
-    name: 'Routine 1',
-    exercises: [
-      {
-        name: 'Exercise 1',
-        sets: [
-          { id: 1, weight: 100, reps: 10 },
-          { id: 2, weight: 110, reps: 8 },
-          { id: 3, weight: 120, reps: 6 },
-        ],
-      },
-      {
-        name: 'Exercise 2',
-        sets: [
-          { id: 1, weight: 50, reps: 10 },
-          { id: 2, weight: 55, reps: 8 },
-          { id: 3, weight: 60, reps: 6 },
-        ],
-      },
-    ],
-  },
-  {
-    name: 'Routine 2',
-    exercises: [
-      {
-        name: 'Exercise 1',
-        sets: [
-          { id: 1, weight: 120, reps: 10 },
-          { id: 2, weight: 130, reps: 8 },
-          { id: 3, weight: 140, reps: 6 },
-        ],
-      },
-      {
-        name: 'Exercise 2',
-        sets: [
-          { id: 1, weight: 60, reps: 10 },
-          { id: 2, weight: 65, reps: 8 },
-          { id: 3, weight: 70, reps: 6 },
-        ],
-      },
-    ],
-  },
-  {
-    name: 'Routine 3',
-    exercises: [
-      {
-        name: 'Exercise 1',
-        sets: [
-          { id: 1, weight: 120, reps: 10 },
-          { id: 2, weight: 130, reps: 8 },
-          { id: 3, weight: 140, reps: 6 },
-        ],
-      },
-      {
-        name: 'Exercise 2',
-        sets: [
-          { id: 1, weight: 60, reps: 10 },
-          { id: 2, weight: 65, reps: 8 },
-          { id: 3, weight: 70, reps: 6 },
-        ],
-      },
-    ],
-  },
-];
 
-//Define ViewRoutine component
+// Function to delete all routines in async storage
+async function deleteAllRoutines() {
+  try {
+    await AsyncStorage.removeItem('routines');
+    console.log('All routines deleted from async storage.');
+  } catch (error) {
+    console.log('Error deleting routines from async storage:', error);
+  }
+}
+
+// Function to fetch all updated routines from async storage
+async function fetchAllRoutines() {
+  try {
+    const routinesJson = await AsyncStorage.getItem('routines');
+    const routines = routinesJson != null ? JSON.parse(routinesJson) : [];
+    console.log('Fetch all routines', routines);
+    return routines;
+    console.log('', routines);
+  } catch (error) {
+    console.log('Error fetching routines from async storage:', error);
+    return [];
+  }
+}
+
+
 const ViewRoutine = ({ navigation }: Props) => {
-  const [selectedRoutineIndex, setSelectedRoutineIndex] = useState(null);
+  const [routines, setRoutines] = useState<Routine[]>([]);
+  const [selectedRoutineIndex, setSelectedRoutineIndex] = useState<number | null>(null);
 
-  const handleRoutinePress = (index: any) => {
+  const handleRoutinePress = (index: number) => {
     setSelectedRoutineIndex(index);
+  };
+
+  useEffect(() => {
+    const getRoutines = async () => {
+      const routinesFromStorage = await fetchAllRoutines();
+      if (routinesFromStorage !== null) {
+        setRoutines(routinesFromStorage);
+      }
+    };
+    getRoutines();
+  }, []);  
+
+  const handleDeleteAllRoutines = async () => {
+    try {
+      deleteAllRoutines();
+      setRoutines([]);
+      setSelectedRoutineIndex(null);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <View style={styles.container}>
-      {ROUTINES.length === 0 ? (
+      {routines.length === 0 ? (
         <View style={styles.container}>
           <Text style={styles.emptyRoutineText}>No routines found.</Text>
           <TouchableOpacity
@@ -95,7 +74,7 @@ const ViewRoutine = ({ navigation }: Props) => {
         </View>
       ) : (
         <ScrollView>
-          {ROUTINES.map((routine, index) => (
+          {routines.map((routine, index) => (
             <TouchableOpacity
               key={routine.name}
               style={[styles.routineBox, selectedRoutineIndex === index && styles.selectedRoutineBox]}
@@ -126,6 +105,7 @@ const ViewRoutine = ({ navigation }: Props) => {
           </TouchableOpacity>
         </ScrollView>
       )}
+      <View style={styles.buttonContainer}>
       {selectedRoutineIndex !== null && (
         <TouchableOpacity
           style={styles.startWorkoutButton}
@@ -134,8 +114,15 @@ const ViewRoutine = ({ navigation }: Props) => {
           <Text style={styles.startWorkoutButtonText}>Start Workout</Text>
         </TouchableOpacity>
       )}
+      <TouchableOpacity
+        style={styles.deleteRoutinesButton}
+        onPress={handleDeleteAllRoutines}
+      >
+        <Text style={styles.deleteRoutinesButtonText}>Delete All Routines</Text>
+      </TouchableOpacity>
     </View>
-  );
+  </View>
+);
 };
 
 // Define the structure of the routine object
@@ -252,22 +239,6 @@ const styles = StyleSheet.create({
   setInfo: {
     fontSize: 14,
   },
-  startWorkoutButton: {
-    position: 'absolute',
-    bottom: 16,
-    left: 20,
-    right: 20,
-    height: 50,
-    backgroundColor: '#007AFF',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  startWorkoutButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
   createRoutineButton: {
     height: 50,
     borderRadius: 10,
@@ -282,6 +253,35 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    position: 'absolute',
+    bottom: 16,
+    left: 20,
+    right: 20,
+  },
+  deleteRoutinesButton: {
+    backgroundColor: 'red',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  deleteRoutinesButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  startWorkoutButton: {
+    backgroundColor: 'green',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  startWorkoutButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  
 });
 
 
