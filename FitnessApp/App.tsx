@@ -20,7 +20,8 @@ export type RootStackParamList = {
   ViewRoutine: undefined,
   Routine: undefined,
   Profile: undefined,
-  Log: undefined;
+  Log: undefined,
+  StartWorkout: undefined;
 };
 
 //Create bottom tab navigator
@@ -58,5 +59,8 @@ const App = () => {
 
   );
 }
+
+
+
 
 export default App;
