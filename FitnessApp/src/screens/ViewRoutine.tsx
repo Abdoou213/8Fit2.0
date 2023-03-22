@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Set navigation type
 type Props = {
   navigation: any;
 };
 
-// Function to delete all routines in async storage
 async function deleteAllRoutines() {
   try {
     await AsyncStorage.removeItem('routines');
@@ -17,7 +22,6 @@ async function deleteAllRoutines() {
   }
 }
 
-// Function to fetch all updated routines from async storage
 async function fetchAllRoutines() {
   try {
     const routinesJson = await AsyncStorage.getItem('routines');
@@ -31,24 +35,23 @@ async function fetchAllRoutines() {
   }
 }
 
-
 const ViewRoutine = ({ navigation }: Props) => {
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [selectedRoutineIndex, setSelectedRoutineIndex] = useState<number | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   const handleRoutinePress = (index: number) => {
     setSelectedRoutineIndex(index);
   };
 
-  useEffect(() => {
-    const getRoutines = async () => {
-      const routinesFromStorage = await fetchAllRoutines();
-      if (routinesFromStorage !== null) {
-        setRoutines(routinesFromStorage);
-      }
-    };
-    getRoutines();
-  }, []);  
+  const onRefresh = async () => {
+    setRefreshing(true);
+    const routinesFromStorage = await fetchAllRoutines();
+    if (routinesFromStorage !== null) {
+      setRoutines(routinesFromStorage);
+    }
+    setRefreshing(false);
+  };
 
   const handleDeleteAllRoutines = async () => {
     try {
@@ -59,6 +62,16 @@ const ViewRoutine = ({ navigation }: Props) => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      const routinesFromStorage = await fetchAllRoutines();
+      if (routinesFromStorage !== null) {
+        setRoutines(routinesFromStorage);
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -73,7 +86,9 @@ const ViewRoutine = ({ navigation }: Props) => {
           </TouchableOpacity>
         </View>
       ) : (
-        <ScrollView>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        >
           {routines.map((routine, index) => (
             <TouchableOpacity
               key={routine.name}
