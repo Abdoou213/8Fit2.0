@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Routine, Exercise, Set } from './ViewRoutine';
@@ -13,14 +13,16 @@ const ExerciseList = ({ exercises }: { exercises: Exercise[] }) => {
   return (
     <>
       {exercises.map((exercise) => (
-        <View key={exercise.name}>
-          <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{exercise.name}</Text>
+        <View key={exercise.name} style={styles.exercise}>
+          <Text style={styles.exerciseName}>{exercise.name}</Text>
           {exercise.sets.map((set) => (
-            <View key={set.id} style={{ flexDirection: 'row' }}>
-              <Text>Set {set.id}: </Text>
-              <Text>{set.weight} lbs</Text>
-              <Text> x </Text>
-              <Text>{set.reps}</Text>
+            <View key={set.id} style={styles.exerciseSet}>
+              <Text style={styles.setLabel}>Set {set.id}: </Text>
+              <View style={styles.setValuesContainer}>
+                <Text style={styles.setValue}>{set.weight} lbs</Text>
+                <Text style={styles.timesLabel}>x</Text>
+                <Text style={styles.setValue}>{set.reps}</Text>
+              </View>
             </View>
           ))}
         </View>
@@ -61,7 +63,6 @@ const CreateRoutine = ({ navigation }: Props) => {
       await AsyncStorage.setItem('routines', JSON.stringify(updatedRoutines));
       console.log('Routine saved successfully:', newRoutine);
   
-      // Add a delay of 500 milliseconds (half a second) before navigating to the 'ViewRoutine' screen
       setTimeout(() => {
         navigation.navigate('ViewRoutine');
       }, 500);
@@ -74,27 +75,117 @@ const CreateRoutine = ({ navigation }: Props) => {
   
 
   return (
-    <View style={{ padding: 16 }}>
-      <Text>Routine Name:</Text>
-      <TextInput value={routineName} onChangeText={setRoutineName} />
+    <View style={styles.container}>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Routine Name:</Text>
+        <TextInput value={routineName} onChangeText={setRoutineName} />
 
-      <Text>Exercise Name:</Text>
-      <TextInput value={exerciseName} onChangeText={setExerciseName} />
+        <Text style={styles.label}>Exercise Name:</Text>
+        <TextInput value={exerciseName} onChangeText={setExerciseName} />
 
-      <Text>Weight:</Text>
-      <TextInput value={weight} onChangeText={setWeight} />
+        <View style={styles.setsContainer}>
+          <View style={styles.setsInputContainer}>
+            <Text style={styles.label}>Weight:</Text>
+            <TextInput value={weight} onChangeText={setWeight} style={styles.input} />
+          </View>
+          <View style={styles.setsInputContainer}>
+            <Text style={styles.label}>Reps:</Text>
+            <TextInput value={reps} onChangeText={setReps} style={styles.input} />
+          </View>
+        </View>
 
-      <Text>Reps:</Text>
-      <TextInput value={reps} onChangeText={setReps} />
-
-  
-      <Button title="Add Set" onPress={handleAddSet} />
-      <Button title="Add Exercise" onPress={handleAddExercise} />
-      <Button title="Save Routine" onPress={handleSaveRoutine} />
+        <TouchableOpacity style={styles.addButton} onPress={handleAddSet}>
+          <Text style={styles.buttonText}>Add Set</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
+          <Text style={styles.buttonText}>Add Exercise</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.saveButton} onPress={handleSaveRoutine}>
+          <Text style={styles.buttonText}>Save Routine</Text>
+        </TouchableOpacity>
+      </View>
 
       <ExerciseList exercises={exercises} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+  },
+  inputContainer: {
+    marginBottom: 16,
+  },
+  label: {
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  input: {
+    borderColor: '#999',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    marginBottom: 16,
+  },
+  setsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  setsInputContainer: {
+    flex: 1,
+    marginRight: 8,
+  },
+  addButton: {
+    borderRadius: 10,
+    backgroundColor: '#007AFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
+    paddingVertical: 8,
+    marginBottom: 8,
+  },
+  saveButton: {
+    borderRadius: 10,
+    backgroundColor: '#007AFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
+    paddingVertical: 8,
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  exercise: {
+    marginBottom: 16,
+  },
+  exerciseName: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  exerciseSet: {
+    flexDirection: 'row',
+    marginBottom: 16,
+  },
+  setLabel: {
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  setValuesContainer: {
+    flexDirection: 'row',
+  },
+  setValue: {
+    marginRight: 8,
+  },
+  timesLabel: {
+    fontWeight: 'bold',
+  },
+
+
+  
+});
 
 export default CreateRoutine;

@@ -285,6 +285,7 @@ const styles = StyleSheet.create({
   deleteRoutinesButtonText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontSize: 18,
   },
   startWorkoutButton: {
     backgroundColor: 'green',
@@ -295,6 +296,7 @@ const styles = StyleSheet.create({
   startWorkoutButtonText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontSize: 18,
   },
   
 });
