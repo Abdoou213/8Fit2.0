@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Routine, Exercise, Set } from './ViewRoutine';
@@ -59,13 +59,20 @@ const CreateRoutine = ({ navigation }: Props) => {
     try {
       const existingRoutines = await AsyncStorage.getItem('routines');
       const parsedRoutines = existingRoutines ? JSON.parse(existingRoutines) : [];
+  
+      // Check if routine name already exists
+      const routineExists = parsedRoutines.some((routine: Routine) => routine.name === routineName);
+  
+      if (routineExists) {
+        Alert.alert('Routine name already exists');
+        return;
+      }
+      // Save routine 
       const updatedRoutines = [...parsedRoutines, newRoutine];
       await AsyncStorage.setItem('routines', JSON.stringify(updatedRoutines));
-      console.log('Routine saved successfully:', newRoutine);
-  
-      setTimeout(() => {
-        navigation.navigate('ViewRoutine');
-      }, 500);
+      console.log('Routine saved successfully:321', newRoutine);
+      // go to viewRoutine screen
+      navigation.navigate('ViewRoutine');
     } catch (e) {
       console.error('Error saving routine:', e);
     }
@@ -73,7 +80,6 @@ const CreateRoutine = ({ navigation }: Props) => {
   
   
   
-
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>

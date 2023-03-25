@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  RefreshControl,
-} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, ScrollView, RefreshControl} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Props = {
@@ -121,23 +114,23 @@ const ViewRoutine = ({ navigation }: Props) => {
         </ScrollView>
       )}
       <View style={styles.buttonContainer}>
-      {selectedRoutineIndex !== null && (
+        {selectedRoutineIndex !== null && (
+          <TouchableOpacity
+            style={styles.startWorkoutButton}
+            onPress={() => navigation.navigate('StartWorkout')}
+          >
+            <Text style={styles.startWorkoutButtonText}>Start Workout</Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
-          style={styles.startWorkoutButton}
-          onPress={() => navigation.navigate('StartWorkout')}
+          style={styles.deleteRoutinesButton}
+          onPress={handleDeleteAllRoutines}
         >
-          <Text style={styles.startWorkoutButtonText}>Start Workout</Text>
+          <Text style={styles.deleteRoutinesButtonText}>Delete All Routines</Text>
         </TouchableOpacity>
-      )}
-      <TouchableOpacity
-        style={styles.deleteRoutinesButton}
-        onPress={handleDeleteAllRoutines}
-      >
-        <Text style={styles.deleteRoutinesButtonText}>Delete All Routines</Text>
-      </TouchableOpacity>
+      </View>
     </View>
-  </View>
-);
+  );
 };
 
 // Define the structure of the routine object
@@ -155,39 +148,6 @@ export type Exercise = {
 export type Routine = {
   name: string;
   exercises: Exercise[];
-};
-
-// Define the function to store a routine object
-export const storeRoutine = async (routine: Routine) => {
-  try {
-    const existingRoutines = await AsyncStorage.getItem('routines');
-    let routines = [];
-
-    if (existingRoutines !== null) {
-      routines = JSON.parse(existingRoutines);
-    }
-
-    routines.push(routine);
-    await AsyncStorage.setItem('routines', JSON.stringify(routines));
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-// Define the function to retrieve all routine objects
-export const getRoutines = async (): Promise<Routine[]> => {
-  try {
-    const routines = await AsyncStorage.getItem('routines');
-
-    if (routines !== null) {
-      return JSON.parse(routines);
-    }
-
-    return [];
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
 };
 
 //Add style to the component
@@ -298,11 +258,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
-  
+
 });
-
-
-
-
 
 export default ViewRoutine;
