@@ -71,11 +71,15 @@ const CreateRoutine = ({ navigation }: Props) => {
       const updatedRoutines = [...parsedRoutines, newRoutine];
       await AsyncStorage.setItem('routines', JSON.stringify(updatedRoutines));
       console.log('Routine saved successfully:321', newRoutine);
-      // go to viewRoutine screen
+      // Go to viewRoutine screen
       navigation.navigate('ViewRoutine');
     } catch (e) {
       console.error('Error saving routine:', e);
     }
+  };
+
+  const handleCancel = () => {
+    navigation.navigate('ViewRoutine');
   };
   
   
@@ -108,6 +112,9 @@ const CreateRoutine = ({ navigation }: Props) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.saveButton} onPress={handleSaveRoutine}>
           <Text style={styles.buttonText}>Save Routine</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
+          <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
       </View>
 
@@ -159,6 +166,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     elevation: 5,
     paddingVertical: 8,
+    marginBottom: 8,
+  },
+  cancelButton: {
+    borderRadius: 10,
+    backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
+    paddingVertical: 8,
+    marginBottom: 8,
   },
   buttonText: {
     color: '#fff',
