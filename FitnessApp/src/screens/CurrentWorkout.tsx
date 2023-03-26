@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Animated,TouchableOpacity, ScrollView } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 //import ExerciseBox from './ExerciseBox';
 
 
@@ -77,8 +78,32 @@ const CurrentWorkout = () => {
       }[];
     }
 
+    //This function recreates the array of sets, adds a set with weights 0 and 0 reps
+    const addSet = (exerciseId: string) => {
+      setData(prevData => {
+        const newData = prevData.map(exercise => {
+          if (exercise.title === exerciseId) {
+            return {
+              ...exercise,
+              sets: [
+                ...exercise.sets,
+                { weight: 0, repetitions: 0 }
+              ]
+            };
+          }
+          return exercise;
+        });
+        return newData;
+      });
+    };
+
 // Define ExerciseBox component
 const ExerciseBox = ({ title, sets }: ExerciseBoxProps) => {
+
+  const handleAddSet = () => {
+    addSet(title);
+  };
+
   return (
     <View style={styles.exerciseBox}>
       <Text style={styles.exerciseTitle}>{title}</Text>
@@ -86,13 +111,13 @@ const ExerciseBox = ({ title, sets }: ExerciseBoxProps) => {
         {sets.map((set, index) => (
           <View key={index} style={styles.set}>
             <Text style={styles.setText}>Set {index + 1}</Text>
-            <Text style={styles.setText}>{set.weight} kg</Text>
-            <Text style={styles.setText}>{set.repetitions} reps</Text>
+            <TextInput style={styles.setText}>{set.weight} kg</TextInput>
+            <TextInput style={styles.setText}>{set.repetitions} reps</TextInput>
           </View>
         ))}
       </View>
-      <TouchableOpacity style={styles.addButton}>
-        <Text style={styles.addButtonText}>Add Set</Text>
+      <TouchableOpacity style={styles.addButton} onPress={handleAddSet}>
+        <Text style={styles.addButtonText} >Add Set</Text>
       </TouchableOpacity>
     </View>
   );
@@ -163,9 +188,15 @@ const ExerciseBox = ({ title, sets }: ExerciseBoxProps) => {
       marginTop: 5,
       marginBottom: 5,
       backgroundColor: 'white',
+      paddingVertical: 0,
+      flex: 1
     },
     setText: {
       fontSize: 16,
+      marginTop: 2.5,
+      marginBottom: 2.5,
+      //height: 30,
+      flex: 1
     },
     addButton: {
       backgroundColor: 'indianred',
@@ -195,6 +226,7 @@ const ExerciseBox = ({ title, sets }: ExerciseBoxProps) => {
     },
     setsContainer: {
       marginTop: 10,
+      
     },
   });
   
