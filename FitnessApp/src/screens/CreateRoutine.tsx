@@ -1,77 +1,47 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Routine, Exercise, Set } from './ViewRoutine';
 
-// Set navigation type
 type Props = {
   navigation: any;
-};
-
-const ExerciseList = ({ exercises }: { exercises: Exercise[] }) => {
-  return (
-    <>
-      {exercises.map((exercise) => (
-        <View key={exercise.name} style={styles.exercise}>
-          <Text style={styles.exerciseName}>{exercise.name}</Text>
-          {exercise.sets.map((set) => (
-            <View key={set.id} style={styles.exerciseSet}>
-              <Text style={styles.setLabel}>Set {set.id}: </Text>
-              <View style={styles.setValuesContainer}>
-                <Text style={styles.setValue}>{set.weight} lbs</Text>
-                <Text style={styles.timesLabel}>x</Text>
-                <Text style={styles.setValue}>{set.reps}</Text>
-              </View>
-            </View>
-          ))}
-        </View>
-      ))}
-    </>
-  );
 };
 
 const CreateRoutine = ({ navigation }: Props) => {
   const [routineName, setRoutineName] = useState('');
   const [exerciseName, setExerciseName] = useState('');
-  const [weight, setWeight] = useState('');
-  const [reps, setReps] = useState('');
-
+  const [setsCount, setSetsCount] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [sets, setSets] = useState<Set[]>([]);
-
-  const handleAddSet = () => {
-    const newSet = { id: sets.length + 1, weight: Number(weight), reps: Number(reps) };
-    setSets([...sets, newSet]);
-    setWeight('');
-    setReps('');
-  };
 
   const handleAddExercise = () => {
-    const newExercise = { name: exerciseName, sets };
+    const newExercise: Exercise = {
+      name: exerciseName,
+      sets: [],
+      setsCount: parseInt(setsCount),
+    };
     setExercises([...exercises, newExercise]);
     setExerciseName('');
-    setSets([]);
+    setSetsCount('');
   };
+
 
   const handleSaveRoutine = async () => {
     const newRoutine: Routine = { name: routineName, exercises };
     try {
       const existingRoutines = await AsyncStorage.getItem('routines');
       const parsedRoutines = existingRoutines ? JSON.parse(existingRoutines) : [];
-  
-      // Check if routine name already exists
+
       const routineExists = parsedRoutines.some((routine: Routine) => routine.name === routineName);
-  
+
       if (routineExists) {
         Alert.alert('Routine name already exists');
         return;
       }
-      // Save routine 
+
       const updatedRoutines = [...parsedRoutines, newRoutine];
       await AsyncStorage.setItem('routines', JSON.stringify(updatedRoutines));
-      console.log('Routine saved successfully:321', newRoutine);
-      // Go to viewRoutine screen
+      console.log('Routine saved successfully:', newRoutine);
       navigation.navigate('ViewRoutine');
     } catch (e) {
       console.error('Error saving routine:', e);
@@ -81,32 +51,21 @@ const CreateRoutine = ({ navigation }: Props) => {
   const handleCancel = () => {
     navigation.navigate('ViewRoutine');
   };
-  
-  
-  
+
+
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Routine Name:</Text>
-        <TextInput value={routineName} onChangeText={setRoutineName} />
+        <TextInput style={styles.input} value={routineName} onChangeText={setRoutineName} />
 
         <Text style={styles.label}>Exercise Name:</Text>
-        <TextInput value={exerciseName} onChangeText={setExerciseName} />
+        <TextInput style={styles.input} value={exerciseName} onChangeText={setExerciseName} />
 
-        <View style={styles.setsContainer}>
-          <View style={styles.setsInputContainer}>
-            <Text style={styles.label}>Weight:</Text>
-            <TextInput value={weight} onChangeText={setWeight} style={styles.input} />
-          </View>
-          <View style={styles.setsInputContainer}>
-            <Text style={styles.label}>Reps:</Text>
-            <TextInput value={reps} onChangeText={setReps} style={styles.input} />
-          </View>
-        </View>
+        <Text style={styles.label}>Number of Sets:</Text>
+        <TextInput style={styles.input} value={setsCount} onChangeText={setSetsCount} />
 
-        <TouchableOpacity style={styles.addButton} onPress={handleAddSet}>
-          <Text style={styles.buttonText}>Add Set</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
           <Text style={styles.buttonText}>Add Exercise</Text>
         </TouchableOpacity>
@@ -118,10 +77,22 @@ const CreateRoutine = ({ navigation }: Props) => {
         </TouchableOpacity>
       </View>
 
-      <ExerciseList exercises={exercises} />
+      <FlatList
+        data={exercises}
+        renderItem={({ item }) => (
+          <View key={item.name} style={styles.exercise}>
+            <Text style={styles.exerciseName}>{item.name}</Text>
+            <Text style={styles.setLabel}>Number of Sets: {item.setsCount}</Text>
+          </View>
+        )}
+        keyExtractor={(item) => item.name}
+      />
+
+
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -208,7 +179,7 @@ const styles = StyleSheet.create({
   },
 
 
-  
+
 });
 
 export default CreateRoutine;
