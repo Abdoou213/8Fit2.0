@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Animated,TouchableOpacity, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-//import ExerciseBox from './ExerciseBox';
-
 
 
 const CurrentWorkout = () => {
