@@ -143,6 +143,7 @@ export type Set = {
 export type Exercise = {
   name: string;
   sets: Set[];
+  setsCount: number
 };
 
 export type Routine = {
