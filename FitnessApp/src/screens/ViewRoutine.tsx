@@ -90,19 +90,21 @@ const ViewRoutine = ({ navigation }: Props) => {
             >
               <Text style={styles.routineName}>{routine.name}</Text>
               <View style={styles.exerciseList}>
-                {routine.exercises.map((exercise) => (
-                  <View key={exercise.name} style={styles.exerciseBox}>
-                    <Text style={styles.exerciseName}>{exercise.name}</Text>
-                    <View style={styles.setList}>
-                      {exercise.sets.map((set) => (
-                        <View key={set.id} style={styles.setBox}>
-                          <Text style={styles.setInfo}>{set.weight} lbs x {set.reps} reps</Text>
-                        </View>
-                      ))}
-                    </View>
-                  </View>
-                ))}
-              </View>
+  {routine.exercises.map((exercise) => (
+    <View key={exercise.name} style={styles.exerciseBox}>
+      <Text style={styles.exerciseName}>{exercise.name}</Text>
+      <View style={styles.setList}>
+        {exercise.sets.map((set, index) => (
+          <View key={set.id} style={styles.setBox}>
+            <Text style={styles.setInfo}>{`${index + 1}. ${set.weight} lbs x ${set.reps} reps`}</Text>
+          </View>
+        ))}
+      </View>
+      <Text style={styles.setInfo}>{`Sets: ${exercise.setsCount}`}</Text>
+    </View>
+  ))}
+</View>
+
             </TouchableOpacity>
           ))}
           <TouchableOpacity
@@ -197,7 +199,9 @@ const styles = StyleSheet.create({
   },
   exerciseList: {
     marginTop: 10,
+    marginLeft: 20,
   },
+
   exerciseBox: {
     marginBottom: 10,
   },
@@ -206,6 +210,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
   },
+  
   setList: {
     marginLeft: 20,
   },
@@ -213,8 +218,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   setInfo: {
-    fontSize: 14,
+    fontSize: 16,
+    color: '#666',
+    marginVertical: 5,
+    marginLeft: 10,
   },
+
   createRoutineButton: {
     height: 50,
     borderRadius: 10,

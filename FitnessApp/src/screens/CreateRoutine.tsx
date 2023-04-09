@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
+import {Picker} from '@react-native-picker/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Routine, Exercise, Set } from './ViewRoutine';
@@ -64,7 +65,18 @@ const CreateRoutine = ({ navigation }: Props) => {
         <TextInput style={styles.input} value={exerciseName} onChangeText={setExerciseName} />
 
         <Text style={styles.label}>Number of Sets:</Text>
-        <TextInput style={styles.input} value={setsCount} onChangeText={setSetsCount} />
+<View style={styles.input}>
+<Picker
+    selectedValue={setsCount}
+    onValueChange={(value) => setSetsCount(value)}
+  >
+    {[...Array(10)].map((_, index) => (
+      <Picker.Item key={index} label={(index + 1).toString()} value={(index + 1).toString()} />
+    ))}
+  </Picker>
+
+</View>
+
 
         <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
           <Text style={styles.buttonText}>Add Exercise</Text>
