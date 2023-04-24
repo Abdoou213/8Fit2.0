@@ -15,6 +15,14 @@ const CreateRoutine = ({ navigation }: Props) => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
 
   const handleAddExercise = () => {
+    if (!exerciseName.trim() || !setsCount.trim()) {
+      Alert.alert('Please provide a name and number of sets for the exercise');
+      return;
+    }
+    if (exercises.length >= 25) {
+      Alert.alert('You cannot add more than 25 exercises to a routine');
+      return;
+    }
     const newExercise: Exercise = {
       name: exerciseName,
       sets: [],
@@ -26,6 +34,14 @@ const CreateRoutine = ({ navigation }: Props) => {
   };
 
   const handleSaveRoutine = async () => {
+    if (!routineName.trim()) {
+      Alert.alert('Please provide a name for the routine');
+      return;
+    }
+    if (exercises.length === 0) {
+      Alert.alert('You cannot save a routine without exercises');
+      return;
+    }
     const newRoutine: Routine = { name: routineName, exercises };
     try {
       const existingRoutines = await AsyncStorage.getItem('routines');
@@ -60,11 +76,13 @@ const CreateRoutine = ({ navigation }: Props) => {
           <Picker
             selectedValue={setsCount}
             onValueChange={(value) => setSetsCount(value)}
+            prompt="Choose set count"
           >
             {[...Array(10)].map((_, index) => (
               <Picker.Item key={index} label={(index + 1).toString()} value={(index + 1).toString()} />
             ))}
           </Picker>
+
         </View>
         <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
           <Text style={styles.buttonText}>Add Exercise</Text>
@@ -78,7 +96,7 @@ const CreateRoutine = ({ navigation }: Props) => {
       </View>
       {exercises.length > 0 ? (
         <View style={styles.exercisesContainer}>
-          <Text style={styles.label}>Exercises:</Text>
+          <Text style={styles.labelExercises}>Exercises:</Text>
           <ScrollView style={styles.contentContainerStyle}>
             {exercises.map((exercise, index) => (
               <View key={index} style={styles.exercise}>
@@ -90,7 +108,7 @@ const CreateRoutine = ({ navigation }: Props) => {
         </View>
       ) : (
         <View style={styles.exercisesContainer}>
-          <Text style={styles.label}>Exercises:</Text>
+          <Text style={styles.labelExercises}>Exercises: </Text>
           <Text style={styles.message}>No exercises added yet</Text>
         </View>
       )}
@@ -107,6 +125,12 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: 'bold',
     marginBottom: 8,
+    fontSize: 18,
+  },
+  labelExercises: {
+    fontWeight: 'bold',
+    marginBottom: 8,
+    fontSize: 18,
   },
   input: {
     borderColor: '#999',
@@ -115,6 +139,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     marginBottom: 16,
+    fontSize: 18,
   },
   setsContainer: {
     flexDirection: 'row',
