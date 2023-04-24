@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Props = {
@@ -36,6 +36,21 @@ const ViewRoutine = ({ navigation }: Props) => {
   const handleRoutinePress = (index: number) => {
     setSelectedRoutineIndex(index);
   };
+
+  const onDeleteRoutine = async () => {
+    if (selectedRoutineIndex !== null) {
+      try {
+        const updatedRoutines = [...routines];
+        updatedRoutines.splice(selectedRoutineIndex, 1);
+        await AsyncStorage.setItem('routines', JSON.stringify(updatedRoutines));
+        setRoutines(updatedRoutines);
+        setSelectedRoutineIndex(null);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+  
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -94,12 +109,13 @@ const ViewRoutine = ({ navigation }: Props) => {
                   <View key={exercise.name} style={styles.exerciseBox}>
                     <Text style={styles.exerciseName}>{exercise.name}</Text>
                     <View style={styles.setList}>
-                      {exercise.sets.map((set) => (
+                      {exercise.sets.map((set, index) => (
                         <View key={set.id} style={styles.setBox}>
-                          <Text style={styles.setInfo}>{set.weight} lbs x {set.reps} reps</Text>
+                          <Text style={styles.setInfo}>{`${index + 1}. ${set.weight} lbs x ${set.reps} reps`}</Text>
                         </View>
                       ))}
                     </View>
+                    <Text style={styles.setInfo}>{`Sets: ${exercise.setsCount}`}</Text>
                   </View>
                 ))}
               </View>
@@ -114,21 +130,30 @@ const ViewRoutine = ({ navigation }: Props) => {
         </ScrollView>
       )}
       <View style={styles.buttonContainer}>
-        {selectedRoutineIndex !== null && (
-          <TouchableOpacity
-            style={styles.startWorkoutButton}
-            onPress={() => navigation.navigate('StartWorkout')}
-          >
-            <Text style={styles.startWorkoutButtonText}>Start Workout</Text>
-          </TouchableOpacity>
-        )}
-        <TouchableOpacity
-          style={styles.deleteRoutinesButton}
-          onPress={handleDeleteAllRoutines}
-        >
-          <Text style={styles.deleteRoutinesButtonText}>Delete All Routines</Text>
-        </TouchableOpacity>
-      </View>
+  {selectedRoutineIndex !== null && (
+    <TouchableOpacity
+      style={styles.startWorkoutButton}
+      onPress={() => navigation.navigate('StartWorkout')}
+    >
+      <Text style={styles.startWorkoutButtonText}>Start Workout</Text>
+    </TouchableOpacity>
+  )}
+  {selectedRoutineIndex !== null && (
+    <TouchableOpacity
+      style={styles.deleteRoutineButton}
+      onPress={() => onDeleteRoutine()}
+    >
+      <Text style={styles.deleteRoutineButtonText}>Delete</Text>
+    </TouchableOpacity>
+  )}
+  <TouchableOpacity
+    style={styles.deleteRoutinesButton}
+    onPress={handleDeleteAllRoutines}
+  >
+    <Text style={styles.deleteRoutinesButtonText}>Delete All</Text>
+  </TouchableOpacity>
+</View>
+
     </View>
   );
 };
@@ -152,114 +177,106 @@ export type Routine = {
 };
 
 //Add style to the component
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 20,
-    paddingBottom: 70,
-  },
-  button: {
-    position: 'absolute',
-    bottom: 16,
-    alignSelf: 'center',
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: 'black',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-  },
-  routineBox: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    marginBottom: 20,
-    padding: 20,
-  },
-  selectedRoutineBox: {
-    backgroundColor: '#f0f0f0',
-  },
-  routineName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
   },
   emptyRoutineText: {
-    color: '#000',
-    fontWeight: 'bold',
-    fontSize: 18,
+    marginTop: 20,
+    alignSelf: 'center',
+    fontSize: 20,
+  },
+  createRoutineButton: {
+    marginVertical: 10,
+    marginHorizontal: 20,
+    paddingVertical: 15,
+    backgroundColor: '#2196f3',
+    borderRadius: 5,
+  },
+  createRoutineButtonText: {
+    color: '#fff',
     textAlign: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  routineBox: {
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  selectedRoutineBox: {
+    backgroundColor: '#f2f2f2',
+  },
+  routineName: {
+    fontSize: 24,
+    fontWeight: 'bold',
   },
   exerciseList: {
     marginTop: 10,
   },
   exerciseBox: {
-    marginBottom: 10,
+    marginTop: 10,
   },
   exerciseName: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 5,
   },
   setList: {
-    marginLeft: 20,
+    marginTop: 5,
   },
   setBox: {
-    marginBottom: 5,
+    marginTop: 5,
   },
   setInfo: {
-    fontSize: 14,
-  },
-  createRoutineButton: {
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-    flex: 0,
-  },
-  createRoutineButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 16,
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    position: 'absolute',
-    bottom: 16,
-    left: 20,
-    right: 20,
-  },
-  deleteRoutinesButton: {
-    backgroundColor: 'red',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-  deleteRoutinesButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 18,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 10,
   },
   startWorkoutButton: {
-    backgroundColor: 'green',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+    flex: 1,
+    marginHorizontal: 5,
+    paddingVertical: 15,
+    backgroundColor: '#2196f3',
+    borderRadius: 5,
   },
   startWorkoutButtonText: {
     color: '#fff',
-    fontWeight: 'bold',
+    textAlign: 'center',
     fontSize: 18,
+    fontWeight: 'bold',
   },
-
+  deleteRoutineButton: {
+    flex: 1,
+    marginHorizontal: 5,
+    paddingVertical: 15,
+    backgroundColor: '#ff0000',
+    borderRadius: 5,
+  },
+  deleteRoutineButtonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  deleteRoutinesButton: {
+    flex: 1,
+    marginHorizontal: 5,
+    paddingVertical: 15,
+    backgroundColor: '#cc0000',
+    borderRadius: 5,
+  },
+  deleteRoutinesButtonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });
+
 
 export default ViewRoutine;
