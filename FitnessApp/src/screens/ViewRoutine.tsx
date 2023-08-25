@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, RefreshControl} from 'react-native';
+import { styles } from '../Misc/ComponentStyles';
+import { Props, Routine } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type Props = {
-  navigation: any;
-};
-
+//Deletes all currently saved routines
 async function deleteAllRoutines() {
   try {
     await AsyncStorage.removeItem('routines');
@@ -29,10 +28,13 @@ async function fetchAllRoutines() {
 }
 
 const ViewRoutine = ({ navigation }: Props) => {
+  
+  //Variables used across this screen
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [selectedRoutineIndex, setSelectedRoutineIndex] = useState<number | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 
+  //Detects which Routine was selected
   const handleRoutinePress = (index: number) => {
     setSelectedRoutineIndex(index);
   };
@@ -46,6 +48,7 @@ const ViewRoutine = ({ navigation }: Props) => {
     setRefreshing(false);
   };
 
+  //Deletes all previously created routines
   const handleDeleteAllRoutines = async () => {
     try {
       deleteAllRoutines();
@@ -56,6 +59,7 @@ const ViewRoutine = ({ navigation }: Props) => {
     }
   };
 
+  
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       const routinesFromStorage = await fetchAllRoutines();
@@ -67,9 +71,9 @@ const ViewRoutine = ({ navigation }: Props) => {
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.viewroutinecontainer}>
       {routines.length === 0 ? (
-        <View style={styles.container}>
+        <View style={styles.viewroutinecontainer}>
           <Text style={styles.emptyRoutineText}>No routines found.</Text>
           <TouchableOpacity
             style={styles.createRoutineButton}
@@ -85,7 +89,7 @@ const ViewRoutine = ({ navigation }: Props) => {
           {routines.map((routine, index) => (
             <TouchableOpacity
               key={routine.name}
-              style={[styles.routineBox, selectedRoutineIndex === index && styles.selectedRoutineBox]}
+              style={[styles.viewroutineroutineBox, selectedRoutineIndex === index && styles.selectedRoutineBox]}
               onPress={() => handleRoutinePress(index)}
             >
               <Text style={styles.routineName}>{routine.name}</Text>
@@ -93,13 +97,7 @@ const ViewRoutine = ({ navigation }: Props) => {
                 {routine.exercises.map((exercise) => (
                   <View key={exercise.name} style={styles.exerciseBox}>
                     <Text style={styles.exerciseName}>{exercise.name}</Text>
-                    <View style={styles.setList}>
-                      {exercise.sets.map((set) => (
-                        <View key={set.id} style={styles.setBox}>
-                          <Text style={styles.setInfo}>{set.weight} lbs x {set.reps} reps</Text>
-                        </View>
-                      ))}
-                    </View>
+                    <Text style={styles.setInfo}> x {exercise.setsCount} Sets</Text>
                   </View>
                 ))}
               </View>
@@ -117,7 +115,7 @@ const ViewRoutine = ({ navigation }: Props) => {
         {selectedRoutineIndex !== null && (
           <TouchableOpacity
             style={styles.startWorkoutButton}
-            onPress={() => navigation.navigate('StartWorkout')}
+            onPress={() => navigation.navigate('StartWorkout', { routine: routines[selectedRoutineIndex] })}
           >
             <Text style={styles.startWorkoutButtonText}>Start Workout</Text>
           </TouchableOpacity>
@@ -132,134 +130,5 @@ const ViewRoutine = ({ navigation }: Props) => {
     </View>
   );
 };
-
-// Define the structure of the routine object
-export type Set = {
-  id: number;
-  weight: number;
-  reps: number;
-};
-
-export type Exercise = {
-  name: string;
-  sets: Set[];
-  setsCount: number
-};
-
-export type Routine = {
-  name: string;
-  exercises: Exercise[];
-};
-
-//Add style to the component
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
-    paddingBottom: 70,
-  },
-  button: {
-    position: 'absolute',
-    bottom: 16,
-    alignSelf: 'center',
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: 'black',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-  },
-  routineBox: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    marginBottom: 20,
-    padding: 20,
-  },
-  selectedRoutineBox: {
-    backgroundColor: '#f0f0f0',
-  },
-  routineName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  emptyRoutineText: {
-    color: '#000',
-    fontWeight: 'bold',
-    fontSize: 18,
-    textAlign: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-  },
-  exerciseList: {
-    marginTop: 10,
-  },
-  exerciseBox: {
-    marginBottom: 10,
-  },
-  exerciseName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  setList: {
-    marginLeft: 20,
-  },
-  setBox: {
-    marginBottom: 5,
-  },
-  setInfo: {
-    fontSize: 14,
-  },
-  createRoutineButton: {
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-    flex: 0,
-  },
-  createRoutineButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    position: 'absolute',
-    bottom: 16,
-    left: 20,
-    right: 20,
-  },
-  deleteRoutinesButton: {
-    backgroundColor: 'red',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-  deleteRoutinesButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  startWorkoutButton: {
-    backgroundColor: 'green',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-  startWorkoutButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-
-});
 
 export default ViewRoutine;

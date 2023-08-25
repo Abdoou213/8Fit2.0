@@ -5,9 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import Log from './src/screens/Log';
-import Profile from './src/screens/Profile';
-import ViewRoutineStack from './src/screens/ViewRoutineStack';
+import Log from './src/Screens/Log';
+import Profile from './src/Screens/Profile';
+import ViewRoutineStack from './src/Screens/ViewRoutineStack';
+import { Routine } from './src/Components/AppComponents';
 
 //Set page
 const profileName = 'Profile';
@@ -16,12 +17,12 @@ const logName = 'Log';
 
 //Define the type of the routes
 export type RootStackParamList = {
-  CreateRoutine: undefined,
-  ViewRoutine: undefined,
+  CreateRoutine: undefined, //Allows the user to name a new routine and add a given number of exercises to it
+  ViewRoutine: undefined,   //Lists all routines saved by the user for them to choose from
   Routine: undefined,
   Profile: undefined,
   Log: undefined,
-  StartWorkout: undefined;
+  StartWorkout: { routine: Routine }; //Starts a workout session based on the given routine
 };
 
 //Create bottom tab navigator
@@ -59,8 +60,5 @@ const App = () => {
 
   );
 }
-
-
-
 
 export default App;

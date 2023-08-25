@@ -1,39 +1,53 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { styles } from '../Misc/ComponentStyles';
+import { Props, Routine, Exercise, Set } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Routine, Exercise, Set } from './ViewRoutine';
-
-type Props = {
-  navigation: any;
-};
-
+//Creates the current routine
 const CreateRoutine = ({ navigation }: Props) => {
   const [routineName, setRoutineName] = useState('');
   const [exerciseName, setExerciseName] = useState('');
   const [setsCount, setSetsCount] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>([]);
 
+  //Adds an exercise to a routine
   const handleAddExercise = () => {
+
+    //Create the new Exercise object
     const newExercise: Exercise = {
       name: exerciseName,
-      sets: [],
+      //Creates the array of sets
+      sets: Array.from({ length: parseInt(setsCount) }, (_, index) => ({
+        id: index + 1,
+        weight: 0,
+        reps: 0,
+      })),
       setsCount: parseInt(setsCount),
     };
+
+    //Update with hooks
     setExercises([...exercises, newExercise]);
     setExerciseName('');
     setSetsCount('');
   };
 
-
+  //Saves the current routine
   const handleSaveRoutine = async () => {
-    const newRoutine: Routine = { name: routineName, exercises };
+
+    // Generates a random 5-digit integer for the new routine
+    const generateRandomId = () => {
+      return Math.floor(10000 + Math.random() * 90000);
+    };
+
+    const newRoutine: Routine = { name: routineName, exercises, id: generateRandomId() };
     try {
       const existingRoutines = await AsyncStorage.getItem('routines');
       const parsedRoutines = existingRoutines ? JSON.parse(existingRoutines) : [];
 
       const routineExists = parsedRoutines.some((routine: Routine) => routine.name === routineName);
 
+      //Block in case of duplicating routine
       if (routineExists) {
         Alert.alert('Routine name already exists');
         return;
@@ -48,11 +62,10 @@ const CreateRoutine = ({ navigation }: Props) => {
     }
   };
 
+  //Handles leaving the current creation screen to return to the list of routines
   const handleCancel = () => {
     navigation.navigate('ViewRoutine');
   };
-
-
 
   return (
     <View style={styles.container}>
@@ -81,105 +94,14 @@ const CreateRoutine = ({ navigation }: Props) => {
         data={exercises}
         renderItem={({ item }) => (
           <View key={item.name} style={styles.exercise}>
-            <Text style={styles.exerciseName}>{item.name}</Text>
+            <Text style={styles.createRoutineExerciseName}>{item.name}</Text>
             <Text style={styles.setLabel}>Number of Sets: {item.setsCount}</Text>
           </View>
         )}
         keyExtractor={(item) => item.name}
       />
-
-
     </View>
   );
 };
-
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-  },
-  inputContainer: {
-    marginBottom: 16,
-  },
-  label: {
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  input: {
-    borderColor: '#999',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    marginBottom: 16,
-  },
-  setsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  setsInputContainer: {
-    flex: 1,
-    marginRight: 8,
-  },
-  addButton: {
-    borderRadius: 10,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-    paddingVertical: 8,
-    marginBottom: 8,
-  },
-  saveButton: {
-    borderRadius: 10,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-    paddingVertical: 8,
-    marginBottom: 8,
-  },
-  cancelButton: {
-    borderRadius: 10,
-    backgroundColor: 'red',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-    paddingVertical: 8,
-    marginBottom: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  exercise: {
-    marginBottom: 16,
-  },
-  exerciseName: {
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  exerciseSet: {
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
-  setLabel: {
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  setValuesContainer: {
-    flexDirection: 'row',
-  },
-  setValue: {
-    marginRight: 8,
-  },
-  timesLabel: {
-    fontWeight: 'bold',
-  },
-
-
-
-});
 
 export default CreateRoutine;
