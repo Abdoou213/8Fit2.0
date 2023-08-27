@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
 import { styles } from '../Misc/ComponentStyles';
-import { Props, Routine, Exercise, Set } from '../Components/AppComponents';
+import { Props, Routine, Exercise, Set, generateRandomId } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Creates the current routine
@@ -19,7 +19,7 @@ const CreateRoutine = ({ navigation }: Props) => {
       name: exerciseName,
       //Creates the array of sets
       sets: Array.from({ length: parseInt(setsCount) }, (_, index) => ({
-        id: index + 1,
+        setNum: index + 1,
         weight: 0,
         reps: 0,
       })),
@@ -34,11 +34,6 @@ const CreateRoutine = ({ navigation }: Props) => {
 
   //Saves the current routine
   const handleSaveRoutine = async () => {
-
-    // Generates a random 5-digit integer for the new routine
-    const generateRandomId = () => {
-      return Math.floor(10000 + Math.random() * 90000);
-    };
 
     const newRoutine: Routine = { name: routineName, exercises, id: generateRandomId() };
     try {

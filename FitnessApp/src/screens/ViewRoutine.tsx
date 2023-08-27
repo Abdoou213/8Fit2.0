@@ -28,7 +28,7 @@ async function fetchAllRoutines() {
 }
 
 const ViewRoutine = ({ navigation }: Props) => {
-  
+  console.log('VIEWROUTINE')
   //Variables used across this screen
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [selectedRoutineIndex, setSelectedRoutineIndex] = useState<number | null>(null);
@@ -59,8 +59,8 @@ const ViewRoutine = ({ navigation }: Props) => {
     }
   };
 
-  
   useEffect(() => {
+    console.log('USEEFFECTROUTINE')
     const unsubscribe = navigation.addListener('focus', async () => {
       const routinesFromStorage = await fetchAllRoutines();
       if (routinesFromStorage !== null) {

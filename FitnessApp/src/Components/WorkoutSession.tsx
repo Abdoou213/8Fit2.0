@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Routine, Exercise } from "./AppComponents";
+import { Routine, Exercise, generateRandomId } from "./AppComponents";
 
 //================WORKOUT SESSION AND METHODS===============
 //Workout Session Objects and its methods
@@ -68,6 +68,7 @@ export const storeSession = async (session: WorkoutSession) => {
 // Fetch all workout sessions from AsyncStorage
 export const fetchAllSessions = async (): Promise<WorkoutSession[]> => {
     try {
+      console.log('FETCHED')
       const sessions = await AsyncStorage.getItem('sessions');
       
       if (sessions) {
@@ -92,9 +93,4 @@ export const handleDeleteAllSessions = async () => {
   } catch (e) {
     console.error('Error deleting sessions:', e);
   }
-};
-
-// Generates a random 5-digit integer for the new routine/workout session
-export  const generateRandomId = () => {
-  return Math.floor(10000 + Math.random() * 90000);
 };

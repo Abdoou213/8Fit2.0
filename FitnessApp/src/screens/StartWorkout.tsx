@@ -1,6 +1,6 @@
-import { StyleSheet, View, Text, Animated, ScrollView, TouchableOpacity, Alert, FlatList, TextInput } from 'react-native';
+import { StyleSheet, View, Text, Animated, ScrollView, TouchableOpacity, Alert, FlatList } from 'react-native';
 import { RootStackParamList } from '../../App';
-import ExerciseBox from '../Components/AppComponents';
+import ExerciseBox from '../Components/ExerciseBox';
 import {WorkoutSession, createWorkoutSession, storeSession, finalizeWorkoutSession} from '../Components/WorkoutSession';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -16,13 +16,13 @@ type StartWorkoutProps = {
 //Define StartWorkout component
 const StartWorkout = ({ route, navigation }: StartWorkoutProps) => {
 
-  console.log('Checkpoint 1');
   //1) Screen Attributes
   const { routine: chosenRoutine } = route.params; // Extract the routine parameter
 
   //2) Create the workoutSession data using the methods
-  const workoutSession = createWorkoutSession(chosenRoutine);
-  //setWorkoutSession(newSession);
+  const [workoutSession, setWorkoutSession] = useState<WorkoutSession>(
+    createWorkoutSession(chosenRoutine)
+  );
 
   //Define a function to handle finishing the workout session
   const handleFinishWorkout = () => {
@@ -36,10 +36,9 @@ const StartWorkout = ({ route, navigation }: StartWorkoutProps) => {
     }
 
     //Return to list of routines
-    navigation.navigate('ViewRoutine');
+    navigation.goBack();
   };
   
-  console.log('Checkpoint 2');
   return (
     <ScrollView  style={styles.container}>
       <Animated.View>
@@ -62,7 +61,8 @@ const StartWorkout = ({ route, navigation }: StartWorkoutProps) => {
       </Animated.View>
       <FlatList
         data={workoutSession.routine ? workoutSession.routine.exercises : []}
-        renderItem={({ item }) => <ExerciseBox title={item.name} exercise={item} />}  //exercise name + exercise
+        renderItem={({ item }) => <ExerciseBox title={item.name} exercise={item} workoutSession={workoutSession} // Pass the entire workout session
+        setWorkoutSession={setWorkoutSession}  />}  //Pass state session as well to update, display exercise name + exercise sets
         keyExtractor={item => item.name}  //TODO: key extractor should be id
       />
     </ScrollView >

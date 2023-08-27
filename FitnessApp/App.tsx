@@ -6,14 +6,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import Log from './src/Screens/Log';
+import LogScreenStack from './src/Screens/LogScreenStack';
 import Profile from './src/Screens/Profile';
 import ViewRoutineStack from './src/Screens/ViewRoutineStack';
 import { Routine } from './src/Components/AppComponents';
+import { WorkoutSession } from './src/Components/WorkoutSession';
+import ViewPastSession from './src/Screens/ViewPastSession';
 
 //Set page
 const profileName = 'Profile';
 const viewRoutineName = 'Routine';
-const logName = 'Log';
+const logName = 'Logger';
 
 //Define the type of the routes
 export type RootStackParamList = {
@@ -22,7 +25,9 @@ export type RootStackParamList = {
   Routine: undefined,
   Profile: undefined,
   Log: undefined,
+  Logger: undefined,
   StartWorkout: { routine: Routine }; //Starts a workout session based on the given routine
+  ViewPastSession: {sessionId: number};
 };
 
 //Create bottom tab navigator
@@ -54,7 +59,7 @@ const App = () => {
         {/* Define the screens for the Bottom Tab Navigator */}
         <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
         <Tab.Screen name="Routine" component={ViewRoutineStack} options={{ headerShown: false }}/>
-        <Tab.Screen name="Log" component={Log} options={{ headerShown: false }}/>
+        <Tab.Screen name="Logger" component={LogScreenStack} options={{ headerShown: false }}/>
     </Tab.Navigator> 
   </NavigationContainer>
 
