@@ -1,39 +1,30 @@
 import { StyleSheet } from 'react-native';
 
-//TODO: RE-ORGANIZE PROBLEM STYLE SETTINGS, NEED TO SET APP STANDARDS FOR ALL SCREENS
 export const styles = StyleSheet.create({
-    viewroutinecontainer: {
+    scrollViewContainer: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#2d2d47',
         padding: 20,
         paddingBottom: 70,
       },
-      viewroutinebutton: {
-        position: 'absolute',
-        bottom: 16,
-        alignSelf: 'center',
-        width: 56,
-        height: 56,
-        borderRadius: 28,
-        backgroundColor: 'black',
-        alignItems: 'center',
-        justifyContent: 'center',
-        elevation: 5,
-      },
-      viewroutineroutineBox: {
+      viewRoutineroutineBox: {
         borderWidth: 1,
         borderColor: '#ccc',
+        backgroundColor: '#2d2d47',
         borderRadius: 10,
         marginBottom: 20,
         padding: 20,
       },
       selectedRoutineBox: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#2d2d47',
+        borderColor: '#a6a571',
+        borderWidth: 4,
       },
       routineName: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
+        color: 'white'
       },
       emptyRoutineText: {
         color: '#000',
@@ -46,28 +37,20 @@ export const styles = StyleSheet.create({
       exerciseList: {
         marginTop: 10,
       },
-      exerciseBox: {
+      exerciseInListDisplayed: {
         marginBottom: 10,
         flexDirection: 'row'
       },
-      exerciseName: {
+      setInfo: {
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 5,
-      },
-      setList: {
-        marginLeft: 20,
-      },
-      setBox: {
-        marginBottom: 5,
-      },
-      setInfo: {
-        fontSize: 14,
+        color: 'white'
       },
       createRoutineButton: {
         height: 50,
         borderRadius: 10,
-        backgroundColor: '#007AFF',
+        backgroundColor: '#76ab63',
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
@@ -87,7 +70,7 @@ export const styles = StyleSheet.create({
         right: 20,
       },
       deleteRoutinesButton: {
-        backgroundColor: 'red',
+        backgroundColor: '#bd1730',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 8,
@@ -95,29 +78,35 @@ export const styles = StyleSheet.create({
       deleteRoutinesButtonText: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: 18, 
+        textAlign: 'center',
+        paddingVertical: 1
       },
-      startWorkoutButton: {
-        backgroundColor: 'green',
+      currentWorkoutButton: {
+        backgroundColor: '#76ab63',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 8,
       },
-      startWorkoutButtonText: {
+      currentWorkoutButtonText: {
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 18,
       },
-
-      container: {
-        padding: 16,
+      screenListContainer: {
+        padding: 20,
+        backgroundColor: '#2d2d47',
+        flex: 1
       },
       inputContainer: {
         marginBottom: 16,
+        color: '#76ab63',
       },
-      label: {
+      createPageHeaderLabels: {
         fontWeight: 'bold',
         marginBottom: 8,
+        fontSize: 16,
+        color: '#fff',
       },
       input: {
         borderColor: '#999',
@@ -126,8 +115,9 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 4,
         marginBottom: 16,
+        color: '#fff'
       },
-      setsContainer: {
+      setsContainerExerciseBox: {
         flexDirection: 'column',
         justifyContent: 'space-between',
         borderColor : 'black',
@@ -137,144 +127,208 @@ export const styles = StyleSheet.create({
         flex: 1,
         marginRight: 8,
       },
-      addButton: {
+
+      //Create Routine
+      addButtonCreate: {
         borderRadius: 10,
-        backgroundColor: '#007AFF',
+        backgroundColor: '#76ab63',
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
-        paddingVertical: 8,
-        marginBottom: 8,
+        paddingVertical: 5,
+        marginBottom: 5,
       },
-      saveButton: {
+      saveButtonCreate: {
         borderRadius: 10,
-        backgroundColor: '#007AFF',
+        backgroundColor: '#76ab63',
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
-        paddingVertical: 8,
-        marginBottom: 8,
+        paddingVertical: 5,
+        marginBottom: 5,
       },
-      cancelButton: {
+      cancelButtonCreate: {
         borderRadius: 10,
-        backgroundColor: 'red',
+        backgroundColor: '#bd1730',
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
-        paddingVertical: 8,
-        marginBottom: 8,
+        paddingVertical: 5,
+        marginBottom: 5,
       },
       buttonText: {
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 18,
       },
-      exercise: {
+      exerciseCreate: {
         marginBottom: 16,
       },
       createRoutineExerciseName: {
         fontWeight: 'bold',
         fontSize: 18,
+        color:'#fff'
       },
-      exerciseSet: {
-        flexDirection: 'row',
-        marginBottom: 16,
+      createRoutineExercisesListLabel: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        color:'#fff',
+        textDecorationLine: 'underline',
+        textAlign: 'center',
+        padding: 5,
       },
-      setLabel: {
+      setLabelCreate: {
         fontWeight: 'bold',
         marginBottom: 8,
-      },
-      setValuesContainer: {
-        flexDirection: 'row',
-      },
-      setValue: {
-        marginRight: 8,
-      },
-      timesLabel: {
-        fontWeight: 'bold',
+        color: '#fff',
+        fontSize: 14
       },
       exerciseTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
-        backgroundColor: 'white',
-        borderColor: 'black',
+        backgroundColor: '#2d2d47',
+        color: '#fff',
+        borderColor: '#a6a571',
         borderWidth: 3
       },
-      set: {
+      setExerciseBox: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 5,
         marginBottom: 5,
-        backgroundColor: 'grey',
+        backgroundColor: '#2d2d47',
         paddingVertical: 0,
         flex: 1,
-        borderColor : 'black',
+        borderColor : '#a6a571',
         borderWidth: 2
       },
-      setText: {
+      setTextExerciseBox: {
         fontSize: 16,
         marginTop: 2.5,
         marginBottom: 2.5,
-        //height: 30,
+        padding: 5,
+        color: '#fff',
         flex: 1,
-        backgroundColor: 'white'
       },
-      addButtonText: {
-        color: 'white',
-        fontSize: 16,
-        textAlign: 'center',
-      },
-      headerRows: {
+      headerRowsPastSession: {
         height: 30,
         width: '75%',
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
+        color: '#fff',
         paddingLeft: 10,
-        backgroundColor: 'linen',
+        fontSize: 24,
+        marginBottom: 5,
+      },
+      headerRowsDatePastSession: {
+        height: 30,
+        width: '75%',
+        color: '#fff',
+        paddingLeft: 10,
+        fontSize: 18,
+        marginBottom: 5,
+      },
+      logHeaderTitle: {
+        color: '#fff',
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        textAlign: 'center', 
+        justifyContent: 'center',
+      },
+      currentWorkoutHeaderDate: {
+        color: '#fff',
         fontSize: 19,
         marginBottom: 5,
+        textAlign: 'center', 
+        justifyContent: 'center',
+      },
+      underline: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#a6a571',
+        marginBottom: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      underlineDate: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#a6a571',
+        marginBottom: 5,
+        justifyContent: 'space-between',
+        alignItems: 'center',
       },
       textInputsContainerHeader: {
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
+        color: '#fff',
         marginBottom: 5,
       },
 
       //ExerciseBox
-      exerciseBoxStartWorkout: {
+      exerciseBoxContainer: {
         borderWidth: 3,
-        borderColor: 'black',
+        borderColor: '#a6a571',
         borderRadius: 10,
         padding: 20,
         marginBottom: 20,
+        backgroundColor: '#2d2d47'
       },
-      exerciseTitleStartWorkout: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        backgroundColor: 'white',
-      },
-      addSetButton: {
-        backgroundColor: '#007AFF',
+      addSetButtonExerciseBox: {
+        backgroundColor: '#a6a571',
         padding: 8,
         borderRadius: 5,
         width: '100%',
         marginTop: 10,
         marginBottom: 10,
       },
-      addSetButtonText: {
-        color: 'white',
+      addSetButtonTextExerciseBox: {
+        color: '#2d2d47',
         fontSize: 16,
+        fontWeight: 'bold',
         textAlign: 'center',
       },
-      logContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+      closeButtonViewPastSession: {
+        backgroundColor: 'transparent',
+        padding: 8,
+        borderRadius: 5,
+        marginRight: 10,
       },
+      closeButtonTextViewPastSession: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      headerContainerPastSession: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+      },     
+      headerContainer: {
+        marginTop: 20,
+        marginBottom: 20, // Add margin to create space between header and the following components
+      },
+
+      //Current Workout Screen
+      finishButtonCurrentWorkout:{
+        backgroundColor: "#a6a571",
+        padding: 8,
+        borderRadius: 5,
+        width: "45%",
+        justifyContent: "center"
+      },
+      headerTextCurrentWorkout: {
+        color: '#2d2d47',
+        fontSize: 16,
+        textAlign: "center",
+        fontWeight: 'bold',
+      },
+      currentWorkoutHeader: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginBottom: 20,
+        marginTop: 20
+      }
 });

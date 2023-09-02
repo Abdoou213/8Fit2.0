@@ -1,32 +1,27 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
-import Log from './src/Screens/Log';
-import LogScreenStack from './src/Screens/LogScreenStack';
+import LogScreenStack from './src/Screens/ScreenStacks/LogScreenStack';
 import Profile from './src/Screens/Profile';
-import ViewRoutineStack from './src/Screens/ViewRoutineStack';
+import ViewRoutineStack from './src/Screens/ScreenStacks/ViewRoutineStack';
 import { Routine } from './src/Components/AppComponents';
-import { WorkoutSession } from './src/Components/WorkoutSession';
-import ViewPastSession from './src/Screens/ViewPastSession';
 
 //Set page
 const profileName = 'Profile';
-const viewRoutineName = 'Routine';
-const logName = 'Logger';
+const viewRoutineName = 'Routines';
+const logName = 'Log';
 
 //Define the type of the routes
 export type RootStackParamList = {
   CreateRoutine: undefined, //Allows the user to name a new routine and add a given number of exercises to it
   ViewRoutine: undefined,   //Lists all routines saved by the user for them to choose from
-  Routine: undefined,
+  Routines: undefined,
   Profile: undefined,
   Log: undefined,
-  Logger: undefined,
-  StartWorkout: { routine: Routine }; //Starts a workout session based on the given routine
+  LogScreen: undefined,
+  CurrentWorkoutSession: { routine: Routine }; //Starts a workout session based on the given routine
   ViewPastSession: {sessionId: number};
 };
 
@@ -58,8 +53,8 @@ const App = () => {
       })}>
         {/* Define the screens for the Bottom Tab Navigator */}
         <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
-        <Tab.Screen name="Routine" component={ViewRoutineStack} options={{ headerShown: false }}/>
-        <Tab.Screen name="Logger" component={LogScreenStack} options={{ headerShown: false }}/>
+        <Tab.Screen name="Routines" component={ViewRoutineStack} options={{ headerShown: false }}/>
+        <Tab.Screen name="Log" component={LogScreenStack} options={{ headerShown: false }}/>
     </Tab.Navigator> 
   </NavigationContainer>
 

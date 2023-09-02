@@ -31,43 +31,57 @@ export const ExerciseBox = ({exercise, workoutSession, setWorkoutSession }: Exer
         reps: 0,
       });
 
+      //Increment the set count
+      updatedSession.exercises[exerciseIndex].setsCount++;
+
       // Update the workout session state in the parent component (CurrentWorkoutSession)
       setWorkoutSession(updatedSession);
       console.log('Added new Set!');
     };
 
-    // Function to update weight of a given set upon receiving user input
+     // Function to update weight of a given set upon receiving user input
     const handleWeightChange = (index: number, value: string) => {
-      const newSets = [...updatedExercise.sets];
-      newSets[index].weight = parseFloat(value) || 0; // Convert input to number or set to 0
-      setUpdatedExercise({ ...updatedExercise, sets: newSets });
+      setWorkoutSession(prevSession => {
+        const updatedSession = { ...prevSession };
+        const exerciseIndex = updatedSession.exercises.findIndex(ex => ex.name === exercise.name);
+        const newSets = [...updatedSession.exercises[exerciseIndex].sets];
+        newSets[index].weight = parseFloat(value) || 0;
+        updatedSession.exercises[exerciseIndex].sets = newSets;
+        return updatedSession;
+      });
     };
 
     // Function to update the number of repetitions of a given set upon receiving user input
     const handleRepsChange = (index: number, value: string) => {
-      const newSets = [...updatedExercise.sets];
-      newSets[index].reps = parseInt(value) || 0; // Convert input to number or set to 0
-      setUpdatedExercise({ ...updatedExercise, sets: newSets });
+      setWorkoutSession(prevSession => {
+        const updatedSession = { ...prevSession };
+        const exerciseIndex = updatedSession.exercises.findIndex(ex => ex.name === exercise.name);
+        const newSets = [...updatedSession.exercises[exerciseIndex].sets];
+        newSets[index].reps = parseInt(value) || 0;
+        updatedSession.exercises[exerciseIndex].sets = newSets;
+        return updatedSession;
+      });
     };
     
     return (
-      <View style={styles.exerciseBoxStartWorkout}>
+      <View style={styles.exerciseBoxContainer}>
         <Text style={styles.exerciseTitle}>{exercise.name}</Text>
-          <View style={styles.setsContainer}>
+        <View style={styles.underline}></View>
+          <View style={styles.setsContainerExerciseBox}>
             {exercise.sets.map((set: Set, index: number) => (
-              <View key={index} style={styles.set}>
-                <Text style={styles.setText}>Set {index + 1}</Text>
-                <TextInput keyboardType="numeric" style={styles.setText} 
+              <View key={index} style={styles.setExerciseBox}>
+                <Text style={styles.setTextExerciseBox}>Set {index + 1}</Text>
+                <TextInput keyboardType="numeric" style={styles.setTextExerciseBox} 
                 onChangeText={(value) => handleWeightChange(index, value)}>{set.weight}</TextInput>
-                <Text style={styles.setText}>kg/lbs</Text>
-                <TextInput keyboardType="numeric" style={styles.setText} 
+                <Text style={styles.setTextExerciseBox}>kg/lbs</Text>
+                <TextInput keyboardType="numeric" style={styles.setTextExerciseBox} 
                 onChangeText={(value) => handleRepsChange(index, value)}>{set.reps}</TextInput>
-                <Text style={styles.setText}>reps</Text>
+                <Text style={styles.setTextExerciseBox}>reps</Text>
               </View>
             ))}
           </View>
-        <TouchableOpacity style={styles.addSetButton} onPress={handleAddSet}>
-          <Text style={styles.addSetButtonText}>Add Set</Text>
+        <TouchableOpacity style={styles.addSetButtonExerciseBox} onPress={handleAddSet}>
+          <Text style={styles.addSetButtonTextExerciseBox}>Add Set</Text>
         </TouchableOpacity>
       </View>
     );
@@ -77,16 +91,17 @@ export const ExerciseBox = ({exercise, workoutSession, setWorkoutSession }: Exer
 export const ExerciseBoxPastSession = ({ exercise }: { exercise: Exercise }) => {
   
   return (
-    <View style={styles.exerciseBoxStartWorkout}>
+    <View style={styles.exerciseBoxContainer}>
       <Text style={styles.exerciseTitle}>{exercise.name}</Text>
-        <View style={styles.setsContainer}>
+      <View style={styles.underline}></View>
+        <View style={styles.setsContainerExerciseBox}>
           {exercise.sets.map((set: Set, index: number) => (
-            <View key={index} style={styles.set}>
-              <Text style={styles.setText}>Set {index + 1}</Text>
-              <Text style={styles.setText}>{set.weight}</Text>
-              <Text style={styles.setText}>kg/lbs</Text>
-              <Text style={styles.setText}>{set.reps}</Text>
-              <Text style={styles.setText}>reps</Text>
+            <View key={index} style={styles.setExerciseBox}>
+              <Text style={styles.setTextExerciseBox}>Set {index + 1}</Text>
+              <Text style={styles.setTextExerciseBox}>{set.weight}</Text>
+              <Text style={styles.setTextExerciseBox}>kg/lbs</Text>
+              <Text style={styles.setTextExerciseBox}>{set.reps}</Text>
+              <Text style={styles.setTextExerciseBox}>reps</Text>
             </View>
           ))}
         </View>

@@ -20,7 +20,7 @@ export type Exercise = {
     setsCount: number
   };
 
-//Routine object, contains a predefined list of exercises with a predefined number of sets
+// Routine object, contains a predefined list of exercises with a predefined number of sets
 export type Routine = {
     name: string;
     id: number;

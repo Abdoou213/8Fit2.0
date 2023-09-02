@@ -28,14 +28,14 @@ async function fetchAllRoutines() {
 }
 
 const ViewRoutine = ({ navigation }: Props) => {
-  console.log('VIEWROUTINE')
   //Variables used across this screen
   const [routines, setRoutines] = useState<Routine[]>([]);
-  const [selectedRoutineIndex, setSelectedRoutineIndex] = useState<number | null>(null);
+  const [selectedRoutineIndex, setSelectedRoutineIndex] = useState<number | null>(null);  //TODO: SHOULD USE ROUTINE ID NOT INDEX
   const [refreshing, setRefreshing] = useState(false);
 
   //Detects which Routine was selected
   const handleRoutinePress = (index: number) => {
+    console.log(index)
     setSelectedRoutineIndex(index);
   };
 
@@ -60,7 +60,6 @@ const ViewRoutine = ({ navigation }: Props) => {
   };
 
   useEffect(() => {
-    console.log('USEEFFECTROUTINE')
     const unsubscribe = navigation.addListener('focus', async () => {
       const routinesFromStorage = await fetchAllRoutines();
       if (routinesFromStorage !== null) {
@@ -71,9 +70,11 @@ const ViewRoutine = ({ navigation }: Props) => {
   }, [navigation]);
 
   return (
-    <View style={styles.viewroutinecontainer}>
+    <View style={styles.scrollViewContainer}>
+      <Text style={styles.logHeaderTitle}>Routines</Text>
+      <View style={styles.underline}></View>
       {routines.length === 0 ? (
-        <View style={styles.viewroutinecontainer}>
+        <View style={styles.scrollViewContainer}>
           <Text style={styles.emptyRoutineText}>No routines found.</Text>
           <TouchableOpacity
             style={styles.createRoutineButton}
@@ -89,14 +90,15 @@ const ViewRoutine = ({ navigation }: Props) => {
           {routines.map((routine, index) => (
             <TouchableOpacity
               key={routine.name}
-              style={[styles.viewroutineroutineBox, selectedRoutineIndex === index && styles.selectedRoutineBox]}
+              style={[styles.viewRoutineroutineBox, selectedRoutineIndex === index && styles.selectedRoutineBox]}
               onPress={() => handleRoutinePress(index)}
             >
               <Text style={styles.routineName}>{routine.name}</Text>
+              <View style={styles.underline}></View>
               <View style={styles.exerciseList}>
                 {routine.exercises.map((exercise) => (
-                  <View key={exercise.name} style={styles.exerciseBox}>
-                    <Text style={styles.exerciseName}>{exercise.name}</Text>
+                  <View key={exercise.name} style={styles.exerciseInListDisplayed}>
+                    <Text style={styles.setInfo}>{exercise.name}</Text>
                     <Text style={styles.setInfo}> x {exercise.setsCount} Sets</Text>
                   </View>
                 ))}
@@ -114,10 +116,10 @@ const ViewRoutine = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         {selectedRoutineIndex !== null && (
           <TouchableOpacity
-            style={styles.startWorkoutButton}
-            onPress={() => navigation.navigate('StartWorkout', { routine: routines[selectedRoutineIndex] })}
+            style={styles.currentWorkoutButton}
+            onPress={() => navigation.navigate('CurrentWorkoutSession', { routine: routines[selectedRoutineIndex] })}
           >
-            <Text style={styles.startWorkoutButtonText}>Start Workout</Text>
+            <Text style={styles.currentWorkoutButtonText}>Start Workout</Text>
           </TouchableOpacity>
         )}
         <TouchableOpacity

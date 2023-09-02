@@ -63,38 +63,41 @@ const CreateRoutine = ({ navigation }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.screenListContainer}>
+      
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Routine Name:</Text>
+        <Text style={styles.setLabelCreate}>Routine Name:</Text>
         <TextInput style={styles.input} value={routineName} onChangeText={setRoutineName} />
 
-        <Text style={styles.label}>Exercise Name:</Text>
+        <Text style={styles.setLabelCreate}>Exercise Name:</Text>
         <TextInput style={styles.input} value={exerciseName} onChangeText={setExerciseName} />
 
-        <Text style={styles.label}>Number of Sets:</Text>
-        <TextInput style={styles.input} value={setsCount} onChangeText={setSetsCount} />
+        <Text style={styles.setLabelCreate}>Number of Sets:</Text>
+        <TextInput keyboardType="numeric" style={styles.input} value={setsCount} onChangeText={setSetsCount} />
 
-        <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
+        <TouchableOpacity style={styles.addButtonCreate} onPress={handleAddExercise}>
           <Text style={styles.buttonText}>Add Exercise</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.saveButton} onPress={handleSaveRoutine}>
-          <Text style={styles.buttonText}>Save Routine</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-          <Text style={styles.buttonText}>Cancel</Text>
-        </TouchableOpacity>
+               
       </View>
-
+      <Text style={styles.createRoutineExercisesListLabel}>Exercises</Text>
       <FlatList
-        data={exercises}
-        renderItem={({ item }) => (
-          <View key={item.name} style={styles.exercise}>
-            <Text style={styles.createRoutineExerciseName}>{item.name}</Text>
-            <Text style={styles.setLabel}>Number of Sets: {item.setsCount}</Text>
-          </View>
-        )}
-        keyExtractor={(item) => item.name}
-      />
+      data={exercises}
+      style={styles.screenListContainer}
+      renderItem={({ item }) => (
+        <View key={item.name} style={styles.exerciseCreate}>
+          <Text style={styles.createRoutineExerciseName}>{item.name}</Text>
+          <Text style={styles.setLabelCreate}>Number of Sets: {item.setsCount}</Text>
+        </View>
+      )}
+      keyExtractor={(item) => item.name}
+    />
+    <TouchableOpacity style={styles.saveButtonCreate} onPress={handleSaveRoutine}>
+      <Text style={styles.buttonText}>Save Routine</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.cancelButtonCreate} onPress={handleCancel}>
+          <Text style={styles.buttonText}>Cancel</Text>
+    </TouchableOpacity>  
     </View>
   );
 };

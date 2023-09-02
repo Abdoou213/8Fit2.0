@@ -10,6 +10,7 @@ export type WorkoutSession = {
     exercises: Exercise[];
     startTime: Date,
     endTime: Date,
+    startTimeString: string,
     duration: number; 
   };
 
@@ -24,6 +25,12 @@ export const createWorkoutSession = (
     exercises: routine.exercises,   // Initialize exercises with routine's exercises
     startTime: new Date(),          // Initialize to the current date and time
     endTime: new Date(),            // Initialize to the current date and time
+    startTimeString: new Date().toLocaleString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    }),
     duration: 0,
   };
 };
