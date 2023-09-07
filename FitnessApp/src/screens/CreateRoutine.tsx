@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
 import { styles } from '../Misc/ComponentStyles';
 import { Props, Routine, Exercise, Set, generateRandomId } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CreateExercise from './CreateExercise';
 
 //Creates the current routine
 const CreateRoutine = ({ navigation }: Props) => {
+  console.log('ROUTINEZ')
   const [routineName, setRoutineName] = useState('');
   const [exerciseName, setExerciseName] = useState('');
   const [setsCount, setSetsCount] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>([]);
 
-  //Adds an exercise to a routine
-  const handleAddExercise = () => {
+  //Callback function to update routineExercises
+  const updateRoutineExercises = (newExercise: Exercise) => {
+      setExercises([...exercises, newExercise]);
+    };
+
+  //Adds an exercise to a routine (OBSOLETE GARDER POUR VOIR SI UTILISABLE PAR ADD EXERCISE DURING WORKOUT)
+  /*const handleAddExercise = () => {
 
     //Create the new Exercise object
     const newExercise: Exercise = {
@@ -30,7 +37,7 @@ const CreateRoutine = ({ navigation }: Props) => {
     setExercises([...exercises, newExercise]);
     setExerciseName('');
     setSetsCount('');
-  };
+  };*/
 
   //Saves the current routine
   const handleSaveRoutine = async () => {
@@ -62,23 +69,30 @@ const CreateRoutine = ({ navigation }: Props) => {
     navigation.navigate('ViewRoutine');
   };
 
+  const handleCreateExercise = () => {
+    navigation.navigate('CreateExercise', {
+      updateRoutineExercises, // Pass the callback function as a prop
+    });
+  };
+
+  const handleSelectExercise = () => {
+    navigation.navigate('SelectExerciseCategory', {
+      updateRoutineExercises,
+    });
+  };
+
   return (
     <View style={styles.screenListContainer}>
       
       <View style={styles.inputContainer}>
         <Text style={styles.setLabelCreate}>Routine Name:</Text>
         <TextInput style={styles.input} value={routineName} onChangeText={setRoutineName} />
-
-        <Text style={styles.setLabelCreate}>Exercise Name:</Text>
-        <TextInput style={styles.input} value={exerciseName} onChangeText={setExerciseName} />
-
-        <Text style={styles.setLabelCreate}>Number of Sets:</Text>
-        <TextInput keyboardType="numeric" style={styles.input} value={setsCount} onChangeText={setSetsCount} />
-
-        <TouchableOpacity style={styles.addButtonCreate} onPress={handleAddExercise}>
-          <Text style={styles.buttonText}>Add Exercise</Text>
+        <TouchableOpacity style={styles.addButtonCreate} onPress={handleCreateExercise}>
+          <Text style={styles.buttonText}>Create Exercise</Text>
         </TouchableOpacity>
-               
+        <TouchableOpacity style={styles.addButtonCreate} onPress={handleSelectExercise}>
+          <Text style={styles.buttonText}>Select Exercise</Text>
+        </TouchableOpacity>             
       </View>
       <Text style={styles.createRoutineExercisesListLabel}>Exercises</Text>
       <FlatList

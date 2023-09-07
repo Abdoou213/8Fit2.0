@@ -1,12 +1,12 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import LogScreenStack from './src/Screens/ScreenStacks/LogScreenStack';
 import Profile from './src/Screens/Profile';
 import ViewRoutineStack from './src/Screens/ScreenStacks/ViewRoutineStack';
-import { Routine } from './src/Components/AppComponents';
+import { Exercise, ExerciseCategory, Routine } from './src/Components/AppComponents';
 
 //Set page
 const profileName = 'Profile';
@@ -16,6 +16,14 @@ const logName = 'Log';
 //Define the type of the routes
 export type RootStackParamList = {
   CreateRoutine: undefined, //Allows the user to name a new routine and add a given number of exercises to it
+  CreateExercise: { updateRoutineExercises: (newExercise: Exercise) => void }, //callBack method to modify current routine
+  SelectExerciseCategory: { updateRoutineExercises: (newExercise: Exercise) => void },
+  ChooseExerciseFromCategory: {
+    category: ExerciseCategory;
+    route: RouteProp<RootStackParamList, 'ChooseExerciseFromCategory'>;
+    updateRoutineExercises: (newExercise: Exercise) => void;
+    goBackToCreateRoutine: () => void;
+  }, 
   ViewRoutine: undefined,   //Lists all routines saved by the user for them to choose from
   Routines: undefined,
   Profile: undefined,

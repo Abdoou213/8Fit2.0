@@ -59,7 +59,38 @@ const ViewRoutine = ({ navigation }: Props) => {
     }
   };
 
+  // Function to initialize exercise categories if not already initialized (done first time users opens the app)
+ const initializeExerciseCategories = async () => {
+  try {
+    // Check if the initialization flag is set in AsyncStorage
+    const isInitialized = await AsyncStorage.getItem('exerciseCategoriesInitialized');
+    console.log('INITIALIZEDDDDDDDDD')
+    if (!isInitialized) {
+      // Initialize default exercise categories
+      const defaultCategories = [
+        // Your default categories here
+        { name: 'Core', categoryId: 1, exerciseList: [] },
+        { name: 'Back', categoryId: 2, exerciseList: [] },
+        { name: 'Biceps', categoryId: 3, exerciseList: [] },
+        { name: 'Triceps', categoryId: 4, exerciseList: [] },
+        { name: 'Chest', categoryId: 5, exerciseList: [] },
+        { name: 'Legs', categoryId: 6, exerciseList: [] },
+      ];
+
+      // Save the default exercise categories to AsyncStorage
+      await AsyncStorage.setItem('exerciseCategories', JSON.stringify(defaultCategories));
+      console.log('INITIALIZED')
+      // Set the initialization flag in AsyncStorage
+      await AsyncStorage.setItem('exerciseCategoriesInitialized', 'true');
+    }
+  } catch (error) {
+    console.error('Error initializing exercise categories:', error);
+  }
+};
+
   useEffect(() => {
+    console.log('ZOINKS');
+    initializeExerciseCategories();
     const unsubscribe = navigation.addListener('focus', async () => {
       const routinesFromStorage = await fetchAllRoutines();
       if (routinesFromStorage !== null) {

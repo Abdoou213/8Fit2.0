@@ -33,12 +33,11 @@ const ViewPastSession =  ({route, navigation} : ViewPastSessionProps) => {
         fetchSessionData();
     }, [currentSessionId]);
 
-    //Use a loading state to handle the asynchronous data fetching
+    //4) Use a loading state to handle the asynchronous data fetching
     if (selectedSession === null) {
-        return <ActivityIndicator size="large" />;
+      return <ActivityIndicator size="large" />;
     }
-    console.log(selectedSession)
-    console.log('startTimu:' + selectedSession.startTimeString)
+
     return (
         <FlatList
             style={styles.screenListContainer}
