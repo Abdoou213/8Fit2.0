@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, TouchableOpacity, ScrollView, RefreshControl} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, RefreshControl, Alert} from 'react-native';
 import { styles } from '../Misc/ComponentStyles';
 import { Props, Routine } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -38,6 +38,45 @@ const ViewRoutine = ({ navigation }: Props) => {
     console.log(index)
     setSelectedRoutineIndex(index);
   };
+
+// Function to delete a single routine upon clicking the X
+async function deleteRoutine(routineToDelete: Routine) {
+  try {
+    // Display a confirmation pop-up to confirm the deletion, do nothing if User cancels
+    Alert.alert('Confirm Deletion',`Are you sure you want to delete "${routineToDelete.name}"?`,
+      [
+        {
+          text: 'Cancel', onPress: () => {// User canceled, do nothing
+            console.log('Deletion canceled.');},style: 'cancel',},
+        {
+          text: 'Confirm',
+          onPress: async () => {
+            // User confirmed, proceed with deletion
+            const allRoutines = await fetchAllRoutines();
+
+            const indexToDelete = allRoutines.findIndex(
+              (routine: Routine) => routine.name === routineToDelete.name
+            );
+
+            if (indexToDelete !== -1) {
+              allRoutines.splice(indexToDelete, 1);
+
+              await AsyncStorage.setItem('routines', JSON.stringify(allRoutines));
+              setRoutines(allRoutines);
+
+              console.log(`Routine "${routineToDelete.name}" deleted.`);
+            } else {
+              console.log(`Routine "${routineToDelete.name}" not found.`);
+            }
+          },
+          style: 'destructive',
+        },
+      ]
+    );
+  } catch (error) {
+    console.log('Error deleting routine from async storage:', error);
+  }
+}
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -79,7 +118,6 @@ const ViewRoutine = ({ navigation }: Props) => {
 
       // Save the default exercise categories to AsyncStorage
       await AsyncStorage.setItem('exerciseCategories', JSON.stringify(defaultCategories));
-      console.log('INITIALIZED')
       // Set the initialization flag in AsyncStorage
       await AsyncStorage.setItem('exerciseCategoriesInitialized', 'true');
     }
@@ -105,7 +143,7 @@ const ViewRoutine = ({ navigation }: Props) => {
       <View style={styles.underline}></View>
       {routines.length === 0 ? (
         <View style={styles.scrollViewContainer}>
-          <Text style={styles.emptyRoutineText}>No routines found.</Text>
+          <Text style={styles.createRoutineExercisesListLabel}>No routines found.</Text>
           <TouchableOpacity
             style={styles.createRoutineButton}
             onPress={() => navigation.navigate('CreateRoutine')}
@@ -123,14 +161,28 @@ const ViewRoutine = ({ navigation }: Props) => {
               style={[styles.viewRoutineroutineBox, selectedRoutineIndex === index && styles.selectedRoutineBox]}
               onPress={() => handleRoutinePress(index)}
             >
-              <Text style={styles.routineName}>{routine.name}</Text>
+              <View style={styles.deleteRoutineButtonContainer}>
+                <Text style={styles.routineName}>{routine.name}</Text>
+                <TouchableOpacity
+                  onPress={() => deleteRoutine(routine)}
+                  style={styles.closeButtonViewPastSession}
+                >
+                  <Text style={styles.closeButtonTextViewPastSession}>X</Text>
+                </TouchableOpacity>
+              </View>
+              
               <View style={styles.underline}></View>
               <View style={styles.exerciseList}>
                 {routine.exercises.map((exercise) => (
-                  <View key={exercise.name} style={styles.exerciseInListDisplayed}>
-                    <Text style={styles.setInfo}>{exercise.name}</Text>
-                    <Text style={styles.setInfo}> x {exercise.setsCount} Sets</Text>
+                  <View>
+                    <View key={exercise.name} style={styles.exerciseInListDisplayed}>
+                      
+                      <Text style={styles.setInfo}>{exercise.name}</Text>
+                      <Text style={styles.setInfo}> x {exercise.setsCount} Sets</Text>
+                    </View>
+
                   </View>
+                  
                 ))}
               </View>
             </TouchableOpacity>

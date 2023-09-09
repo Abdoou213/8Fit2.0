@@ -75,6 +75,11 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 8,
       },
+      deleteRoutineButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
       deleteRoutinesButtonText: {
         color: '#fff',
         fontWeight: 'bold',
@@ -294,6 +299,12 @@ export const styles = StyleSheet.create({
         padding: 8,
         borderRadius: 5,
         marginRight: 10,
+      },
+      deleteRoutineButton: {
+        backgroundColor: 'transparent',
+        padding: 8,
+        borderRadius: 5,
+        marginLeft: 10,
       },
       closeButtonTextViewPastSession: {
         color: '#fff',
