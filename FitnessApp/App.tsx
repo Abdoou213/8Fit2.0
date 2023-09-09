@@ -7,6 +7,7 @@ import LogScreenStack from './src/Screens/ScreenStacks/LogScreenStack';
 import Profile from './src/Screens/Profile';
 import ViewRoutineStack from './src/Screens/ScreenStacks/ViewRoutineStack';
 import { Exercise, ExerciseCategory, Routine } from './src/Components/AppComponents';
+import { WorkoutSession } from './src/Components/WorkoutSession';
 
 //Set page
 const profileName = 'Profile';
@@ -17,19 +18,29 @@ const logName = 'Log';
 export type RootStackParamList = {
   CreateRoutine: undefined, //Allows the user to name a new routine and add a given number of exercises to it
   CreateExercise: { updateRoutineExercises: (newExercise: Exercise) => void }, //callBack method to modify current routine
-  SelectExerciseCategory: { updateRoutineExercises: (newExercise: Exercise) => void },
+  SelectExerciseCategory: { 
+    updateRoutineExercises?: (newExercise: Exercise) => void;
+    updateWorkoutSessionExercises?: (newExercise: Exercise) => void;
+    currWorkoutSession?: WorkoutSession
+  }   
   ChooseExerciseFromCategory: {
     category: ExerciseCategory;
     route: RouteProp<RootStackParamList, 'ChooseExerciseFromCategory'>;
-    updateRoutineExercises: (newExercise: Exercise) => void;
-    goBackToCreateRoutine: () => void;
+    updateRoutineExercises?: (newExercise: Exercise) => void;
+    currWorkoutSession?: WorkoutSession,
+    goBackToPreviousScreen: () => void;
+    goBackToCurrentWorkout?: (currWorkoutSession: WorkoutSession) => void;
   }, 
   ViewRoutine: undefined,   //Lists all routines saved by the user for them to choose from
   Routines: undefined,
   Profile: undefined,
   Log: undefined,
   LogScreen: undefined,
-  CurrentWorkoutSession: { routine: Routine }; //Starts a workout session based on the given routine
+  //Starts a workout session based on the given routine
+  CurrentWorkoutSession: { 
+    routine?: Routine,
+    currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
+   },
   ViewPastSession: {sessionId: number};
 };
 

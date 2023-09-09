@@ -5,6 +5,8 @@ import ViewRoutine from '../ViewRoutine';
 import CreateRoutine from '../CreateRoutine';
 import CurrentWorkoutSession from '../CurrentWorkoutSession';
 import CreateRoutineStack from './CreateRoutineStack';
+import ChooseExerciseFromCategory from '../ChooseExerciseFromCategory';
+import SelectExerciseCategory from '../SelectExerciseCategory';
 
 //Create Stack Navigator
 const Stack = createStackNavigator<RootStackParamList>();
@@ -17,6 +19,8 @@ const ViewRoutineStack = () => {
       <Stack.Screen name="ViewRoutine" component={ViewRoutine} options={{ headerShown: false }}/>
       <Stack.Screen name="CreateRoutine" component={CreateRoutineStack} options={{ headerShown: false }}/>
       <Stack.Screen name="CurrentWorkoutSession" component={CurrentWorkoutSession} options={{ headerShown: false }}/>
+      <Stack.Screen name="SelectExerciseCategory" component={SelectExerciseCategory} options={{ headerShown: false }}/>
+      <Stack.Screen name="ChooseExerciseFromCategory" component={ChooseExerciseFromCategory} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

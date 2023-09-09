@@ -1,36 +1,64 @@
-import { StyleSheet, View, Text, Animated, ScrollView, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { View, Text, Animated, TouchableOpacity, Alert, FlatList } from 'react-native';
 import { RootStackParamList } from '../../App';
 import ExerciseBox from '../Components/ExerciseBox';
 import {WorkoutSession, createWorkoutSession, storeSession, finalizeWorkoutSession} from '../Components/WorkoutSession';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useState } from 'react';
 import { styles } from '../Misc/ComponentStyles';
+import { Routine } from '../Components/AppComponents';
 
 //CurrentWorkout Screen Properties
 type CurrentWorkoutSessionProps = {
   navigation: StackNavigationProp<RootStackParamList, 'CurrentWorkoutSession', 'ViewRoutine'>;
-  route: RouteProp<RootStackParamList, 'CurrentWorkoutSession'>;
+  route: {
+    params: {
+      routine?: Routine,
+      currWorkoutSession?: WorkoutSession
+    };
+  };
 };
 
 //Define CurrentWorkoutSession component
 const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps) => {
 
   //1) Screen Attributes
-  const { routine: chosenRoutine } = route.params; // Extract the routine parameter
+  const { routine, currWorkoutSession } = route.params;
+  const initialWorkoutSession = currWorkoutSession ? currWorkoutSession : createWorkoutSession(route.params?.routine as Routine); 
+  const [routineLoaded, setRoutineLoaded] = useState<boolean>(false);
 
   //2) Create the workoutSession data using the methods
   const [workoutSession, setWorkoutSession] = useState<WorkoutSession>(
-    createWorkoutSession(chosenRoutine)
+    initialWorkoutSession
   );
+
+  useFocusEffect(() => {
+    // Load the routine only if it hasn't been loaded yet
+    if (!routineLoaded) {
+      // Initialize routine here if it's not available
+      // For example, you can fetch it from storage or wherever it's stored
+      setRoutineLoaded(true); // Mark the routine as loaded
+    }
+    
+    if (currWorkoutSession) {
+      setWorkoutSession(currWorkoutSession);
+    }
+  },);
+
+  // Opens the page towards the ExerciseCategory to choose a new Exercise from
+  const handleAddExercise = () => {
+    navigation.navigate('SelectExerciseCategory', {
+      currWorkoutSession: workoutSession,
+    });
+  };
 
   //Define a function to handle finishing the workout session
   const handleFinishWorkout = () => {
-    console.log(workoutSession);
+
     if (workoutSession) {
       // Update the workoutSession with endTime and duration
       const finalizedSession = finalizeWorkoutSession(workoutSession);
-
+ 
       // Store the updated session
       storeSession(finalizedSession);
     }
@@ -41,7 +69,7 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
 
   return (
     <FlatList
-      data={workoutSession.routine ? workoutSession.routine.exercises : []}
+      data={workoutSession.routine ? workoutSession.exercises : []}
       style={styles.scrollViewContainer}
       renderItem={({ item }) => (
         <ExerciseBox
@@ -60,7 +88,7 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
             <View style={styles.underline}></View>
             <View style={styles.currentWorkoutHeader}>
               <TouchableOpacity style={styles.finishButtonCurrentWorkout}>
-                <Text style={styles.headerTextCurrentWorkout}>+</Text>
+                <Text style={styles.headerTextCurrentWorkout} onPress={handleAddExercise}>+</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.finishButtonCurrentWorkout} onPress={handleFinishWorkout}>
                 <Text style={styles.headerTextCurrentWorkout}>Finish</Text>

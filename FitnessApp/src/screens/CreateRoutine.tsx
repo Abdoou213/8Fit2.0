@@ -7,37 +7,13 @@ import CreateExercise from './CreateExercise';
 
 //Creates the current routine
 const CreateRoutine = ({ navigation }: Props) => {
-  console.log('ROUTINEZ')
   const [routineName, setRoutineName] = useState('');
-  const [exerciseName, setExerciseName] = useState('');
-  const [setsCount, setSetsCount] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>([]);
 
   //Callback function to update routineExercises
   const updateRoutineExercises = (newExercise: Exercise) => {
       setExercises([...exercises, newExercise]);
     };
-
-  //Adds an exercise to a routine (OBSOLETE GARDER POUR VOIR SI UTILISABLE PAR ADD EXERCISE DURING WORKOUT)
-  /*const handleAddExercise = () => {
-
-    //Create the new Exercise object
-    const newExercise: Exercise = {
-      name: exerciseName,
-      //Creates the array of sets
-      sets: Array.from({ length: parseInt(setsCount) }, (_, index) => ({
-        setNum: index + 1,
-        weight: 0,
-        reps: 0,
-      })),
-      setsCount: parseInt(setsCount),
-    };
-
-    //Update with hooks
-    setExercises([...exercises, newExercise]);
-    setExerciseName('');
-    setSetsCount('');
-  };*/
 
   //Saves the current routine
   const handleSaveRoutine = async () => {

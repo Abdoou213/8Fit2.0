@@ -17,8 +17,8 @@ const CreateRoutineStack = () => {
     <Stack.Navigator initialRouteName="CreateRoutine" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="CreateRoutine" component={CreateRoutine} />
       <Stack.Screen name="CreateExercise" component={CreateExercise} />
-      <Stack.Screen name="SelectExerciseCategory" component={SelectExerciseCategory} />
-      <Stack.Screen name="ChooseExerciseFromCategory" component={ChooseExerciseFromCategory} />
+      <Stack.Screen name="SelectExerciseCategory" component={SelectExerciseCategory} options={{ headerShown: false }}/>
+      <Stack.Screen name="ChooseExerciseFromCategory" component={ChooseExerciseFromCategory} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 };

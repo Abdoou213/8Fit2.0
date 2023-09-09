@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
 import { styles } from '../Misc/ComponentStyles';
 import { Exercise, ExerciseCategory, loadExerciseCategories } from '../Components/AppComponents';
@@ -24,6 +24,18 @@ const CreateExercise = ({ route, navigation }: CreateExerciseProps) => {
 
     // Receive the callback function from the route params
     const { updateRoutineExercises } = route.params;
+
+    // Function to check if an exercise with the same name exists
+    const checkIfExerciseExists = (exerciseName: string) => {
+      for (const category of categories) {
+        for (const exercise of category.exerciseList) {
+          if (exercise.name === exerciseName) {
+            return true; // Exercise with the same name found
+          }
+        }
+      }
+      return false; // No exercise with the same name found
+    };
     
     //Load all ExerciseCategory objects, used to validate that current exercise does not already exist
     useEffect(() => {
@@ -64,6 +76,13 @@ const CreateExercise = ({ route, navigation }: CreateExerciseProps) => {
         // Handle the case where no target category is selected
         return;
       }
+
+      // Check if an exercise with the same name exists
+    if (checkIfExerciseExists(exerciseName)) {
+      // An exercise with the same name already exists, show an alert
+      Alert.alert('Exercise Already Exists', 'An exercise with the same name already exists. Please enter a different one.');
+      return;
+    }
   
       // Create the new Exercise object
       const newExercise: Exercise = {

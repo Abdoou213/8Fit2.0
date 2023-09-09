@@ -3,12 +3,14 @@ import { View, Text, TextInput, TouchableOpacity, Alert, FlatList, Animated } fr
 import { styles } from '../Misc/ComponentStyles';
 import { Props, Routine, Exercise, Set, generateRandomId, ExerciseCategory, loadExerciseCategories } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { WorkoutSession } from '../Components/WorkoutSession';
 
 type SelectCategoryProps = {
   navigation: any; // The navigation prop used for screen navigation
   route: {
     params: {
-      updateRoutineExercises: (newExercise: Exercise) => void; // Callback function to update routineExercises
+      updateRoutineExercises?: (newExercise: Exercise) => void; // Callback function to update routineExercises
+      currWorkoutSession?: WorkoutSession;
     };
   };
 };
@@ -17,7 +19,7 @@ const SelectExerciseCategory = ({ route, navigation }: SelectCategoryProps) => {
 
     //List of saved exercise categories
     const [categories, setCategories] = useState<ExerciseCategory[]>([]);
-    const { updateRoutineExercises } = route.params;
+    const { currWorkoutSession, updateRoutineExercises } = route.params;
 
     //Loads all existing ExerciseCategory objects upon loading page
     useEffect(() => {
@@ -38,19 +40,33 @@ const SelectExerciseCategory = ({ route, navigation }: SelectCategoryProps) => {
     const goBackToCreateRoutine = () => {
       navigation.navigate('CreateRoutine');
     };
+
+    const goBackToCurrentWorkout = (currWorkoutSession: WorkoutSession) => {
+      navigation.navigate('CurrentWorkoutSession', {currWorkoutSession: currWorkoutSession});
+    };
     
     const handleAddExerciseToRoutine = (category: ExerciseCategory) => {
       console.log('handlu')
-      console.log(category)
-      console.log(updateRoutineExercises)
+      console.log('ORAAAAAAAAA')
+      console.log(currWorkoutSession)
+      console.log('SESSIONUSEZ')
       console.log(goBackToCreateRoutine)
-      navigation.navigate('ChooseExerciseFromCategory', {
-        category: category,
-        updateRoutineExercises: updateRoutineExercises,
-        goBackToCreateRoutine: goBackToCreateRoutine
-      });
+      if(updateRoutineExercises){
+        navigation.navigate('ChooseExerciseFromCategory', {
+          category: category,
+          updateRoutineExercises: updateRoutineExercises,
+          goBackToPreviousScreen: goBackToCreateRoutine
+        });
+      }
+
+      if(currWorkoutSession){
+        navigation.navigate('ChooseExerciseFromCategory', {
+          category: category,
+          currWorkoutSession: currWorkoutSession,
+          goBackToCurrentWorkout: goBackToCurrentWorkout
+        });
     }
-    
+  }
 
     return (
       <FlatList
@@ -72,12 +88,16 @@ const SelectExerciseCategory = ({ route, navigation }: SelectCategoryProps) => {
         }
         data={categories}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            //style={styles.exerciseItem}
-            onPress={() => {handleAddExerciseToRoutine(item)}}
-          >
-            <Text style={styles.headerRowsDatePastSession}>{item.name}</Text>
-          </TouchableOpacity>
+          <View>
+            <View style={styles.underline}></View>
+            <TouchableOpacity
+              onPress={() => {handleAddExerciseToRoutine(item)}}
+            >
+              <Text style={styles.headerRowsDatePastSession}>{item.name}</Text>
+            </TouchableOpacity>
+            <View style={styles.underline}></View>
+          </View>
+          
         )}
         keyExtractor={(item) => item.name}
       />

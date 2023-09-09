@@ -64,7 +64,7 @@ const ViewRoutine = ({ navigation }: Props) => {
   try {
     // Check if the initialization flag is set in AsyncStorage
     const isInitialized = await AsyncStorage.getItem('exerciseCategoriesInitialized');
-    console.log('INITIALIZEDDDDDDDDD')
+
     if (!isInitialized) {
       // Initialize default exercise categories
       const defaultCategories = [
@@ -89,7 +89,6 @@ const ViewRoutine = ({ navigation }: Props) => {
 };
 
   useEffect(() => {
-    console.log('ZOINKS');
     initializeExerciseCategories();
     const unsubscribe = navigation.addListener('focus', async () => {
       const routinesFromStorage = await fetchAllRoutines();
