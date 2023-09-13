@@ -17,7 +17,7 @@ const ViewRoutineStack = () => {
     <Stack.Navigator>
         {/* Define the screens for the View Routine Stack Navigator */}
       <Stack.Screen name="ViewRoutine" component={ViewRoutine} options={{ headerShown: false }}/>
-      <Stack.Screen name="CreateRoutine" component={CreateRoutineStack} options={{ headerShown: false }}/>
+      <Stack.Screen name="CreateRoutineStack" component={CreateRoutineStack} options={{ headerShown: false }}/>
       <Stack.Screen name="CurrentWorkoutSession" component={CurrentWorkoutSession} options={{ headerShown: false }}/>
       <Stack.Screen name="SelectExerciseCategory" component={SelectExerciseCategory} options={{ headerShown: false }}/>
       <Stack.Screen name="ChooseExerciseFromCategory" component={ChooseExerciseFromCategory} options={{ headerShown: false }} />

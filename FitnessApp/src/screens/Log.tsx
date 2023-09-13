@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import {Text, View, ScrollView, RefreshControl, TouchableOpacity} from 'react-native';
+import {Text, View, ScrollView, RefreshControl, TouchableOpacity, Alert } from 'react-native';
 import { WorkoutSession, fetchAllSessions, handleDeleteAllSessions } from '../Components/WorkoutSession';
-import {styles} from '../Misc/ComponentStyles';
-import { Props } from '../Components/AppComponents';
+import { styles } from '../Misc/ComponentStyles';
+import {  Props } from '../Components/AppComponents';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Define Log component
 const LogScreen = ({ navigation }: Props) => {
@@ -14,7 +15,7 @@ const LogScreen = ({ navigation }: Props) => {
   const [refreshing, setRefreshing] = useState(false);                              //useState if page is being refreshed or not
 
   //Navigates to the ViewPastSession page upon clicking on a session.
-  const handleViewPastSession = useCallback(   
+  const handleViewPastSession = useCallback(
     (sessionId: number) => {
         setSelectedSessionId(sessionId);
         navigation.navigate('ViewPastSession', { sessionId });
@@ -29,6 +30,70 @@ const LogScreen = ({ navigation }: Props) => {
       setSessions(sessionsFromStorage);
     }
   };
+
+  // Function to delete a single WorkoutSession
+const deleteWorkoutSession = async (sessionToDelete: WorkoutSession) => {
+  try {
+    // Display a confirmation pop-up to confirm the deletion, do nothing if User cancels
+    Alert.alert(
+      'Confirm Deletion',
+      `Are you sure you want to delete the '${sessionToDelete.name}' workout session from '${sessionToDelete.startTimeString}'?`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {
+            // User canceled, do nothing
+            console.log('Deletion canceled.');
+          },
+          style: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          onPress: async () => {
+            // User confirmed, proceed with deletion
+            const allSessions = await fetchAllSessions();
+
+            // Find the index of the session to delete
+            const indexToDelete = allSessions.findIndex(
+              (session: WorkoutSession) =>
+                session.startTime === sessionToDelete.startTime
+            );
+
+            if (indexToDelete !== -1) {
+              allSessions.splice(indexToDelete, 1);
+
+              // Update the stored sessions without the deleted session
+              await AsyncStorage.setItem(
+                'sessions',
+                JSON.stringify(allSessions)
+              );
+
+              setSessions(allSessions);
+
+              console.log(
+                `Workout session from ${sessionToDelete.startTimeString} deleted.`
+              );
+            } else {
+              console.log(
+                `Workout session from ${sessionToDelete.startTimeString} not found.`
+              );
+            }
+          },
+          style: 'destructive',
+        },
+      ]
+    );
+   
+  } catch (error) {
+    console.log('Error deleting workout session from AsyncStorage:', error);
+  }
+};
+
+    //Async method to fetch all saved sessions to display on the screen.
+    const handleDeleteSsession = async (session: WorkoutSession) => {
+      deleteWorkoutSession(session);
+      await fetchSessions();
+    };
 
   //Handles the refreshing of the list of sessions to be displayed when the user scrolls up.
   const onRefresh = async () => {
@@ -52,23 +117,34 @@ const LogScreen = ({ navigation }: Props) => {
     <ScrollView style={styles.scrollViewContainer}
     refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
 
-      <View style={styles.headerContainer}>
-        <Text style={styles.logHeaderTitle}>Log</Text>
-        <View style={styles.underline}></View>
+      <View style={styles.headerContainer}>        
+      <Text style={styles.logHeaderTitle}>Log</Text>
         <TouchableOpacity
             style={styles.deleteRoutinesButton}
             onPress={handleDeleteAllSessions}>
-            <Text style={styles.deleteRoutinesButtonText}>Delete All Sessions</Text>
+            <Text style={styles.closeButtonTextViewPastSession}>Delete All</Text>
         </TouchableOpacity>
+        <View style={styles.underline}></View>
       </View>
 
-      {sessions.map((session, id) => (      
+      {sessions.map((session, id) => (  
+            
               <TouchableOpacity
                 key={session.id}
                 style={[styles.viewRoutineroutineBox, selectedSessionId === id && styles.selectedRoutineBox]}
                 onPress={() => {handleViewPastSession(session.id)}}
               >
-              <Text style={styles.routineName}>{session.name}</Text>
+
+              <View style={styles.deleteRoutineButtonContainer}>
+                <Text style={styles.routineName}>{session.name}</Text>
+                <TouchableOpacity
+                  onPress={() => handleDeleteSsession(session)}
+                  style={styles.closeButtonViewPastSession}
+                >
+                  <Text style={styles.closeButtonTextViewPastSession}>X</Text>
+                </TouchableOpacity>
+              </View>
+
               <View style={styles.underline}></View>
               <Text style={styles.setInfo}>{session.duration} minutes </Text>
               <View style={styles.exerciseList}>

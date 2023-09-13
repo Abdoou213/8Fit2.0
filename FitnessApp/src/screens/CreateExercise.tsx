@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
 import { styles } from '../Misc/ComponentStyles';
-import { Exercise, ExerciseCategory, loadExerciseCategories } from '../Components/AppComponents';
+import { ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
+import { Exercise } from '../Components/Exercise';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type CreateExerciseProps = {

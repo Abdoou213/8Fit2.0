@@ -20,7 +20,6 @@ async function fetchAllRoutines() {
     const routines = routinesJson != null ? JSON.parse(routinesJson) : [];
     console.log('Fetch all routines', routines);
     return routines;
-    console.log('', routines);
   } catch (error) {
     console.log('Error fetching routines from async storage:', error);
     return [];
@@ -35,7 +34,6 @@ const ViewRoutine = ({ navigation }: Props) => {
 
   //Detects which Routine was selected
   const handleRoutinePress = (index: number) => {
-    console.log(index)
     setSelectedRoutineIndex(index);
   };
 
@@ -53,7 +51,8 @@ async function deleteRoutine(routineToDelete: Routine) {
           onPress: async () => {
             // User confirmed, proceed with deletion
             const allRoutines = await fetchAllRoutines();
-
+            
+            //Routine index in list of 
             const indexToDelete = allRoutines.findIndex(
               (routine: Routine) => routine.name === routineToDelete.name
             );
@@ -146,7 +145,7 @@ async function deleteRoutine(routineToDelete: Routine) {
           <Text style={styles.createRoutineExercisesListLabel}>No routines found.</Text>
           <TouchableOpacity
             style={styles.createRoutineButton}
-            onPress={() => navigation.navigate('CreateRoutine')}
+            onPress={() => navigation.navigate('CreateRoutineStack')}
           >
             <Text style={styles.createRoutineButtonText}>Create a new Routine</Text>
           </TouchableOpacity>
@@ -189,7 +188,7 @@ async function deleteRoutine(routineToDelete: Routine) {
           ))}
           <TouchableOpacity
             style={styles.createRoutineButton}
-            onPress={() => navigation.navigate('CreateRoutine')}
+            onPress={() => navigation.navigate('CreateRoutineStack')}
           >
             <Text style={styles.createRoutineButtonText}>Create a new Routine</Text>
           </TouchableOpacity>

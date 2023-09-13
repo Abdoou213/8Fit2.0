@@ -17,6 +17,7 @@ const logName = 'Log';
 //Define the type of the routes
 export type RootStackParamList = {
   CreateRoutine: undefined, //Allows the user to name a new routine and add a given number of exercises to it
+  CreateRoutineStack:undefined, //Navigator Stack for Routine creation
   CreateExercise: { updateRoutineExercises: (newExercise: Exercise) => void }, //callBack method to modify current routine
   SelectExerciseCategory: { 
     updateRoutineExercises?: (newExercise: Exercise) => void;
@@ -30,7 +31,8 @@ export type RootStackParamList = {
     currWorkoutSession?: WorkoutSession,
     goBackToPreviousScreen: () => void;
     goBackToCurrentWorkout?: (currWorkoutSession: WorkoutSession) => void;
-  }, 
+  },
+  SelectExerciseStack: undefined, //Navigator Stack to select an exercise.
   ViewRoutine: undefined,   //Lists all routines saved by the user for them to choose from
   Routines: undefined,
   Profile: undefined,

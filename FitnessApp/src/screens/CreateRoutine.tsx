@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
 import { styles } from '../Misc/ComponentStyles';
-import { Props, Routine, Exercise, Set, generateRandomId } from '../Components/AppComponents';
+import { Props, Routine, generateRandomId } from '../Components/AppComponents';
+import { Exercise } from '../Components/Exercise';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CreateExercise from './CreateExercise';
 

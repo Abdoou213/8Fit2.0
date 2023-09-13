@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Animated } from 'react-native';
 import { styles } from '../Misc/ComponentStyles';
-import { Exercise, ExerciseCategory } from '../Components/AppComponents';
-import { RouteProp, useNavigation } from '@react-navigation/native';
-
-// ... Rest of your imports ...
-import { RootStackParamList } from '../../App';
+import { Exercise } from '../Components/Exercise';
+import { ExerciseCategory } from '../Components/ExerciseCategory';
+import { useNavigation } from '@react-navigation/native';
 import { WorkoutSession } from '../Components/WorkoutSession';
 
 export type ChooseExerciseFromCategoryProps = {
@@ -44,11 +42,6 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
   // Function to handle adding an exercise to the routine and calling the callback
   const handleAddExerciseToRoutine = (newExercise: Exercise) => {
     // Check if updateRoutineExercises is defined, use it if available
-    console.log('CHOOOOOOSUUUU')
-    console.log(updateRoutineExercises)
-    console.log(currWorkoutSession)
-    console.log(goBackToCurrentWorkout)
-
     if (updateRoutineExercises) {
       updateRoutineExercises(newExercise);
       goBackToPreviousScreen();
@@ -56,13 +49,11 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
 
     // If not, check if updateWorkoutSessionExercises is defined and use it
     if (currWorkoutSession && goBackToCurrentWorkout) {
-      console.log('KAIZOKUO NINARU OTOKODA')
       //updateWorkoutSessionExercises(newExercise);
       const updatedWorkoutSession = {
         ...currWorkoutSession,
         exercises: [...currWorkoutSession.exercises, newExercise],
       };
-      console.log(updatedWorkoutSession)
       goBackToCurrentWorkout(updatedWorkoutSession)
     }
 

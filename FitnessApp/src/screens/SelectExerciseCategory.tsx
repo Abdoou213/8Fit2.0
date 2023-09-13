@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, FlatList, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Animated } from 'react-native';
 import { styles } from '../Misc/ComponentStyles';
-import { Props, Routine, Exercise, Set, generateRandomId, ExerciseCategory, loadExerciseCategories } from '../Components/AppComponents';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Exercise } from '../Components/Exercise';
+import {ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
 import { WorkoutSession } from '../Components/WorkoutSession';
 
 type SelectCategoryProps = {
@@ -46,11 +46,6 @@ const SelectExerciseCategory = ({ route, navigation }: SelectCategoryProps) => {
     };
     
     const handleAddExerciseToRoutine = (category: ExerciseCategory) => {
-      console.log('handlu')
-      console.log('ORAAAAAAAAA')
-      console.log(currWorkoutSession)
-      console.log('SESSIONUSEZ')
-      console.log(goBackToCreateRoutine)
       if(updateRoutineExercises){
         navigation.navigate('ChooseExerciseFromCategory', {
           category: category,

@@ -1,7 +1,8 @@
 import { styles } from '../Misc/ComponentStyles';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import {WorkoutSession} from './WorkoutSession';
-import {Exercise, Set, generateRandomId} from './AppComponents';
+import { Set, generateRandomId} from './AppComponents';
+import {Exercise } from './Exercise';
 import { useState } from 'react';
 
 //Interface of exercise box parameters
