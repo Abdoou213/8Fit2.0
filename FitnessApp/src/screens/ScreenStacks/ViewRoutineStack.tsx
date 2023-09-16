@@ -2,9 +2,10 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../App';
 import ViewRoutine from '../ViewRoutine';
-import CreateRoutine from '../CreateRoutine';
+//import CreateRoutine from '../CreateRoutine';
 import CurrentWorkoutSession from '../CurrentWorkoutSession';
 import CreateRoutineStack from './CreateRoutineStack';
+
 import ChooseExerciseFromCategory from '../ChooseExerciseFromCategory';
 import SelectExerciseCategory from '../SelectExerciseCategory';
 

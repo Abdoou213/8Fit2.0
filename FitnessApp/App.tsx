@@ -3,10 +3,12 @@ import 'react-native-gesture-handler';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import LogScreenStack from './src/Screens/ScreenStacks/LogScreenStack';
-import Profile from './src/Screens/Profile';
-import ViewRoutineStack from './src/Screens/ScreenStacks/ViewRoutineStack';
-import { Exercise, ExerciseCategory, Routine } from './src/Components/AppComponents';
+import LogScreenStack from './src/screens/ScreenStacks/LogScreenStack';
+import Profile from './src/screens/Profile';
+import ViewRoutineStack from './src/screens/ScreenStacks/ViewRoutineStack';
+import { Routine } from './src/Components/AppComponents';
+import { Exercise } from './src/Components/Exercise';
+import { ExerciseCategory } from './src/Components/ExerciseCategory';
 import { WorkoutSession } from './src/Components/WorkoutSession';
 
 //Set page

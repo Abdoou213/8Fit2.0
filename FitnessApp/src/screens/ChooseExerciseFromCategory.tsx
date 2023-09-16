@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Animated, Alert } from 'react-native';
 import { styles } from '../Misc/ComponentStyles';
-import { Exercise } from '../Components/Exercise';
-import { ExerciseCategory } from '../Components/ExerciseCategory';
+import { Exercise, loadAllCategoryExercises, updateExerciseCategories } from '../Components/Exercise';
+import { ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
 import { useNavigation } from '@react-navigation/native';
 import { WorkoutSession } from '../Components/WorkoutSession';
 
@@ -27,6 +27,7 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
   const exerciseCategory: ExerciseCategory = route.params?.category;
   // Initialize the exercises state with the exerciseList from exerciseCategory
   const [exercises, setExercises] = useState<Exercise[]>(exerciseCategory.exerciseList);
+  const [categories, setCategories] = useState<ExerciseCategory[]>([]);
 
   // Access the updateRoutineExercises function from the navigation params
   const updateRoutineExercises = route.params?.updateRoutineExercises;
@@ -37,6 +38,18 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
   // Initializes the list of exercises within the ExerciseCategory upon loading the page
   useEffect(() => {
     setExercises(exerciseCategory.exerciseList);
+    //Load Exercise categories in case an exercise is deleted.
+    const loadCategories = async () => {
+      try {
+        const loadedCategories = await loadExerciseCategories();
+        setCategories(loadedCategories);
+      } catch (error) {
+        // Handle errors
+        console.error('Error loading exercise categories:', error);
+      }
+    };
+  
+    loadCategories(); // Call the async function to load exercise categories
   }, [exerciseCategory]);
 
   // Function to handle adding an exercise to the routine and calling the callback
@@ -49,16 +62,72 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
 
     // If not, check if updateWorkoutSessionExercises is defined and use it
     if (currWorkoutSession && goBackToCurrentWorkout) {
-      //updateWorkoutSessionExercises(newExercise);
       const updatedWorkoutSession = {
         ...currWorkoutSession,
         exercises: [...currWorkoutSession.exercises, newExercise],
       };
       goBackToCurrentWorkout(updatedWorkoutSession)
     }
-
-    
   };
+
+  // Function to delete a single exercise from a category upon confirmation
+  async function deleteExerciseFromCategory(exerciseToDelete: Exercise) {
+    try {
+      // Display a confirmation pop-up to confirm the deletion, do nothing if User cancels
+      Alert.alert(
+        'Confirm Deletion',
+        `Are you sure you want to delete "${exerciseToDelete.name}" from this category?`,
+        [
+          {
+            text: 'Cancel',
+            onPress: () => {
+              // User canceled, do nothing
+              console.log('Deletion canceled.');
+            },
+            style: 'cancel',
+          },
+          {
+            text: 'Confirm',
+            onPress: async () => {
+              // Fetch all exercises from AsyncStorage
+              const allExercises = await loadAllCategoryExercises(exerciseCategory);
+  
+              // Find the index of the exercise to delete
+              const indexToDelete = allExercises.findIndex(
+                (exercise: Exercise) => exercise.name === exerciseToDelete.name
+              );
+  
+              if (indexToDelete !== -1) {
+                allExercises.splice(indexToDelete, 1);
+  
+                // Update the stored exercises within the category without the deleted exercise
+                exerciseCategory.exerciseList = allExercises;
+              
+                // Update all categories with the updated exerciseCategory
+                const updatedCategories = categories.map((category) => {
+                  if (category.categoryId === exerciseCategory.categoryId) {
+                    return exerciseCategory;
+                  }
+                  return category;
+                });
+
+                //Update all categories
+                await updateExerciseCategories(updatedCategories);
+
+                console.log(`Exercise "${exerciseToDelete.name}" deleted from category.`);
+                setExercises(allExercises);
+              } else {
+                console.log(`Exercise "${exerciseToDelete.name}" not found in category.`);
+              }
+            },
+            style: 'destructive',
+          },
+        ]
+      );
+    } catch (error) {
+      console.log('Error deleting exercise from category:', error);
+    }
+  }
 
     return (
       <FlatList
@@ -82,11 +151,18 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
         renderItem={({ item }) => (
           <View>
               <View style={styles.underline}></View>
-              <TouchableOpacity
-                onPress={() => {handleAddExerciseToRoutine(item)}}
-              >
-                <Text style={styles.headerRowsDatePastSession}>{item.name}</Text>
-              </TouchableOpacity>
+              <View style={styles.itemContainer}>
+                <TouchableOpacity
+                  onPress={() => {handleAddExerciseToRoutine(item)}}
+                >
+                  <Text style={styles.chooseExerciseBox}>{item.name}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => { deleteExerciseFromCategory(item) }}
+                  >
+                    <Text style={styles.closeButtonTextViewPastSession}>X</Text>
+                </TouchableOpacity>
+              </View>
               <View style={styles.underline}></View>
           </View>
           

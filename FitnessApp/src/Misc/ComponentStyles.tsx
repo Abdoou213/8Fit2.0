@@ -342,5 +342,39 @@ export const styles = StyleSheet.create({
         justifyContent: "space-around",
         marginBottom: 20,
         marginTop: 20
-      }
+      },
+      //ChooseExerciseFromCategory
+      deleteButtonContainer: {
+        paddingHorizontal: 8, // Adjust horizontal padding as needed
+      },
+      deleteButtonText: {
+        fontSize: 18, // Adjust the font size as needed
+        color: 'red', // Customize the color as needed
+        // Add any other styles you want for the "X" button text
+      },
+      viewContainer: {
+        flexDirection: 'row', // Arrange children horizontally
+        justifyContent: 'space-between', // Space evenly between children
+        alignItems: 'center', // Center vertically
+        borderBottomWidth: 1, // Add the underline
+        borderBottomColor: 'gray', // Underline color
+        paddingVertical: 8, // Adjust vertical padding as needed
+      },
+      itemContainer: {
+        flexDirection: 'row', // Arrange children horizontally
+        justifyContent: 'space-between', // Put space between children (1st left, 2nd right)
+        alignItems: 'center', // Center vertically
+        borderBottomWidth: 1, // Add the underline
+        borderBottomColor: 'gray', // Underline color
+        paddingVertical: 8, // Adjust vertical padding as needed
+      },
+      chooseExerciseBox: {
+        height: 30,
+        width: '100%',
+        color: '#fff',
+        paddingLeft: 10,
+        fontSize: 18,
+        marginBottom: 5,
+       // flex: 1,
+      },
 });

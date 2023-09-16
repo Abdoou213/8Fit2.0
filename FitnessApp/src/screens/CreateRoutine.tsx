@@ -4,7 +4,6 @@ import { styles } from '../Misc/ComponentStyles';
 import { Props, Routine, generateRandomId } from '../Components/AppComponents';
 import { Exercise } from '../Components/Exercise';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CreateExercise from './CreateExercise';
 
 //Creates the current routine
 const CreateRoutine = ({ navigation }: Props) => {

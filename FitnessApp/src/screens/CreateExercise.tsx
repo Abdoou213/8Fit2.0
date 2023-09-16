@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
 import { styles } from '../Misc/ComponentStyles';
 import { ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
-import { Exercise } from '../Components/Exercise';
+import { Exercise, updateExerciseCategories } from '../Components/Exercise';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type CreateExerciseProps = {
@@ -52,21 +52,6 @@ const CreateExercise = ({ route, navigation }: CreateExerciseProps) => {
     
       loadCategories(); // Call the async function to load exercise categories
     }, []);
-
-    const updateExerciseCategories = async (updatedCategories: ExerciseCategory[]) => {
-      try {
-        // Convert the updated categories to JSON string
-        const updatedCategoriesJSON = JSON.stringify(updatedCategories);
-    
-        // Update the ExerciseCategories in AsyncStorage
-        await AsyncStorage.setItem('exerciseCategories', updatedCategoriesJSON);
-        
-        console.log('ADDED EXERCISE')
-      } catch (error) {
-        // Handle errors here
-        console.error('Error updating exercise categories:', error);
-      }
-    };
 
     //Adds an exercise to the current routine
     const handleCreateExercise = async () => {

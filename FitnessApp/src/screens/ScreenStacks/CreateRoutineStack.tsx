@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../App';
 import CreateRoutine from '../CreateRoutine';
 import CreateExercise from '../CreateExercise';
-import ChooseExerciseFromCategory from '../ChooseExerciseFromCategory';
+import ChooseExerciseFromCategory from "../ChooseExerciseFromCategory";
 import SelectExerciseCategory from '../SelectExerciseCategory';
 
 //Create Stack Navigator
