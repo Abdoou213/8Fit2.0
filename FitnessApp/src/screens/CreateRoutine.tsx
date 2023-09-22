@@ -22,7 +22,6 @@ const CreateRoutine = ({ navigation }: Props) => {
     try {
       const existingRoutines = await AsyncStorage.getItem('routines');
       const parsedRoutines = existingRoutines ? JSON.parse(existingRoutines) : [];
-
       const routineExists = parsedRoutines.some((routine: Routine) => routine.name === routineName);
 
       //Block in case of duplicating routine
@@ -30,7 +29,6 @@ const CreateRoutine = ({ navigation }: Props) => {
         Alert.alert('Routine name already exists');
         return;
       }
-
       const updatedRoutines = [...parsedRoutines, newRoutine];
       await AsyncStorage.setItem('routines', JSON.stringify(updatedRoutines));
       console.log('Routine saved successfully:', newRoutine);
