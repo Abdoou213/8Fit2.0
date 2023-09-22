@@ -16,7 +16,6 @@ export type Exercise = {
   
       // Update the ExerciseCategories in AsyncStorage
       await AsyncStorage.setItem('exerciseCategories', updatedCategoriesJSON);
-      console.log(updatedCategories)
       console.log('ADDED EXERCISE')
     } catch (error) {
       // Handle errors here
@@ -60,21 +59,4 @@ export type Exercise = {
       return [];
     }
   };
- /* export const fetchAllExercises = async (): Promise<Exercise[]> => {
-    try {
-      const exercisesJson = await AsyncStorage.getItem('exercises');
-      console.log(exercisesJson);
-      if (exercisesJson) {
-        // Parse the exercises from JSON
-        const parsedExercises: Exercise[] = JSON.parse(exercisesJson);
-        
-        return parsedExercises;
-      } else {
-        return [];
-      }
-    } catch (e) {
-      console.error('Error fetching exercises:', e);
-      return [];
-    }
-  };*/
       

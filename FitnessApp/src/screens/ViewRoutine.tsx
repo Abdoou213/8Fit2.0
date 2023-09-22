@@ -188,8 +188,7 @@ async function deleteRoutine(routineToDelete: Routine) {
           ))}
           <TouchableOpacity
             style={styles.createRoutineButton}
-            onPress={() => navigation.navigate('CreateRoutineStack')}
-          >
+            onPress={() => navigation.navigate('CreateRoutineStack')}>
             <Text style={styles.createRoutineButtonText}>Create a new Routine</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -203,12 +202,6 @@ async function deleteRoutine(routineToDelete: Routine) {
             <Text style={styles.currentWorkoutButtonText}>Start Workout</Text>
           </TouchableOpacity>
         )}
-        <TouchableOpacity
-          style={styles.deleteRoutinesButton}
-          onPress={handleDeleteAllRoutines}
-        >
-          <Text style={styles.deleteRoutinesButtonText}>Delete All Routines</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

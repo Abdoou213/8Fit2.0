@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import {Text, View, ScrollView, RefreshControl, TouchableOpacity, Alert } from 'react-native';
-import { WorkoutSession, fetchAllSessions, handleDeleteAllSessions } from '../Components/WorkoutSession';
+import { WorkoutSession, fetchAllSessions } from '../Components/WorkoutSession';
 import { styles } from '../Misc/ComponentStyles';
 import {  Props } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -118,12 +118,7 @@ const deleteWorkoutSession = async (sessionToDelete: WorkoutSession) => {
     refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
 
       <View style={styles.headerContainer}>        
-      <Text style={styles.logHeaderTitle}>Log</Text>
-        <TouchableOpacity
-            style={styles.deleteRoutinesButton}
-            onPress={handleDeleteAllSessions}>
-            <Text style={styles.closeButtonTextViewPastSession}>Delete All</Text>
-        </TouchableOpacity>
+        <Text style={styles.logHeaderTitle}>Log</Text>
         <View style={styles.underline}></View>
       </View>
 

@@ -90,13 +90,16 @@ export const styles = StyleSheet.create({
       currentWorkoutButton: {
         backgroundColor: '#76ab63',
         paddingVertical: 10,
+        alignItems: 'center',
         paddingHorizontal: 20,
         borderRadius: 8,
+        flex: 1
       },
       currentWorkoutButtonText: {
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 18,
+        alignItems: 'center'
       },
       screenListContainer: {
         padding: 20,
@@ -350,7 +353,6 @@ export const styles = StyleSheet.create({
       deleteButtonText: {
         fontSize: 18, // Adjust the font size as needed
         color: 'red', // Customize the color as needed
-        // Add any other styles you want for the "X" button text
       },
       viewContainer: {
         flexDirection: 'row', // Arrange children horizontally
@@ -375,6 +377,5 @@ export const styles = StyleSheet.create({
         paddingLeft: 10,
         fontSize: 18,
         marginBottom: 5,
-       // flex: 1,
       },
 });

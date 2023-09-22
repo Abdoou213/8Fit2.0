@@ -95,12 +95,12 @@ export const fetchAllSessions = async (): Promise<WorkoutSession[]> => {
 
 
 
-// Deletes all saved workout sessions from AsyncStorage
-export const handleDeleteAllSessions = async () => {
+// Deletes all saved workout sessions from AsyncStorage (NOT USED ANYMORE BUT KEEP AS ARCHVIE JUST IN CASE)
+/*export const handleDeleteAllSessions = async () => {
   try {
     await AsyncStorage.removeItem('sessions');
     console.log('All sessions deleted successfully!');
   } catch (e) {
     console.error('Error deleting sessions:', e);
   }
-};
+};*/
