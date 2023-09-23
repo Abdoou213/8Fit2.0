@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Animated,TouchableOpacity, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
-
 const CurrentWorkout = () => {
   const [data, setData] = useState([
     {
@@ -123,10 +122,7 @@ const ExerciseBox = ({ title, sets }: ExerciseBoxProps) => {
 
   return (
     <ScrollView  style={styles.container}>
-      <Animated.View 
-     //</ScrollView> style = {{transform:
-      //  [{translateY:translateY}]}}
-      >
+      <Animated.View>
       <View style={styles.textInputsContainerHeader}>
         <Text style={styles.headerRows}> Routine name </Text>
         <Text style={styles.headerRows}> Start Time: </Text>

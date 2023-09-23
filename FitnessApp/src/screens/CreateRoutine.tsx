@@ -1,52 +1,30 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
-import { Picker } from '@react-native-picker/picker'
+import React, { useCallback, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { styles } from '../Misc/ComponentStyles';
+import { Props, Routine, generateRandomId } from '../Components/AppComponents';
+import { Exercise } from '../Components/Exercise';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Routine, Exercise, Set } from './ViewRoutine';
 
-type Props = {
-  navigation: any;
-};
-
+//Creates the current routine
 const CreateRoutine = ({ navigation }: Props) => {
   const [routineName, setRoutineName] = useState('');
-  const [exerciseName, setExerciseName] = useState('');
-  const [setsCount, setSetsCount] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>([]);
 
-  const handleAddExercise = () => {
-    if (!exerciseName.trim() || !setsCount.trim()) {
-      Alert.alert('Please provide a name and number of sets for the exercise');
-      return;
-    }
-    if (exercises.length >= 25) {
-      Alert.alert('You cannot add more than 25 exercises to a routine');
-      return;
-    }
-    const newExercise: Exercise = {
-      name: exerciseName,
-      sets: [],
-      setsCount: parseInt(setsCount),
+  //Callback function to update routineExercises
+  const updateRoutineExercises = (newExercise: Exercise) => {
+      setExercises([...exercises, newExercise]);
     };
-    setExercises([...exercises, newExercise]);
-    setExerciseName('');
-    setSetsCount('');
-  };
 
+  //Saves the current routine
   const handleSaveRoutine = async () => {
-    if (!routineName.trim()) {
-      Alert.alert('Please provide a name for the routine');
-      return;
-    }
-    if (exercises.length === 0) {
-      Alert.alert('You cannot save a routine without exercises');
-      return;
-    }
-    const newRoutine: Routine = { name: routineName, exercises };
+
+    const newRoutine: Routine = { name: routineName, exercises, id: generateRandomId() };
     try {
       const existingRoutines = await AsyncStorage.getItem('routines');
       const parsedRoutines = existingRoutines ? JSON.parse(existingRoutines) : [];
       const routineExists = parsedRoutines.some((routine: Routine) => routine.name === routineName);
+
+      //Block in case of duplicating routine
       if (routineExists) {
         Alert.alert('Routine name already exists');
         return;
@@ -60,167 +38,56 @@ const CreateRoutine = ({ navigation }: Props) => {
     }
   };
 
+  //Handles leaving the current creation screen to return to the list of routines
   const handleCancel = () => {
     navigation.navigate('ViewRoutine');
   };
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Routine Name:</Text>
-        <TextInput style={styles.input} value={routineName} onChangeText={setRoutineName} />
-        <Text style={styles.label}>Exercise Name:</Text>
-        <TextInput style={styles.input} value={exerciseName} onChangeText={setExerciseName} />
-        <Text style={styles.label}>Number of Sets:</Text>
-        <View style={styles.input}>
-          <Picker
-            selectedValue={setsCount}
-            onValueChange={(value) => setSetsCount(value)}
-            prompt="Choose set count"
-          >
-            {[...Array(10)].map((_, index) => (
-              <Picker.Item key={index} label={(index + 1).toString()} value={(index + 1).toString()} />
-            ))}
-          </Picker>
+  const handleCreateExercise = () => {
+    navigation.navigate('CreateExercise', {
+      updateRoutineExercises, // Pass the callback function as a prop
+    });
+  };
 
-        </View>
-        <TouchableOpacity style={styles.addButton} onPress={handleAddExercise}>
-          <Text style={styles.buttonText}>Add Exercise</Text>
+  const handleSelectExercise = () => {
+    navigation.navigate('SelectExerciseCategory', {
+      updateRoutineExercises,
+    });
+  };
+
+  return (
+    <View style={styles.screenListContainer}>
+      
+      <View style={styles.inputContainer}>
+        <Text style={styles.setLabelCreate}>Routine Name:</Text>
+        <TextInput style={styles.input} value={routineName} onChangeText={setRoutineName} />
+        <TouchableOpacity style={styles.addButtonCreate} onPress={handleCreateExercise}>
+          <Text style={styles.buttonText}>Create Exercise</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.saveButton} onPress={handleSaveRoutine}>
-          <Text style={styles.buttonText}>Save Routine</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-          <Text style={styles.buttonText}>Cancel</Text>
-        </TouchableOpacity>
+        <TouchableOpacity style={styles.addButtonCreate} onPress={handleSelectExercise}>
+          <Text style={styles.buttonText}>Select Exercise</Text>
+        </TouchableOpacity>             
       </View>
-      {exercises.length > 0 ? (
-        <View style={styles.exercisesContainer}>
-          <Text style={styles.labelExercises}>Exercises:</Text>
-          <ScrollView style={styles.contentContainerStyle}>
-            {exercises.map((exercise, index) => (
-              <View key={index} style={styles.exercise}>
-                <Text style={styles.exerciseName}>{exercise.name}</Text>
-                <Text style={styles.setLabel}>Number of Sets: {exercise.setsCount}</Text>
-              </View>
-            ))}
-          </ScrollView>
-        </View>
-      ) : (
-        <View style={styles.exercisesContainer}>
-          <Text style={styles.labelExercises}>Exercises: </Text>
-          <Text style={styles.message}>No exercises added yet</Text>
+      <Text style={styles.createRoutineExercisesListLabel}>Exercises</Text>
+      <FlatList
+      data={exercises}
+      style={styles.screenListContainer}
+      renderItem={({ item }) => (
+        <View key={item.name} style={styles.exerciseCreate}>
+          <Text style={styles.createRoutineExerciseName}>{item.name}</Text>
+          <Text style={styles.setLabelCreate}>Number of Sets: {item.setsCount}</Text>
         </View>
       )}
+      keyExtractor={(item) => item.name}
+    />
+    <TouchableOpacity style={styles.saveButtonCreate} onPress={handleSaveRoutine}>
+      <Text style={styles.buttonText}>Save Routine</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.cancelButtonCreate} onPress={handleCancel}>
+          <Text style={styles.buttonText}>Cancel</Text>
+    </TouchableOpacity>  
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-  },
-  inputContainer: {
-    marginBottom: 16,
-  },
-  label: {
-    fontWeight: 'bold',
-    marginBottom: 8,
-    fontSize: 18,
-  },
-  labelExercises: {
-    fontWeight: 'bold',
-    marginBottom: 8,
-    fontSize: 18,
-  },
-  input: {
-    borderColor: '#999',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    marginBottom: 16,
-    fontSize: 18,
-  },
-  setsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  setsInputContainer: {
-    flex: 1,
-    marginRight: 8,
-  },
-  addButton: {
-    borderRadius: 10,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-    paddingVertical: 8,
-    marginBottom: 8,
-  },
-  saveButton: {
-    borderRadius: 10,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-    paddingVertical: 8,
-    marginBottom: 8,
-  },
-  cancelButton: {
-    borderRadius: 10,
-    backgroundColor: 'red',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-    paddingVertical: 8,
-    marginBottom: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  exercise: {
-    marginBottom: 16,
-  },
-  exerciseName: {
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  exerciseSet: {
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
-  setLabel: {
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  setValuesContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  setValueInput: {
-    borderColor: '#999',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    width: 50,
-    textAlign: 'center',
-    marginHorizontal: 4,
-  },
-  exercisesContainer: {
-    height: 200,
-  },
-  contentContainerStyle: {
-    flexGrow: 1,
-  },
-  message: {
-    fontStyle: 'italic',
-    color: '#999',
-    textAlign: 'center',
-    marginTop: 16,
-  },
-});
+
 export default CreateRoutine;

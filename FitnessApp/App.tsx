@@ -1,27 +1,51 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
-import Log from './src/screens/Log';
+import LogScreenStack from './src/screens/ScreenStacks/LogScreenStack';
 import Profile from './src/screens/Profile';
-import ViewRoutineStack from './src/screens/ViewRoutineStack';
+import ViewRoutineStack from './src/screens/ScreenStacks/ViewRoutineStack';
+import { Routine } from './src/Components/AppComponents';
+import { Exercise } from './src/Components/Exercise';
+import { ExerciseCategory } from './src/Components/ExerciseCategory';
+import { WorkoutSession } from './src/Components/WorkoutSession';
 
 //Set page
 const profileName = 'Profile';
-const viewRoutineName = 'Routine';
+const viewRoutineName = 'Routines';
 const logName = 'Log';
 
 //Define the type of the routes
 export type RootStackParamList = {
-  CreateRoutine: undefined,
-  ViewRoutine: undefined,
-  Routine: undefined,
+  CreateRoutine: undefined, //Allows the user to name a new routine and add a given number of exercises to it
+  CreateRoutineStack:undefined, //Navigator Stack for Routine creation
+  CreateExercise: { updateRoutineExercises: (newExercise: Exercise) => void }, //callBack method to modify current routine
+  SelectExerciseCategory: { 
+    updateRoutineExercises?: (newExercise: Exercise) => void;
+    updateWorkoutSessionExercises?: (newExercise: Exercise) => void;
+    currWorkoutSession?: WorkoutSession
+  }   
+  ChooseExerciseFromCategory: {
+    category: ExerciseCategory;
+    route: RouteProp<RootStackParamList, 'ChooseExerciseFromCategory'>;
+    updateRoutineExercises?: (newExercise: Exercise) => void;
+    currWorkoutSession?: WorkoutSession,
+    goBackToPreviousScreen: () => void;
+    goBackToCurrentWorkout?: (currWorkoutSession: WorkoutSession) => void;
+  },
+  SelectExerciseStack: undefined, //Navigator Stack to select an exercise.
+  ViewRoutine: undefined,   //Lists all routines saved by the user for them to choose from
+  Routines: undefined,
   Profile: undefined,
   Log: undefined,
-  StartWorkout: undefined;
+  LogScreen: undefined,
+  //Starts a workout session based on the given routine
+  CurrentWorkoutSession: { 
+    routine?: Routine,
+    currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
+   },
+  ViewPastSession: {sessionId: number};
 };
 
 //Create bottom tab navigator
@@ -52,15 +76,12 @@ const App = () => {
       })}>
         {/* Define the screens for the Bottom Tab Navigator */}
         <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
-        <Tab.Screen name="Routine" component={ViewRoutineStack} options={{ headerShown: false }}/>
-        <Tab.Screen name="Log" component={Log} options={{ headerShown: false }}/>
+        <Tab.Screen name="Routines" component={ViewRoutineStack} options={{ headerShown: false }}/>
+        <Tab.Screen name="Log" component={LogScreenStack} options={{ headerShown: false }}/>
     </Tab.Navigator> 
   </NavigationContainer>
 
   );
 }
-
-
-
 
 export default App;
