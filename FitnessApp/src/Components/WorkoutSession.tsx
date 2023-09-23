@@ -6,7 +6,7 @@ import { Alert } from 'react-native'; // Import Alert from react-native
 //================WORKOUT SESSION AND METHODS===============
 //Workout Session Objects and its methods
 export type WorkoutSession = {
-    routine: Routine,   //TODO: make null if new session w/o routine
+    routine: Routine,
     name: string,
     id: number,
     exercises: Exercise[];
@@ -22,7 +22,7 @@ export const createWorkoutSession = (
 ): WorkoutSession => {
   return {
     routine,
-    name: routine.name,             //TODO: Add an empty string if routine is null
+    name: routine.name,
     id: generateRandomId(),
     exercises: routine.exercises,   // Initialize exercises with routine's exercises
     startTime: new Date(),          // Initialize to the current date and time
@@ -58,17 +58,11 @@ export const storeSession = async (session: WorkoutSession) => {
     //Load existing sessions
     const existingSessions = await fetchAllSessions();
 
-    // Check if the session already exists
-    const sessionExists = existingSessions.some(existingSession => existingSession.id === session.id);
+    // Add the new session to the existing list
+    const updatedSessions = [session, ...existingSessions];
+    await AsyncStorage.setItem('sessions', JSON.stringify(updatedSessions));
 
-    if (!sessionExists) {
-      // Add the new session to the existing list
-      const updatedSessions = [session, ...existingSessions];
-      
-      await AsyncStorage.setItem('sessions', JSON.stringify(updatedSessions));
-
-      console.log('Session saved successfully!');
-    }
+    console.log('Session saved successfully!');
   } catch (e) {
     console.error('Error saving session:', e);
   }

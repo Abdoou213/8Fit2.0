@@ -11,7 +11,7 @@ import SelectExerciseCategory from '../SelectExerciseCategory';
 //Create Stack Navigator
 const Stack = createStackNavigator<RootStackParamList>();
 
-//Defien Stack Navigator
+//Define Stack Navigator
 const ViewRoutineStack = () => {
   return (
     <Stack.Navigator>
