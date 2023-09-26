@@ -47,7 +47,7 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
 
   // Opens the page towards the ExerciseCategory to choose a new Exercise from
   const handleAddExercise = () => {
-    navigation.navigate('SelectExerciseCategory', {
+    navigation.navigate('SelectExerciseStack', {
       currWorkoutSession: workoutSession,
     });
   };

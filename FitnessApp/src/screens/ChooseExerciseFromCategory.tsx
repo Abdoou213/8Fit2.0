@@ -25,6 +25,7 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
 
   // Access the exerciseCategory from route.params.category
   const exerciseCategory: ExerciseCategory = route.params?.category;
+  
   // Initialize the exercises state with the exerciseList from exerciseCategory
   const [exercises, setExercises] = useState<Exercise[]>(exerciseCategory.exerciseList);
   const [categories, setCategories] = useState<ExerciseCategory[]>([]);

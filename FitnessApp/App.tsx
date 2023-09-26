@@ -10,6 +10,7 @@ import { Routine } from './src/Components/AppComponents';
 import { Exercise } from './src/Components/Exercise';
 import { ExerciseCategory } from './src/Components/ExerciseCategory';
 import { WorkoutSession } from './src/Components/WorkoutSession';
+import { SelectExerciseCategoryParams } from './src/screens/ScreenStacks/SelectExerciseStack';
 
 //Set page
 const profileName = 'Profile';
@@ -21,11 +22,7 @@ export type RootStackParamList = {
   CreateRoutine: undefined, //Allows the user to name a new routine and add a given number of exercises to it
   CreateRoutineStack:undefined, //Navigator Stack for Routine creation
   CreateExercise: { updateRoutineExercises: (newExercise: Exercise) => void }, //callBack method to modify current routine
-  SelectExerciseCategory: { 
-    updateRoutineExercises?: (newExercise: Exercise) => void;
-    updateWorkoutSessionExercises?: (newExercise: Exercise) => void;
-    currWorkoutSession?: WorkoutSession
-  }   
+  SelectExerciseCategory: SelectExerciseCategoryParams,   
   ChooseExerciseFromCategory: {
     category: ExerciseCategory;
     route: RouteProp<RootStackParamList, 'ChooseExerciseFromCategory'>;
@@ -34,7 +31,10 @@ export type RootStackParamList = {
     goBackToPreviousScreen: () => void;
     goBackToCurrentWorkout?: (currWorkoutSession: WorkoutSession) => void;
   },
-  SelectExerciseStack: undefined, //Navigator Stack to select an exercise.
+  SelectExerciseStack: {
+    currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
+    updateRoutineExercises?: (newExercise: Exercise) => void;
+  },
   ViewRoutine: undefined,   //Lists all routines saved by the user for them to choose from
   Routines: undefined,
   Profile: undefined,
