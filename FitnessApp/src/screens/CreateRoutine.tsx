@@ -50,7 +50,7 @@ const CreateRoutine = ({ navigation }: Props) => {
   };
 
   const handleSelectExercise = () => {
-    navigation.navigate('SelectExerciseCategory', {
+    navigation.navigate('SelectExerciseStack', {
       updateRoutineExercises,
     });
   };
