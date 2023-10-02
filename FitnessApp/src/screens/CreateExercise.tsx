@@ -4,27 +4,34 @@ import ModalSelector from 'react-native-modal-selector';
 import { styles } from '../Misc/ComponentStyles';
 import { ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
 import { Exercise, updateExerciseCategories } from '../Components/Exercise';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { WorkoutSession } from '../Components/WorkoutSession';
 
-type CreateExerciseProps = {
+export type CreateExerciseProps = {
   navigation: any; // The navigation prop used for screen navigation
   route: {
     params: {
-      updateRoutineExercises: (newExercise: Exercise) => void; // Callback function to update routineExercises
+      category: ExerciseCategory; //ExerciseCategory chosen to create exercise
+      currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
+      updateRoutineExercises?: (newExercise: Exercise) => void; // Callback function to update routineExercises
+      goBackToPreviousScreen: () => void;
+      goBackToCurrentWorkout?: (currWorkoutSession: WorkoutSession) => void;
     };
   };
 };
 
 const CreateExercise = ({ route, navigation }: CreateExerciseProps) => {
-
+    
     //List of saved exercise categories
     const [categories, setCategories] = useState<ExerciseCategory[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<ExerciseCategory | null>(null);;
     const [exerciseName, setExerciseName] = useState('');
     const [setsCount, setSetsCount] = useState('');
 
     // Receive the callback function from the route params
-    const { updateRoutineExercises } = route.params;
+    const exerciseCategory = route.params.category;
+    const updateRoutineExercises = route.params?.updateRoutineExercises;
+    const currWorkoutSession = route.params?.currWorkoutSession;
+    const goBackToPreviousScreen = route.params?.goBackToPreviousScreen;
+    const goBackToCurrentWorkout = route.params?.goBackToCurrentWorkout;
 
     // Function to check if an exercise with the same name exists
     const checkIfExerciseExists = (exerciseName: string) => {
@@ -52,11 +59,11 @@ const CreateExercise = ({ route, navigation }: CreateExerciseProps) => {
     
       loadCategories(); // Call the async function to load exercise categories
     }, []);
-
+    
     //Adds an exercise to the current routine
     const handleCreateExercise = async () => {
       // Determine the target category (you need to implement this logic)
-      const targetCategory = selectedCategory;
+      const targetCategory = exerciseCategory;
 
       if (!targetCategory) {
         // Handle the case where no target category is selected
@@ -94,8 +101,21 @@ const CreateExercise = ({ route, navigation }: CreateExerciseProps) => {
         return category;
       });
 
-      // Use the callback function to update routineExercises
+    // Use the callback function to update routineExercises (if currently modifying routine)
+    if (updateRoutineExercises && goBackToPreviousScreen) {
       updateRoutineExercises(newExercise);
+      goBackToPreviousScreen();
+    }
+
+    // If not, check if updateWorkoutSessionExercises is defined and use it
+    if (currWorkoutSession && goBackToCurrentWorkout) {
+      const updatedWorkoutSession = {
+        ...currWorkoutSession,
+        exercises: [...currWorkoutSession.exercises, newExercise],
+      };
+      goBackToCurrentWorkout(updatedWorkoutSession)
+    }
+      
       setCategories(updatedCategories);
       //Reset useStates
       setExerciseName('');
@@ -112,15 +132,6 @@ const CreateExercise = ({ route, navigation }: CreateExerciseProps) => {
         <View style={styles.inputContainer}>      
         <Text style={styles.setLabelCreate}>Create Exercise</Text>
         <View style={styles.underline}></View>
-        <ModalSelector
-        data={categories.map((category) => ({ key: category.categoryId.toString(), label: category.name }))}
-        initValue={selectedCategory ? selectedCategory.name : "Select Category"}
-        onChange={(option) => {
-          const selectedCategoryId = parseInt(option.key); // Parse the key to an integer
-          const selectedCategory = categories.find((category) => category.categoryId === selectedCategoryId);
-          setSelectedCategory(selectedCategory || null);
-        }}
-        />
           <Text style={styles.setLabelCreate}>Exercise Name:</Text>
           <TextInput style={styles.input} value={exerciseName} onChangeText={setExerciseName} />
           <Text style={styles.setLabelCreate}>Number of Sets:</Text>
