@@ -221,6 +221,20 @@ export const styles = StyleSheet.create({
         color: '#fff',
         flex: 1,
       },
+      deleteSetButtonText: {
+        marginTop: 2.5,
+        fontSize: 16,
+        padding: 1,
+        color: '#fff',
+        flex: 1,
+      },
+      deleteSetButton: {
+        marginTop: 2.5,
+        backgroundColor: 'transparent',
+        padding: 7,
+        borderRadius: 1,
+        marginRight: 1,
+      },
       headerRowsPastSession: {
         height: 30,
         width: '75%',

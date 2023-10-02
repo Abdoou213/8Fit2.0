@@ -3,7 +3,6 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import {WorkoutSession} from './WorkoutSession';
 import { Set, generateRandomId} from './AppComponents';
 import {Exercise } from './Exercise';
-import { useState } from 'react';
 
 //Interface of exercise box parameters
 interface ExerciseBoxProps {
@@ -15,8 +14,6 @@ interface ExerciseBoxProps {
 
 //Define the ExerciseBox object displayed in the CurrentWorkout page
 export const ExerciseBox = ({exercise, workoutSession, setWorkoutSession }: ExerciseBoxProps) => {
-
-    const [updatedExercise, setUpdatedExercise] = useState<Exercise>(exercise);
     
     //This function recreates the array of sets, adds a set with weights 0 and 0 reps
     const handleAddSet = () => {
@@ -63,6 +60,31 @@ export const ExerciseBox = ({exercise, workoutSession, setWorkoutSession }: Exer
         return updatedSession;
       });
     };
+
+    //Function used to delete an existing set in a given Exercise
+    const handleDeleteSet = (setIndex: number) => {
+      setWorkoutSession((prevSession) => {
+        const updatedSession = { ...prevSession };
+        const exerciseIndex = updatedSession.exercises.findIndex(
+          (ex) => ex.name === exercise.name
+        );
+    
+        // Ensure setIndex is within the valid range
+        if (setIndex >= 0 && setIndex < updatedSession.exercises[exerciseIndex].sets.length) {
+          // Remove the set at the specified index
+          updatedSession.exercises[exerciseIndex].sets.splice(setIndex, 1);
+    
+          // Decrement the set count
+          updatedSession.exercises[exerciseIndex].setsCount--;
+    
+          console.log('Deleted Set:', setIndex);
+        } else {
+          console.warn('Invalid setIndex:', setIndex);
+        }
+    
+        return updatedSession;
+      });
+    };
     
     return (
       <View style={styles.exerciseBoxContainer}>
@@ -78,6 +100,9 @@ export const ExerciseBox = ({exercise, workoutSession, setWorkoutSession }: Exer
                 <TextInput keyboardType="numeric" style={styles.setTextExerciseBox} 
                 onChangeText={(value) => handleRepsChange(index, value)}>{set.reps}</TextInput>
                 <Text style={styles.setTextExerciseBox}>reps</Text>
+                <TouchableOpacity style={styles.deleteSetButton} onPress={() => handleDeleteSet(index)}>
+                  <Text style={styles.deleteSetButtonText}>X</Text>
+                </TouchableOpacity>  
               </View>
             ))}
           </View>
@@ -88,7 +113,7 @@ export const ExerciseBox = ({exercise, workoutSession, setWorkoutSession }: Exer
     );
   };
 
-  //Define the ExerciseBox object displayed in the ViewPastSession page
+//Define the ExerciseBox object displayed in the ViewPastSession page
 export const ExerciseBoxPastSession = ({ exercise }: { exercise: Exercise }) => {
   
   return (
@@ -102,7 +127,7 @@ export const ExerciseBoxPastSession = ({ exercise }: { exercise: Exercise }) => 
               <Text style={styles.setTextExerciseBox}>{set.weight}</Text>
               <Text style={styles.setTextExerciseBox}>kg/lbs</Text>
               <Text style={styles.setTextExerciseBox}>{set.reps}</Text>
-              <Text style={styles.setTextExerciseBox}>reps</Text>
+              <Text style={styles.setTextExerciseBox}>reps</Text>           
             </View>
           ))}
         </View>

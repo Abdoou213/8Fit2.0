@@ -64,8 +64,7 @@ const ViewPastSession =  ({route, navigation} : ViewPastSessionProps) => {
                   <Text style={styles.headerRowsDatePastSession}>
                     Duration: {selectedSession ? selectedSession.duration : ''} minutes
                   </Text>
-                </View>
-                
+                </View>               
               </View>
             </Animated.View>
             }
