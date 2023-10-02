@@ -4,6 +4,7 @@ import { styles } from '../Misc/ComponentStyles';
 import { Exercise, loadAllCategoryExercises, updateExerciseCategories } from '../Components/Exercise';
 import { ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
 import { WorkoutSession } from '../Components/WorkoutSession';
+import { Routine } from '../Components/AppComponents';
 
 export type ChooseExerciseFromCategoryProps = {
   navigation: any; // The navigation prop used for screen navigation
@@ -11,6 +12,7 @@ export type ChooseExerciseFromCategoryProps = {
     params: {
       category: ExerciseCategory
       updateRoutineExercises?: (newExercise: Exercise) => void;
+      routineExercises?: Exercise[];
       goBackToPreviousScreen: () => void; // Callback function to update routineExercises
       currWorkoutSession?: WorkoutSession;
       goBackToCurrentWorkout?: (currWorkoutSession: WorkoutSession) => void; //Used to return to CurrentWorkout screen with updated WorkoutSession
@@ -27,11 +29,12 @@ const ChooseExerciseFromCategory = ({ route, navigation}: ChooseExerciseFromCate
   const [exercises, setExercises] = useState<Exercise[]>(exerciseCategory.exerciseList);
   const [categories, setCategories] = useState<ExerciseCategory[]>([]);
 
-  // Access the updateRoutineExercises function from the navigation params
+  // Access the given relevant parameters from the navigation params (depends if adding exercise to a session or routine)
   const updateRoutineExercises = route.params?.updateRoutineExercises;
   const currWorkoutSession = route.params?.currWorkoutSession;
   const goBackToPreviousScreen = route.params?.goBackToPreviousScreen;
   const goBackToCurrentWorkout = route.params?.goBackToCurrentWorkout;
+  const currentRoutineExercises = route.params?.routineExercises;
 
   // Initializes the list of exercises within the ExerciseCategory upon loading the page
   useEffect(() => {
@@ -53,20 +56,44 @@ const ChooseExerciseFromCategory = ({ route, navigation}: ChooseExerciseFromCate
 
   // Function to handle adding an exercise to the routine and calling the callback
   const handleAddExerciseToRoutine = (newExercise: Exercise) => {
-
     // Check if updateRoutineExercises is defined, use it if available
-    if (updateRoutineExercises) {
-      updateRoutineExercises(newExercise);
-      goBackToPreviousScreen();
+    if (currentRoutineExercises && updateRoutineExercises) {
+      const isAlreadyInRoutine = currentRoutineExercises.some((exercise) => exercise.name === newExercise.name);
+      console.log(isAlreadyInRoutine)
+      if (isAlreadyInRoutine) {
+        // Display error message
+        Alert.alert(
+          'Duplicate Exercise',
+          `The exercise "${newExercise.name}" is already present in the routine.`
+        );
+      } else {
+        //If not already present, add and return to routine creation
+        updateRoutineExercises(newExercise); 
+        goBackToPreviousScreen();
+      };    
     }
-
+  
     // If not, check if updateWorkoutSessionExercises is defined and use it
     if (currWorkoutSession && goBackToCurrentWorkout) {
-      const updatedWorkoutSession = {
-        ...currWorkoutSession,
-        exercises: [...currWorkoutSession.exercises, newExercise],
-      };
-      goBackToCurrentWorkout(updatedWorkoutSession)
+      // Check if the new exercise is already present in the session
+      const isAlreadyInSession = currWorkoutSession.exercises.some(
+        (exercise) => exercise.name === newExercise.name
+      );
+  
+      if (isAlreadyInSession) {
+        // Display a confirmation pop-up for duplicate exercise
+        Alert.alert(
+          'Duplicate Exercise',
+          `The exercise "${newExercise.name}" is already present in the current workout session.`
+        );
+      } else {
+        // Proceed with adding the new exercise to the session
+        const updatedWorkoutSession = {
+          ...currWorkoutSession,
+          exercises: [...currWorkoutSession.exercises, newExercise],
+        };
+        goBackToCurrentWorkout(updatedWorkoutSession);
+      }
     }
   };
 

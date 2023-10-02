@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Animated } from 'react-native';
 import { styles } from '../Misc/ComponentStyles';
-import {Exercise } from '../Components/Exercise';
-import {ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
+import { Exercise } from '../Components/Exercise';
+import { Routine } from '../Components/AppComponents';
+import { ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
 import { WorkoutSession } from '../Components/WorkoutSession';
 
 type SelectCategoryProps = {
   navigation: any; // The navigation prop used for screen navigation
   route: {
     params: {
+      routineExercises?: Exercise[];
       updateRoutineExercises?: (newExercise: Exercise) => void; // Callback function to update routineExercises
       currWorkoutSession?: WorkoutSession;
     };
@@ -19,7 +21,7 @@ const SelectExerciseCategory = ({ route, navigation }: SelectCategoryProps) => {
 
     //List of saved exercise categories
     const [categories, setCategories] = useState<ExerciseCategory[]>([]);
-    const { currWorkoutSession, updateRoutineExercises } = route.params;
+    const { currWorkoutSession, updateRoutineExercises, routineExercises } = route.params;
 
     //Loads all existing ExerciseCategory objects upon loading page
     useEffect(() => {
@@ -46,10 +48,14 @@ const SelectExerciseCategory = ({ route, navigation }: SelectCategoryProps) => {
     };
     
     const handleAddExerciseToRoutine = (category: ExerciseCategory) => {
+      console.log('HERE1')
       if(updateRoutineExercises){
+        console.log('KATAKURIBALLZ')
+        console.log(routineExercises)
         navigation.navigate('ChooseExerciseFromCategory', {
           category: category,
           updateRoutineExercises: updateRoutineExercises,
+          routineExercises: routineExercises,
           goBackToPreviousScreen: goBackToCreateRoutine
         });
       }

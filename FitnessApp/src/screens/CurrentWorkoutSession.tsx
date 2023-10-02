@@ -23,7 +23,7 @@ type CurrentWorkoutSessionProps = {
 const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps) => {
 
   //1) Screen Attributes
-  const { routine, currWorkoutSession } = route.params;
+  const { currWorkoutSession } = route.params;
   const initialWorkoutSession = currWorkoutSession ? currWorkoutSession : createWorkoutSession(route.params?.routine as Routine); 
   const [routineLoaded, setRoutineLoaded] = useState<boolean>(false);
 
