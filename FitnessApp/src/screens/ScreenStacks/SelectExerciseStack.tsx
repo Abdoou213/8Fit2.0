@@ -7,12 +7,14 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { WorkoutSession } from '../../Components/WorkoutSession';
 import { Exercise } from '../../Components/Exercise';
 import CreateExercise from '../CreateExercise';
+import { Routine } from '../../Components/AppComponents';
 
 //Create Stack Navigator
 const Stack = createStackNavigator<RootStackParamList>();
 
 export type SelectExerciseCategoryParams = {
   updateRoutineExercises?: (newExercise: Exercise) => void;
+  routineExercises?: Exercise[];
   updateWorkoutSessionExercises?: (newExercise: Exercise) => void;
   currWorkoutSession?: WorkoutSession;
 };
@@ -26,6 +28,7 @@ const SelectExerciseStack = () => {
   // Access the updateRoutineExercises function  or the currWorkoutSession from the route parameter (if defined)
   const currWorkoutSession = route.params?.currWorkoutSession;
   const updateRoutineExercises = route.params?.updateRoutineExercises;
+  const routineExercises = route.params?.routineExercises;
 
   //Determine which optional parameter was defined and which wasn't
   // Create an object for initial parameters
@@ -37,12 +40,13 @@ const SelectExerciseStack = () => {
 
   if (updateRoutineExercises) {
     params.updateRoutineExercises = updateRoutineExercises;
+    params.routineExercises = routineExercises;
   }
   
   return (
     <Stack.Navigator>
       <Stack.Screen name="SelectExerciseCategory" component={SelectExerciseCategory} 
-        initialParams={{ currWorkoutSession, updateRoutineExercises } as SelectExerciseCategoryParams}  options={{ headerShown: false }}/>
+        initialParams={{ currWorkoutSession, updateRoutineExercises, routineExercises } as SelectExerciseCategoryParams}  options={{ headerShown: false }}/>
       <Stack.Screen name="ChooseExerciseFromCategory" component={ChooseExerciseFromCategory} options={{ headerShown: false }} />
       <Stack.Screen name="CreateExercise" component={CreateExercise} options={{ headerShown: false }} />
     </Stack.Navigator>

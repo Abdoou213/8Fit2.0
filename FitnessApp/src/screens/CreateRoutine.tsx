@@ -12,8 +12,8 @@ const CreateRoutine = ({ navigation }: Props) => {
 
   //Callback function to update routineExercises
   const updateRoutineExercises = (newExercise: Exercise) => {
-      setExercises([...exercises, newExercise]);
-    };
+    setExercises([...exercises, newExercise]); 
+  }
 
   //Saves the current routine
   const handleSaveRoutine = async () => {
@@ -45,6 +45,7 @@ const CreateRoutine = ({ navigation }: Props) => {
 
   const handleSelectExercise = () => {
     navigation.navigate('SelectExerciseStack', {
+      routineExercises: exercises,
       updateRoutineExercises,
     });
   };

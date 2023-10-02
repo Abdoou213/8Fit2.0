@@ -34,6 +34,7 @@ export type RootStackParamList = {
     category: ExerciseCategory;
     route: RouteProp<RootStackParamList, 'ChooseExerciseFromCategory'>;
     updateRoutineExercises?: (newExercise: Exercise) => void;
+    routineExercises?: Exercise[];
     currWorkoutSession?: WorkoutSession,
     goBackToPreviousScreen: () => void;
     goBackToCurrentWorkout?: (currWorkoutSession: WorkoutSession) => void;
@@ -42,6 +43,7 @@ export type RootStackParamList = {
   SelectExerciseStack: {
     currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
     updateRoutineExercises?: (newExercise: Exercise) => void;
+    routineExercises?: Exercise[];
   },
 
   ViewRoutine: undefined,   //Lists all routines saved by the user for them to choose from
