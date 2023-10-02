@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Routine, generateRandomId } from "./AppComponents";
 import { Exercise } from './Exercise';
-import { Alert } from 'react-native'; // Import Alert from react-native
 
 //================WORKOUT SESSION AND METHODS===============
 //Workout Session Objects and its methods

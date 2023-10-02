@@ -6,6 +6,7 @@ import SelectExerciseCategory from '../SelectExerciseCategory';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { WorkoutSession } from '../../Components/WorkoutSession';
 import { Exercise } from '../../Components/Exercise';
+import CreateExercise from '../CreateExercise';
 
 //Create Stack Navigator
 const Stack = createStackNavigator<RootStackParamList>();
@@ -43,6 +44,7 @@ const SelectExerciseStack = () => {
       <Stack.Screen name="SelectExerciseCategory" component={SelectExerciseCategory} 
         initialParams={{ currWorkoutSession, updateRoutineExercises } as SelectExerciseCategoryParams}  options={{ headerShown: false }}/>
       <Stack.Screen name="ChooseExerciseFromCategory" component={ChooseExerciseFromCategory} options={{ headerShown: false }} />
+      <Stack.Screen name="CreateExercise" component={CreateExercise} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

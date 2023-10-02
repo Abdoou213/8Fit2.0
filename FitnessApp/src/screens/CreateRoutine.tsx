@@ -43,12 +43,6 @@ const CreateRoutine = ({ navigation }: Props) => {
     navigation.navigate('ViewRoutine');
   };
 
-  const handleCreateExercise = () => {
-    navigation.navigate('CreateExercise', {
-      updateRoutineExercises, // Pass the callback function as a prop
-    });
-  };
-
   const handleSelectExercise = () => {
     navigation.navigate('SelectExerciseStack', {
       updateRoutineExercises,
@@ -61,9 +55,6 @@ const CreateRoutine = ({ navigation }: Props) => {
       <View style={styles.inputContainer}>
         <Text style={styles.setLabelCreate}>Routine Name:</Text>
         <TextInput style={styles.input} value={routineName} onChangeText={setRoutineName} />
-        <TouchableOpacity style={styles.addButtonCreate} onPress={handleCreateExercise}>
-          <Text style={styles.buttonText}>Create Exercise</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.addButtonCreate} onPress={handleSelectExercise}>
           <Text style={styles.buttonText}>Select Exercise</Text>
         </TouchableOpacity>             

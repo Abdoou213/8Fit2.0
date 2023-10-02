@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, FlatList, Animated, Alert } from 'react-n
 import { styles } from '../Misc/ComponentStyles';
 import { Exercise, loadAllCategoryExercises, updateExerciseCategories } from '../Components/Exercise';
 import { ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
-import { useNavigation } from '@react-navigation/native';
 import { WorkoutSession } from '../Components/WorkoutSession';
 
 export type ChooseExerciseFromCategoryProps = {
@@ -19,9 +18,7 @@ export type ChooseExerciseFromCategoryProps = {
   };
 };
 
-const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) => {
-
-  const navigation = useNavigation();
+const ChooseExerciseFromCategory = ({ route, navigation}: ChooseExerciseFromCategoryProps) => {
 
   // Access the exerciseCategory from route.params.category
   const exerciseCategory: ExerciseCategory = route.params?.category;
@@ -39,6 +36,7 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
   // Initializes the list of exercises within the ExerciseCategory upon loading the page
   useEffect(() => {
     setExercises(exerciseCategory.exerciseList);
+
     //Load Exercise categories in case an exercise is deleted.
     const loadCategories = async () => {
       try {
@@ -55,6 +53,7 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
 
   // Function to handle adding an exercise to the routine and calling the callback
   const handleAddExerciseToRoutine = (newExercise: Exercise) => {
+
     // Check if updateRoutineExercises is defined, use it if available
     if (updateRoutineExercises) {
       updateRoutineExercises(newExercise);
@@ -130,6 +129,28 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
     }
   }
 
+  const handleCreateExercise = () => {
+  
+    //Check if updateRoutineExercises is defined
+    if (updateRoutineExercises && goBackToPreviousScreen ) {
+      //Navigate to CreateExercise and pass the required props
+      navigation.navigate('CreateExercise', {
+        category: exerciseCategory ,
+        updateRoutineExercises: updateRoutineExercises,
+        goBackToPreviousScreen: goBackToPreviousScreen,
+      });
+    }
+
+    if (currWorkoutSession && goBackToCurrentWorkout) {
+      //Navigate to CreateExercise and pass the required props
+      navigation.navigate('CreateExercise', {
+        category: exerciseCategory,
+        currWorkoutSession: currWorkoutSession,
+        goBackToCurrentWorkout: goBackToCurrentWorkout,
+      });
+    }
+  };
+
     return (
       <FlatList
         style={styles.screenListContainer}
@@ -148,6 +169,11 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
             </View>
           </Animated.View>
         }
+        ListFooterComponent={(
+          <TouchableOpacity style={styles.createExerciseButton} onPress={() => handleCreateExercise()}>
+            <Text style={styles.currentWorkoutButtonText}>Create</Text>
+          </TouchableOpacity>
+        )}
         data={exercises}
         renderItem={({ item }) => (
           <View>
@@ -165,8 +191,7 @@ const ChooseExerciseFromCategory = ({ route}: ChooseExerciseFromCategoryProps) =
                 </TouchableOpacity>
               </View>
               <View style={styles.underline}></View>
-          </View>
-          
+          </View>        
         )}
         keyExtractor={(item) => item.name}
       />

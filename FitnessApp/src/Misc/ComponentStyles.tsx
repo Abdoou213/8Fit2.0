@@ -346,6 +346,7 @@ export const styles = StyleSheet.create({
         marginBottom: 20,
         marginTop: 20
       },
+
       //ChooseExerciseFromCategory
       deleteButtonContainer: {
         paddingHorizontal: 8, // Adjust horizontal padding as needed
@@ -377,5 +378,13 @@ export const styles = StyleSheet.create({
         paddingLeft: 10,
         fontSize: 18,
         marginBottom: 5,
+      },
+      createExerciseButton: {
+        backgroundColor: '#a6a571',
+        paddingVertical: 10,
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        flex: 1
       },
 });
