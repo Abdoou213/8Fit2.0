@@ -19,17 +19,25 @@ const logName = 'Log';
 
 //Define the type of the routes
 export type RootStackParamList = {
-  CreateRoutine: undefined, //Allows the user to name a new routine and add a given number of exercises to it
-  CreateRoutineStack:undefined, //Navigator Stack for Routine creation
+  //1. Allows the user to name a new routine and add a given number of exercises to it
+  CreateRoutine: undefined,
+  //2. Navigator Stack for Routine creation
+  CreateRoutineStack:undefined,
+  //3.
   CreateExercise: {
     category: ExerciseCategory; //ExerciseCategory chosen to create exercise
     currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
     updateRoutineExercises?: (newExercise: Exercise) => void;
     goBackToPreviousScreen: () => void;
     goBackToCurrentWorkout?: (currWorkoutSession: WorkoutSession) => void; }; //callBack method to modify current routine
-
-  SelectExerciseCategory: SelectExerciseCategoryParams,   
-
+  
+  //4.
+  SelectExerciseCategory: SelectExerciseCategoryParams,
+  //5.
+  CreateExerciseCategory: {
+    updateCategories: (newCategory: ExerciseCategory) => void;
+  }, 
+  //6.
   ChooseExerciseFromCategory: {
     category: ExerciseCategory;
     route: RouteProp<RootStackParamList, 'ChooseExerciseFromCategory'>;
@@ -39,23 +47,28 @@ export type RootStackParamList = {
     goBackToPreviousScreen: () => void;
     goBackToCurrentWorkout?: (currWorkoutSession: WorkoutSession) => void;
   },
-
+  //7.
   SelectExerciseStack: {
     currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
     updateRoutineExercises?: (newExercise: Exercise) => void;
     routineExercises?: Exercise[];
   },
-
+  //8.
   ViewRoutine: undefined,   //Lists all routines saved by the user for them to choose from
+  //9.
   Routines: undefined,
+  //10.
   Profile: undefined,
+  //11.
   Log: undefined,
+  //12.
   LogScreen: undefined,
-  //Starts a workout session based on the given routine
+  //13. Starts a workout session based on the given routine
   CurrentWorkoutSession: { 
     routine?: Routine,
     currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
    },
+   //14.
   ViewPastSession: {sessionId: number};
 };
 
