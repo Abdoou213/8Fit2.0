@@ -49,6 +49,12 @@ const CreateExerciseCategory =  ({route, navigation}: CreateCategoryProps) => {
 
     return (
       <View style={styles.screenListContainer}>
+        <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={styles.closeButtonViewPastSession}
+        >
+          <Text style={styles.closeButtonTextViewPastSession}>X</Text>
+        </TouchableOpacity>
         <View style={styles.inputContainer}>      
         <Text style={styles.setLabelCreate}>Create Exercise Category</Text>
         <View style={styles.underline}></View>
