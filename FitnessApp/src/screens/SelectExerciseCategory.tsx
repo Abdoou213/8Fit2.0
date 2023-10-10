@@ -79,10 +79,15 @@ const SelectExerciseCategory = ({ route, navigation }: SelectCategoryProps) => {
 
   //Deletes the chosen ExerciseCategory
   const handleDeleteCategory = (category: ExerciseCategory) => {
+    // Check if the category has exercises, if it does, modify message to notify user
+    const hasExercises = category.exerciseList.length > 0;
+  
     // Display a confirmation dialog
     Alert.alert(
       'Confirm Deletion',
-      `Are you sure you want to delete the exercise category "${category.name}"?`,
+      `Are you sure you want to delete the exercise category "${category.name}"? ${
+        hasExercises ? 'Some exercises are associated with this category.' : ''
+      }`,
       [
         {
           text: 'Cancel',
