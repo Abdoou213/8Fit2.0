@@ -5,18 +5,29 @@ import { Props, Routine, generateRandomId } from '../Components/AppComponents';
 import { Exercise } from '../Components/Exercise';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-//Creates the current routine
 const CreateRoutine = ({ navigation }: Props) => {
   const [routineName, setRoutineName] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>([]);
 
-  //Callback function to update routineExercises
   const updateRoutineExercises = (newExercise: Exercise) => {
-    setExercises([...exercises, newExercise]); 
+    setExercises([...exercises, newExercise]);
   }
 
-  //Saves the current routine
   const handleSaveRoutine = async () => {
+    if (!routineName.trim()) {
+      Alert.alert('Routine name cannot be empty');
+      return;
+    }
+    
+    if (routineName.length > 30) {
+      Alert.alert('Routine name is too long (max 30 characters)');
+      return;
+    }
+
+    if (exercises.length === 0) {
+      Alert.alert('Please add at least one exercise to the routine');
+      return;
+    }
 
     const newRoutine: Routine = { name: routineName, exercises, id: generateRandomId() };
     try {
@@ -24,7 +35,6 @@ const CreateRoutine = ({ navigation }: Props) => {
       const parsedRoutines = existingRoutines ? JSON.parse(existingRoutines) : [];
       const routineExists = parsedRoutines.some((routine: Routine) => routine.name === routineName);
 
-      //Block in case of duplicating routine
       if (routineExists) {
         Alert.alert('Routine name already exists');
         return;
@@ -38,7 +48,6 @@ const CreateRoutine = ({ navigation }: Props) => {
     }
   };
 
-  //Handles leaving the current creation screen to return to the list of routines
   const handleCancel = () => {
     navigation.navigate('ViewRoutine');
   };
@@ -52,32 +61,31 @@ const CreateRoutine = ({ navigation }: Props) => {
 
   return (
     <View style={styles.screenListContainer}>
-      
       <View style={styles.inputContainer}>
         <Text style={styles.setLabelCreate}>Routine Name:</Text>
         <TextInput style={styles.input} value={routineName} onChangeText={setRoutineName} />
         <TouchableOpacity style={styles.addButtonCreate} onPress={handleSelectExercise}>
           <Text style={styles.buttonText}>Select Exercise</Text>
-        </TouchableOpacity>             
+        </TouchableOpacity>
       </View>
       <Text style={styles.createRoutineExercisesListLabel}>Exercises</Text>
       <FlatList
-      data={exercises}
-      style={styles.screenListContainer}
-      renderItem={({ item }) => (
-        <View key={item.name} style={styles.exerciseCreate}>
-          <Text style={styles.createRoutineExerciseName}>{item.name}</Text>
-          <Text style={styles.setLabelCreate}>Number of Sets: {item.setsCount}</Text>
-        </View>
-      )}
-      keyExtractor={(item) => item.name}
-    />
-    <TouchableOpacity style={styles.saveButtonCreate} onPress={handleSaveRoutine}>
-      <Text style={styles.buttonText}>Save Routine</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.cancelButtonCreate} onPress={handleCancel}>
-          <Text style={styles.buttonText}>Cancel</Text>
-    </TouchableOpacity>  
+        data={exercises}
+        style={styles.screenListContainer}
+        renderItem={({ item }) => (
+          <View key={item.name} style={styles.exerciseCreate}>
+            <Text style={styles.createRoutineExerciseName}>{item.name}</Text>
+            <Text style={styles.setLabelCreate}>Number of Sets: {item.setsCount}</Text>
+          </View>
+        )}
+        keyExtractor={(item) => item.name}
+      />
+      <TouchableOpacity style={styles.saveButtonCreate} onPress={handleSaveRoutine}>
+        <Text style={styles.buttonText}>Save Routine</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.cancelButtonCreate} onPress={handleCancel}>
+        <Text style={styles.buttonText}>Cancel</Text>
+      </TouchableOpacity>
     </View>
   );
 };

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import ModalSelector from 'react-native-modal-selector';
 import { styles } from '../Misc/ComponentStyles';
 import { ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
 import { Exercise, updateExerciseCategories } from '../Components/Exercise';
@@ -10,7 +9,7 @@ export type CreateExerciseProps = {
   navigation: any; // The navigation prop used for screen navigation
   route: {
     params: {
-      category: ExerciseCategory; //ExerciseCategory chosen to create exercise
+      category: ExerciseCategory; // ExerciseCategory chosen to create exercise
       currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
       updateRoutineExercises?: (newExercise: Exercise) => void; // Callback function to update routineExercises
       goBackToPreviousScreen: () => void;
@@ -60,7 +59,7 @@ const CreateExercise = ({ route, navigation }: CreateExerciseProps) => {
       loadCategories(); // Call the async function to load exercise categories
     }, []);
     
-    //Adds an exercise to the current routine
+    // Adds an exercise to the current routine
     const handleCreateExercise = async () => {
       // Determine the target category (you need to implement this logic)
       const targetCategory = exerciseCategory;
@@ -70,12 +69,34 @@ const CreateExercise = ({ route, navigation }: CreateExerciseProps) => {
         return;
       }
 
+      // Validation checks
+      if (!exerciseName.trim()) {
+        Alert.alert('Exercise name cannot be empty');
+        return;
+      }
+
+      if (exerciseName.length > 50) {
+        Alert.alert('Exercise name is too long (max 50 characters)');
+        return;
+      }
+
+      if (!setsCount.trim() || isNaN(parseInt(setsCount)) || parseInt(setsCount) <= 0) {
+        Alert.alert('Invalid number of sets');
+        return;
+      }
+
+      if (parseInt(setsCount) > 30) {
+        Alert.alert('Invalid number of sets (max 30)');
+        return;
+      }
+      
+
       // Check if an exercise with the same name exists
-    if (checkIfExerciseExists(exerciseName)) {
-      // An exercise with the same name already exists, show an alert
-      Alert.alert('Exercise Already Exists', 'An exercise with the same name already exists. Please enter a different one.');
-      return;
-    }
+      if (checkIfExerciseExists(exerciseName)) {
+        // An exercise with the same name already exists, show an alert
+        Alert.alert('Exercise Already Exists', 'An exercise with the same name already exists. Please enter a different one.');
+        return;
+      }
   
       // Create the new Exercise object
       const newExercise: Exercise = {
@@ -101,23 +122,23 @@ const CreateExercise = ({ route, navigation }: CreateExerciseProps) => {
         return category;
       });
 
-    // Use the callback function to update routineExercises (if currently modifying routine)
-    if (updateRoutineExercises && goBackToPreviousScreen) {
-      updateRoutineExercises(newExercise);
-      goBackToPreviousScreen();
-    }
+      // Use the callback function to update routineExercises (if currently modifying routine)
+      if (updateRoutineExercises && goBackToPreviousScreen) {
+        updateRoutineExercises(newExercise);
+        goBackToPreviousScreen();
+      }
 
-    // If not, check if updateWorkoutSessionExercises is defined and use it
-    if (currWorkoutSession && goBackToCurrentWorkout) {
-      const updatedWorkoutSession = {
-        ...currWorkoutSession,
-        exercises: [...currWorkoutSession.exercises, newExercise],
-      };
-      goBackToCurrentWorkout(updatedWorkoutSession)
-    }
+      // If not, check if updateWorkoutSessionExercises is defined and use it
+      if (currWorkoutSession && goBackToCurrentWorkout) {
+        const updatedWorkoutSession = {
+          ...currWorkoutSession,
+          exercises: [...currWorkoutSession.exercises, newExercise],
+        };
+        goBackToCurrentWorkout(updatedWorkoutSession)
+      }
       
       setCategories(updatedCategories);
-      //Reset useStates
+      // Reset useStates
       setExerciseName('');
       setSetsCount('');
 
