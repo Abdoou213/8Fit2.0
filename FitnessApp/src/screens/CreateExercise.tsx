@@ -129,6 +129,12 @@ const CreateExercise = ({ route, navigation }: CreateExerciseProps) => {
 
     return (
       <View style={styles.screenListContainer}>
+        <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={styles.closeButtonViewPastSession}
+        >
+          <Text style={styles.closeButtonTextViewPastSession}>X</Text>
+        </TouchableOpacity>
         <View style={styles.inputContainer}>      
         <Text style={styles.setLabelCreate}>Create Exercise</Text>
         <View style={styles.underline}></View>

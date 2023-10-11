@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Animated } from 'react-native';
 import { styles } from '../Misc/ComponentStyles';
 import { Exercise } from '../Components/Exercise';
-import { Routine } from '../Components/AppComponents';
-import { ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
+import { ExerciseCategory, loadExerciseCategories, deleteExerciseCategory } from '../Components/ExerciseCategory';
 import { WorkoutSession } from '../Components/WorkoutSession';
+import { Alert } from 'react-native';
 
 type SelectCategoryProps = {
   navigation: any; // The navigation prop used for screen navigation
@@ -48,10 +48,7 @@ const SelectExerciseCategory = ({ route, navigation }: SelectCategoryProps) => {
     };
     
     const handleAddExerciseToRoutine = (category: ExerciseCategory) => {
-      console.log('HERE1')
       if(updateRoutineExercises){
-        console.log('KATAKURIBALLZ')
-        console.log(routineExercises)
         navigation.navigate('ChooseExerciseFromCategory', {
           category: category,
           updateRoutineExercises: updateRoutineExercises,
@@ -68,6 +65,56 @@ const SelectExerciseCategory = ({ route, navigation }: SelectCategoryProps) => {
         });
     }
   }
+
+  //Callback function to update routineExercises
+  const updateCategoriesList = (newCategory: ExerciseCategory) => {
+    setCategories([...categories, newCategory]); 
+  }
+
+  //Takes the user to the CreateCategory page
+  const handleCreateCategory = () => {
+    navigation.navigate('CreateExerciseCategory',
+    {updateCategories: updateCategoriesList});
+  }
+
+  //Deletes the chosen ExerciseCategory
+  const handleDeleteCategory = (category: ExerciseCategory) => {
+    // Check if the category has exercises, if it does, modify message to notify user
+    const hasExercises = category.exerciseList.length > 0;
+  
+    // Display a confirmation dialog
+    Alert.alert(
+      'Confirm Deletion',
+      `Are you sure you want to delete the exercise category "${category.name}"? ${
+        hasExercises ? 'Some exercises are associated with this category.' : ''
+      }`,
+      [
+        {
+          text: 'Cancel',
+        },
+        {
+          text: 'Confirm',
+          onPress: () => confirmDeleteCategory(category),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  //Completes the deletion of the chosen category upon confirmation by the user and updates list of categories in screen
+  const confirmDeleteCategory = async (category: ExerciseCategory) => {
+    const deleted = await deleteExerciseCategory(category.name);
+    const newCategories = await loadExerciseCategories();
+  
+    if (deleted) {
+      // Successfully deleted, you can perform any additional actions here
+      console.log(`Category "${category.name}" deleted successfully.`);
+      setCategories(newCategories);
+    } else {
+      // Deletion failed or was canceled
+      console.log(`Deletion of category "${category.name}" was unsuccessful.`);
+    }
+  };
 
     return (
       <FlatList
@@ -87,15 +134,27 @@ const SelectExerciseCategory = ({ route, navigation }: SelectCategoryProps) => {
             </View>
           </Animated.View>
         }
+        ListFooterComponent={(
+          <TouchableOpacity style={styles.createExerciseButton} onPress={() => handleCreateCategory()}>
+            <Text style={styles.currentWorkoutButtonText}>Create</Text>
+          </TouchableOpacity>
+        )}
         data={categories}
         renderItem={({ item }) => (
           <View>
             <View style={styles.underline}></View>
+            <View style={styles.itemContainer}>
             <TouchableOpacity
               onPress={() => {handleAddExerciseToRoutine(item)}}
             >
-              <Text style={styles.headerRowsDatePastSession}>{item.name}</Text>
+              <Text style={styles.chooseExerciseBox}>{item.name}</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+                    onPress={() => handleDeleteCategory(item)}
+            >
+              <Text style={styles.closeButtonTextViewPastSession}>X</Text>
+            </TouchableOpacity>
+            </View>       
             <View style={styles.underline}></View>
           </View>
           

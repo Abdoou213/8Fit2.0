@@ -4,7 +4,6 @@ import { styles } from '../Misc/ComponentStyles';
 import { Exercise, loadAllCategoryExercises, updateExerciseCategories } from '../Components/Exercise';
 import { ExerciseCategory, loadExerciseCategories } from '../Components/ExerciseCategory';
 import { WorkoutSession } from '../Components/WorkoutSession';
-import { Routine } from '../Components/AppComponents';
 
 export type ChooseExerciseFromCategoryProps = {
   navigation: any; // The navigation prop used for screen navigation
