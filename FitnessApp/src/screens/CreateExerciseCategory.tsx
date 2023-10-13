@@ -13,16 +13,22 @@ type CreateCategoryProps = {
 
 const CreateExerciseCategory =  ({route, navigation}: CreateCategoryProps) => {
 
-    //ExerciseCategory name attribute
+    // ExerciseCategory name attribute
     const [exerciseCategoryName, setCategoryName] = useState('');
     const updateCategories = route.params.updateCategories;
 
-    //Creates ExerciseCategory
+    // Creates ExerciseCategory
     const handleCreateExerciseCategory = async () => {
 
         // Check if exerciseCategoryName is empty
         if (!exerciseCategoryName.trim()) {
           Alert.alert('Error', 'Exercise category name cannot be empty.');
+          return;
+        }
+
+        // Check if the exerciseCategoryName exceeds the maximum length
+        if (exerciseCategoryName.length > 30) {
+          Alert.alert('Error', 'Exercise category name is too long (max 30 characters).');
           return;
         }
 
@@ -35,7 +41,7 @@ const CreateExerciseCategory =  ({route, navigation}: CreateCategoryProps) => {
             return;
         }
     
-        const newExerciseCategory =  await createExerciseCategory(exerciseCategoryName);
+        const newExerciseCategory = await createExerciseCategory(exerciseCategoryName);
         // Check if newExerciseCategory is undefined
         if (!newExerciseCategory) {
             // Handle the case where createExerciseCategory failed
@@ -68,4 +74,4 @@ const CreateExerciseCategory =  ({route, navigation}: CreateCategoryProps) => {
     );
   };
   
-  export default CreateExerciseCategory;
+export default CreateExerciseCategory;
