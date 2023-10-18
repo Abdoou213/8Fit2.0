@@ -102,7 +102,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
       },
       screenListContainer: {
-        padding: 20,
+        paddingHorizontal: 20,
         backgroundColor: '#2d2d47',
         flex: 1
       },
@@ -394,6 +394,7 @@ export const styles = StyleSheet.create({
         marginBottom: 5,
       },
       createExerciseButton: {
+        marginBottom: 15,
         backgroundColor: '#a6a571',
         paddingVertical: 10,
         alignItems: 'center',
