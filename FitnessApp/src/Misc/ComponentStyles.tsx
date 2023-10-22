@@ -22,13 +22,13 @@ export const styles = StyleSheet.create({
       },
       routineName: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         marginBottom: 10,
         color: 'white'
       },
       emptyRoutineText: {
         color: '#000',
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         fontSize: 18,
         textAlign: 'center',
         justifyContent: 'center',
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
       },
       setInfo: {
         fontSize: 16,
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         marginBottom: 5,
         color: 'white'
       },
@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
       createRoutineButtonText: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: 20,
       },
       buttonContainer: {
         flexDirection: 'row',
@@ -254,10 +254,10 @@ export const styles = StyleSheet.create({
       logHeaderTitle: {
         color: '#fff',
         fontSize: 24,
-        fontWeight: 'bold',
         marginBottom: 5,
         textAlign: 'center', 
         justifyContent: 'center',
+        fontFamily: 'PixelifySansRegular',
       },
       currentWorkoutHeaderDate: {
         color: '#fff',
