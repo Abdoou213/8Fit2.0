@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
       },
       createRoutineButtonText: {
         color: '#fff',
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         fontSize: 20,
       },
       buttonContainer: {
@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
       },
       deleteRoutinesButtonText: {
         color: '#fff',
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         fontSize: 18, 
         textAlign: 'center',
         paddingVertical: 1
@@ -97,7 +97,7 @@ export const styles = StyleSheet.create({
       },
       currentWorkoutButtonText: {
         color: '#fff',
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         fontSize: 18,
         alignItems: 'center'
       },
@@ -111,7 +111,7 @@ export const styles = StyleSheet.create({
         color: '#76ab63',
       },
       createPageHeaderLabels: {
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         marginBottom: 8,
         fontSize: 16,
         color: '#fff',
@@ -166,19 +166,19 @@ export const styles = StyleSheet.create({
       },
       buttonText: {
         color: '#fff',
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         fontSize: 18,
       },
       exerciseCreate: {
         marginBottom: 16,
       },
       createRoutineExerciseName: {
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         fontSize: 18,
         color:'#fff'
       },
       createRoutineExercisesListLabel: {
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         fontSize: 18,
         color:'#fff',
         textDecorationLine: 'underline',
@@ -186,14 +186,14 @@ export const styles = StyleSheet.create({
         padding: 5,
       },
       setLabelCreate: {
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         marginBottom: 8,
         color: '#fff',
         fontSize: 14
       },
       exerciseTitle: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         marginBottom: 10,
         textAlign: 'center',
         backgroundColor: '#2d2d47',
@@ -220,6 +220,7 @@ export const styles = StyleSheet.create({
         padding: 5,
         color: '#fff',
         flex: 1,
+        fontFamily: 'PixelifySansRegular',
       },
       deleteSetButtonText: {
         marginTop: 2.5,
@@ -227,6 +228,7 @@ export const styles = StyleSheet.create({
         padding: 1,
         color: '#fff',
         flex: 1,
+        fontFamily: 'PixelifySansRegular',
       },
       deleteSetButton: {
         marginTop: 2.5,
@@ -242,6 +244,7 @@ export const styles = StyleSheet.create({
         paddingLeft: 10,
         fontSize: 24,
         marginBottom: 5,
+        fontFamily: 'PixelifySansRegular',
       },
       headerRowsDatePastSession: {
         height: 30,
@@ -250,6 +253,7 @@ export const styles = StyleSheet.create({
         paddingLeft: 10,
         fontSize: 18,
         marginBottom: 5,
+        fontFamily: 'PixelifySansRegular',
       },
       logHeaderTitle: {
         color: '#fff',
@@ -265,6 +269,7 @@ export const styles = StyleSheet.create({
         marginBottom: 5,
         textAlign: 'center', 
         justifyContent: 'center',
+        fontFamily: 'PixelifySansRegular',
       },
       underline: {
         borderBottomWidth: 1,
@@ -309,7 +314,7 @@ export const styles = StyleSheet.create({
       addSetButtonTextExerciseBox: {
         color: '#2d2d47',
         fontSize: 16,
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
         textAlign: 'center',
       },
       closeButtonViewPastSession: {
@@ -327,7 +332,7 @@ export const styles = StyleSheet.create({
       closeButtonTextViewPastSession: {
         color: '#fff',
         fontSize: 16,
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
       },
       headerContainerPastSession: {
         flexDirection: 'column',
@@ -337,7 +342,7 @@ export const styles = StyleSheet.create({
       },     
       headerContainer: {
         marginTop: 20,
-        marginBottom: 20, // Add margin to create space between header and the following components
+        marginBottom: 20,
       },
 
       //Current Workout Screen
@@ -352,7 +357,7 @@ export const styles = StyleSheet.create({
         color: '#2d2d47',
         fontSize: 16,
         textAlign: "center",
-        fontWeight: 'bold',
+        fontFamily: 'PixelifySansRegular',
       },
       currentWorkoutHeader: {
         flexDirection: "row",
@@ -363,27 +368,28 @@ export const styles = StyleSheet.create({
 
       //ChooseExerciseFromCategory
       deleteButtonContainer: {
-        paddingHorizontal: 8, // Adjust horizontal padding as needed
+        paddingHorizontal: 8,
       },
       deleteButtonText: {
-        fontSize: 18, // Adjust the font size as needed
-        color: 'red', // Customize the color as needed
+        fontSize: 18,
+        color: 'red',
+        fontFamily: 'PixelifySansRegular',
       },
       viewContainer: {
-        flexDirection: 'row', // Arrange children horizontally
-        justifyContent: 'space-between', // Space evenly between children
-        alignItems: 'center', // Center vertically
-        borderBottomWidth: 1, // Add the underline
-        borderBottomColor: 'gray', // Underline color
-        paddingVertical: 8, // Adjust vertical padding as needed
+        flexDirection: 'row',
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray', 
+        paddingVertical: 8, 
       },
       itemContainer: {
-        flexDirection: 'row', // Arrange children horizontally
-        justifyContent: 'space-between', // Put space between children (1st left, 2nd right)
-        alignItems: 'center', // Center vertically
-        borderBottomWidth: 1, // Add the underline
-        borderBottomColor: 'gray', // Underline color
-        paddingVertical: 8, // Adjust vertical padding as needed
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray',
+        paddingVertical: 8, 
       },
       chooseExerciseBox: {
         height: 30,
@@ -392,6 +398,7 @@ export const styles = StyleSheet.create({
         paddingLeft: 10,
         fontSize: 18,
         marginBottom: 5,
+        fontFamily: 'PixelifySansRegular',
       },
       createExerciseButton: {
         marginBottom: 15,
