@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity, ScrollView, RefreshControl, Alert} from 'r
 import { styles } from '../Misc/ComponentStyles';
 import { Props, Routine } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createDefaultCharacter } from '../Components/Character';
 
 //Deletes all currently saved routines
 async function deleteAllRoutines() {
@@ -125,9 +126,12 @@ async function deleteRoutine(routineToDelete: Routine) {
   }
 };
 
-  useEffect(() => {
+   useEffect(() => {
     initializeExerciseCategories();
     const unsubscribe = navigation.addListener('focus', async () => {
+      
+      //Create the character if not already created
+      await createDefaultCharacter();
       const routinesFromStorage = await fetchAllRoutines();
       if (routinesFromStorage !== null) {
         setRoutines(routinesFromStorage);
@@ -197,7 +201,7 @@ async function deleteRoutine(routineToDelete: Routine) {
         {selectedRoutineIndex !== null && (
           <TouchableOpacity
             style={styles.currentWorkoutButton}
-            onPress={() => navigation.navigate('CurrentWorkoutSession', { routine: routines[selectedRoutineIndex] })}
+            onPress={() => navigation.navigate('OngoingSessionStack', { routine: routines[selectedRoutineIndex] })}
           >
             <Text style={styles.currentWorkoutButtonText}>Start Workout</Text>
           </TouchableOpacity>

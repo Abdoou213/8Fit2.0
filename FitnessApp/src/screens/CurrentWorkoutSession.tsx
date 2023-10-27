@@ -67,6 +67,12 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
     navigation.goBack();
   };
 
+  const handleTestingBallz = () => {
+    navigation.navigate('AwardExpToCharScreen', {
+      currentSession: workoutSession,
+    });
+  };
+
   return (
     <FlatList
       data={workoutSession.routine ? workoutSession.exercises : []}
@@ -92,6 +98,9 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
               </TouchableOpacity>
               <TouchableOpacity style={styles.finishButtonCurrentWorkout} onPress={handleFinishWorkout}>
                 <Text style={styles.headerTextCurrentWorkout}>Finish</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.finishButtonCurrentWorkout} onPress={handleTestingBallz}>
+                <Text style={styles.headerTextCurrentWorkout}>Character</Text>
               </TouchableOpacity>
             </View>
           </View>

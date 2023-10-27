@@ -20,6 +20,7 @@
     "react": "18.2.0",
     "react-native": "0.71.3",
     "react-native-gesture-handler": "^2.9.0",
+    "react-native-gif": "^1.0.3",
     "react-native-ionicons": "^4.6.5",
     "react-native-modal-dropdown": "^1.0.2",
     "react-native-modal-selector": "^2.1.2",
