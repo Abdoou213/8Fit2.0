@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'react-native-gesture-handler';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -11,6 +11,8 @@ import { Exercise } from './src/Components/Exercise';
 import { ExerciseCategory } from './src/Components/ExerciseCategory';
 import { WorkoutSession } from './src/Components/WorkoutSession';
 import { SelectExerciseCategoryParams } from './src/screens/ScreenStacks/SelectExerciseStack';
+import SplashScreen from 'react-native-splash-screen';
+import { Platform } from 'react-native';
 
 //Set page
 const profileName = 'Profile';
@@ -77,6 +79,12 @@ const Tab = createBottomTabNavigator<RootStackParamList>();
 
 //Define App component
 const App = () => {
+  useEffect(() => {
+    if(Platform.OS === 'android'){
+      SplashScreen.hide();
+    }
+    
+  }, [])
   return (
     <NavigationContainer>
     <Tab.Navigator
