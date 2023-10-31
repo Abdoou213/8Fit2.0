@@ -38,22 +38,25 @@ export async function createDefaultCharacter(): Promise<void> {
   return;
 }
 
-export async function getDefaultCharacter(): Promise<Character | null> {
-  try {
+export async function getDefaultCharacter(): Promise<Character> {
     const defaultCharacter = await AsyncStorage.getItem('defaultCharacter');
-    console.log('zz');
+
     if (defaultCharacter) {
       console.log('BONGA');
       const characterParsed = JSON.parse(defaultCharacter);
       return characterParsed;
-    } else {
-      console.log('No default character found in AsyncStorage.');
-      return null;
+    }else{
+      const newChar: Character = {
+        id: 0, // You can set the appropriate default ID
+        name: '', // You can set the appropriate default name
+        level: 1, // You can set the appropriate default level
+        expTotalAmount: 0, // You can set the appropriate default experience points
+        idleAnimation: [],
+        walkingAnimation: [],
+        workingOutAnimation: [],
+      };
+      return newChar;
     }
-  } catch (error) {
-    console.error('Error initializing default character:', error);
-    return null;
-  }
 };
 
 export default Character;
