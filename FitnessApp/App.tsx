@@ -73,7 +73,7 @@ export type RootStackParamList = {
   ViewPastSession: {sessionId: number};
   //15.
   AwardExpToCharScreen: {
-    currentSession: WorkoutSession
+    experiencePointsSession: number
   }
   //16.
   OngoingSessionStack: {

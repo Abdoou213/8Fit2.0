@@ -416,6 +416,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#2d2d47',
         padding: 20,
         paddingBottom: 5,
+        alignContent: 'center'
       },
       awardExpTextContainer: {
         flexDirection: 'row',

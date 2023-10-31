@@ -1,4 +1,4 @@
-import { View, Text, Animated, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { View, Text, Animated, TouchableOpacity, FlatList } from 'react-native';
 import { RootStackParamList } from '../../App';
 import ExerciseBox from '../Components/ExerciseBox';
 import {WorkoutSession, createWorkoutSession, storeSession, finalizeWorkoutSession} from '../Components/WorkoutSession';
@@ -59,19 +59,40 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
       // Update the workoutSession with endTime and duration
       const finalizedSession = finalizeWorkoutSession(workoutSession);
  
-      // Store the updated session
-      storeSession(finalizedSession);
-    }
+    // Calculate EXP points based on your business logic here
+    const expPoints = calculateExpForWorkout(finalizedSession); // Implement this function
+    // Store the updated session
+    storeSession(finalizedSession);
 
-    //Return to list of routines
-    navigation.goBack();
-  };
-
-  const handleTestingBallz = () => {
+    // Move to the screen to award EXP points and pass the calculated EXP
     navigation.navigate('AwardExpToCharScreen', {
-      currentSession: workoutSession,
+      experiencePointsSession: expPoints,
     });
+    }  
   };
+
+  //Calculates EXP gained from the session
+  function calculateExpForWorkout(session: WorkoutSession) {
+    if (!session) {
+      return 0; // If the session or exercises are missing, no EXP to award.
+    }
+  
+    const expPerCompletedRep = 10;
+    let totalExp = 0;
+    
+    //+10EXP per repetition completed
+    for (const exercise of session.exercises) {
+      if (exercise.sets) {
+        for (const set of exercise.sets) {
+          if (set.reps > 0) {
+            totalExp += set.reps * expPerCompletedRep;
+          }
+        }
+      }
+    }
+  
+    return totalExp;
+  }
 
   return (
     <FlatList
@@ -98,9 +119,6 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
               </TouchableOpacity>
               <TouchableOpacity style={styles.finishButtonCurrentWorkout} onPress={handleFinishWorkout}>
                 <Text style={styles.headerTextCurrentWorkout}>Finish</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.finishButtonCurrentWorkout} onPress={handleTestingBallz}>
-                <Text style={styles.headerTextCurrentWorkout}>Character</Text>
               </TouchableOpacity>
             </View>
           </View>

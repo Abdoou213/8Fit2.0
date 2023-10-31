@@ -4,6 +4,7 @@ import { styles } from '../Misc/ComponentStyles';
 import { Props, Routine } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDefaultCharacter } from '../Components/Character';
+import { createUser } from '../Components/User';
 
 //Deletes all currently saved routines
 async function deleteAllRoutines() {
@@ -132,6 +133,7 @@ async function deleteRoutine(routineToDelete: Routine) {
       
       //Create the character if not already created
       await createDefaultCharacter();
+      await createUser();
       const routinesFromStorage = await fetchAllRoutines();
       if (routinesFromStorage !== null) {
         setRoutines(routinesFromStorage);

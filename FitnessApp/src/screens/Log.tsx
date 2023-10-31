@@ -5,6 +5,7 @@ import { WorkoutSession, fetchAllSessions } from '../Components/WorkoutSession';
 import { styles } from '../Misc/ComponentStyles';
 import { Props } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { deleteCharacterAndResetFlag } from '../Components/Character';
 
 const LogScreen = ({ navigation }: Props) => {
   // Attributes
@@ -218,6 +219,12 @@ const renderLogsByMonth = () => {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}></RefreshControl>}
     >
       <View style={styles.headerContainer}>
+          <TouchableOpacity
+              onPress={() => deleteCharacterAndResetFlag()}
+              style={styles.createExerciseButton}
+            >
+            <Text style={styles.closeButtonTextViewPastSession}>Delete char test</Text>
+          </TouchableOpacity>
         <Text style={styles.logHeaderTitle}>Log</Text>
         <View style={styles.underline}></View>
       </View>

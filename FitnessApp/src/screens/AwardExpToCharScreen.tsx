@@ -1,117 +1,71 @@
 import { styles } from '../Misc/ComponentStyles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../App';
-import { WorkoutSession } from '../Components/WorkoutSession';
-import Character, { getDefaultCharacter } from '../Components/Character';
-import { useRef, useEffect, useState } from 'react';
-import { View, Image, TouchableOpacity, Text } from 'react-native';
+import Character from '../Components/Character';
+import { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
+import FrameAnimationIdle from '../Components/IdleFrameAnimation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
 
 type AwardExpScreenProps = {
     navigation: StackNavigationProp<RootStackParamList, 'AwardExpToCharScreen', 'CurrentWorkoutSession'>;
     route: {
       params: {
-        currentSession: WorkoutSession
+        experiencePointsSession: number
       };
     };
   };
 
+  const AwardExpToCharScreen = ({ route, navigation }: AwardExpScreenProps) => {
 
-const AwardExpToCharScreen = ({ route, navigation }: AwardExpScreenProps) => {
+    const { experiencePointsSession} = route.params;
+    const [character, setCharacter] = useState<Character | null>(null);
 
-  const animationFrames = [
-    './frame1.png',
-    'FitnessApp/src/Animations/frame2.png',
-    '../Animations/frame3.png',
-    '../Animations/frame4.png',
-    '../Animations/frame5.png',
-    '../Animations/frame6.png',
-    '../Animations/frame7.png',
-    '../Animations/frame8.png',
-    '../Animations/frame9.png',
-    '../Animations/frame10.png'
-  ];
-
-    //1) Screen Attributes
-    const { currentSession } = route.params;
-    const [character, setCharacter] = useState<Character>();
-    
-    const frameDuration = 100; // Adjust the duration between frames (in milliseconds)
-  
-    const [currentFrame, setCurrentFrame] = useState(0);
-
+    //Loads Character
     useEffect(() => {
-      // Fetch and set the default character when the component mounts
-      getDefaultCharacter()
-        .then((defaultCharacter) => {
-          if (defaultCharacter) {
-            setCharacter(defaultCharacter);
-          }
-        })
-        .catch((error) => {
-          console.error('Error initializing default character:', error);
-        });
-    }, []);
-    console.log(character)
-
-    const updateFrameIndex = () => {
-      if (character && animationFrames) {
-        setCurrentFrame((prevFrameIndex) => (prevFrameIndex + 1) % animationFrames.length);
-      }
-    };
-    /*useEffect(() => {
-      const frameCount = character?.walkingAnimation.length ? character?.idleAnimation.length : 0;
-      const interval = setInterval(() => {
-        setCurrentFrame((prevFrame: number) => (prevFrame + 1) % frameCount);
-      }, frameDuration);
-
-      return () => clearInterval(interval);
-    }, [character?.idleAnimation]);*/
-    // Function to update the frame index in a loop
+      const initializeCharacter = async () => {
+        
+        const defaultCharacterJSON = await AsyncStorage.getItem('defaultCharacter');
+        console.log('JSON')
+          console.log(defaultCharacterJSON)
+        if(defaultCharacterJSON){
+          const defaultCharacter = JSON.parse(defaultCharacterJSON);
+          setCharacter(defaultCharacter);
+          await AsyncStorage.setItem('defaultCharacter', JSON.stringify(character));
+          console.log('CHAAAR')
+          console.log(defaultCharacter)
+        }
+      };
   
-
-  // Use useEffect to start the animation loop when the component mounts
-  useEffect(() => {
-    if (character && character.idleAnimation) {
-      const animationInterval = setInterval(updateFrameIndex, 100); // Adjust the interval as needed
-      return () => clearInterval(animationInterval); // Clear the interval when the component unmounts
-    }
-  }, [character]);
-
-  if (!character || !character.idleAnimation || character.idleAnimation.length === 0) {
-    return null; // Render nothing if character is undefined or has no idleAnimation
-  }
-
-  const idleAnimationSource = animationFrames[currentFrame]
-    if (!idleAnimationSource) {
-      // Handle the case where idleAnimationSource is not defined
-      return null;
-    }
-
+      initializeCharacter();
+    }, []);
     
+    //Leave page after 3 seconds
+    useEffect(() => {
+      const timeout = setTimeout(() => {
+        navigation.navigate('ViewRoutine');
+      }, 4000);
+  
+      return () => {
+        clearTimeout(timeout);
+      };
+    }, [navigation]);
+
     return (
         <View style={styles.awardExpScreenStyle}>
-          <View style={{alignItems: 'center'}}>
-          <Image source={{ uri: animationFrames[currentFrame] }} style={{ width: 300, height: 300 }} />
+         <View style={{ alignContent: 'center', width: 300, height: 300, marginLeft: 30  }}>
+            <FrameAnimationIdle/>
           </View>
-          
-          <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={styles.closeButtonViewPastSession}
-            >
-            <Text style={styles.closeButtonTextViewPastSession}>X</Text>
-          </TouchableOpacity>
-         
           <View style={styles.underline}></View>
           <View style={styles.awardExpTextContainer}>
             <Text style={styles.awardExpText}>Level: </Text>
-            <Text style={styles.awardExpText}>{0}</Text>
+            <Text style={styles.awardExpText}>{character ? character.level : 0}</Text>
           </View>
-          <View style={styles.underline}></View>
-          
-
+          <View style={styles.underline}></View>       
           <View style={styles.awardExpTextContainer}>
-            <Text style={styles.awardExpText}>EXP Bar PlaceHolder: </Text>
-            <Text style={styles.awardExpText}>{0}</Text>
+            <Text style={styles.awardExpText}>EXP Gained: +</Text>
+            <Text style={styles.awardExpText}>{experiencePointsSession}</Text>
           </View>
           <View style={styles.underline}></View>
         </View>

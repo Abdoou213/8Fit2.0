@@ -5,59 +5,79 @@ type Character = {
     name: string;
     level: number,
     expTotalAmount: number,
-    idleAnimation: string[];
-    walkingAnimation: string[];
-    workingOutAnimation: string[];
+    color: string
   }
 
-export async function createDefaultCharacter(): Promise<void> {
-  let defaultCharacterCreated = await AsyncStorage.getItem('defaultCharacterCreated');
-  let defaultCharacter: Character | null = null;
-
-  if (defaultCharacterCreated === null) {
-    // Create a new Character object and initialize its attributes
-    defaultCharacter = {
-      id: 1, // Set the appropriate ID
-      name: 'Cat Fighter',
-      level: 1,
-      expTotalAmount: 0,
-      idleAnimation: ['../Animations/frame1.png','../Animations/frame2.png','../Animations/frame3.png',
-      '../Animations/frame4.png','../Animations/frame5.png','../Animations/frame6.png','../Animations/frame7.png',
-      '../Animations/frame8.png','../Animations/frame9.png','../Animations/frame10.png',],
-      walkingAnimation: [],
-      workingOutAnimation: [],
-    };
-
-    // Set the flag in AsyncStorage to true
-    await AsyncStorage.setItem('defaultCharacterCreated', 'true');
-
-    // Store the default character in the Character section of AsyncStorage
-    await AsyncStorage.setItem('defaultCharacter', JSON.stringify(defaultCharacter));
+  export async function createDefaultCharacter(): Promise<Character | null> {
+    let defaultCharacterCreated = await AsyncStorage.getItem('defaultCharacterCreated');
+    let defaultCharacter: Character | null = null;
+  
+    if (defaultCharacterCreated === null || defaultCharacterCreated === 'false') {
+      // Create a new Character object and initialize its attributes
+      defaultCharacter = {
+        id: 1,
+        name: 'Cat Fighter',
+        level: 1,
+        expTotalAmount: 0,
+        color: 'white',
+      };
+  
+      // Set the flag in AsyncStorage to true
+      await AsyncStorage.setItem('defaultCharacterCreated', 'true');
+  
+      // Store the default character in the Character section of AsyncStorage
+      await AsyncStorage.setItem('defaultCharacter', JSON.stringify(defaultCharacter));
+      console.log('created character');
+      console.log(defaultCharacter);
+    }
+  
+    return defaultCharacter;
   }
 
-  return;
-}
-
-export async function getDefaultCharacter(): Promise<Character> {
-    const defaultCharacter = await AsyncStorage.getItem('defaultCharacter');
-
-    if (defaultCharacter) {
-      console.log('BONGA');
-      const characterParsed = JSON.parse(defaultCharacter);
-      return characterParsed;
-    }else{
+  export async function getDefaultCharacter(): Promise<Character> {
+    try {
+      const defaultCharacter = await AsyncStorage.getItem('defaultCharacter');
+  
+      if (defaultCharacter) {
+        const characterParsed = JSON.parse(defaultCharacter);
+        return characterParsed;
+      } else {
+        const newChar: Character = {
+          id: 0,
+          name: '',
+          level: 1,
+          expTotalAmount: 0,
+          color: 'white'
+        };
+        return newChar;
+      }
+    } catch (error) {
+      // Handle the error here, e.g., log it or return a default character
+      console.error('Error while getting default character:', error);
+  
+      // Return a default character or throw the error
       const newChar: Character = {
-        id: 0, // You can set the appropriate default ID
-        name: '', // You can set the appropriate default name
-        level: 1, // You can set the appropriate default level
-        expTotalAmount: 0, // You can set the appropriate default experience points
-        idleAnimation: [],
-        walkingAnimation: [],
-        workingOutAnimation: [],
+        id: 0,
+        name: '',
+        level: 1,
+        expTotalAmount: 0,
+        color: 'white'
       };
       return newChar;
     }
-};
+  }
+  
+
+export async function deleteCharacterAndResetFlag(): Promise<void> {
+  try {
+    // Remove the character data from AsyncStorage
+    await AsyncStorage.removeItem('defaultCharacter');
+    await AsyncStorage.setItem('defaultCharacterCreated', 'false');
+    console.log('deleted')
+  } catch (error) {
+    console.error('Error deleting character:', error);
+  }
+}
 
 export default Character;
 
