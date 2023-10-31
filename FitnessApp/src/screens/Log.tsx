@@ -219,12 +219,6 @@ const renderLogsByMonth = () => {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}></RefreshControl>}
     >
       <View style={styles.headerContainer}>
-          <TouchableOpacity
-              onPress={() => deleteCharacterAndResetFlag()}
-              style={styles.createExerciseButton}
-            >
-            <Text style={styles.closeButtonTextViewPastSession}>Delete char test</Text>
-          </TouchableOpacity>
         <Text style={styles.logHeaderTitle}>Log</Text>
         <View style={styles.underline}></View>
       </View>
