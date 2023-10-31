@@ -27,14 +27,10 @@ type AwardExpScreenProps = {
       const initializeCharacter = async () => {
         
         const defaultCharacterJSON = await AsyncStorage.getItem('defaultCharacter');
-        console.log('JSON')
-          console.log(defaultCharacterJSON)
         if(defaultCharacterJSON){
           const defaultCharacter = JSON.parse(defaultCharacterJSON);
           setCharacter(defaultCharacter);
           await AsyncStorage.setItem('defaultCharacter', JSON.stringify(defaultCharacter));
-          console.log('CHAAAR')
-          console.log(defaultCharacter)
         }
       };
   
