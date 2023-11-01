@@ -17,7 +17,7 @@ import { Platform } from 'react-native';
 import ProfileScreenStack from './src/screens/ScreenStacks/ProfileScreenStack';
 
 //Set page
-const profileName = 'ProfileScreen';
+const profileName = 'Profile';
 const viewRoutineName = 'Routines';
 const logName = 'Log';
 
@@ -62,7 +62,7 @@ export type RootStackParamList = {
   //9.
   Routines: undefined,
   //10.
-  ProfileScreen: undefined,
+  Profile: undefined,
   //11.
   Log: undefined,
   //12.
@@ -119,7 +119,7 @@ const App = () => {
 
       })}>
         {/* Define the screens for the Bottom Tab Navigator */}
-        <Tab.Screen name="ProfileScreen" component={ProfileScreenStack} options={{ headerShown: false }}/>
+        <Tab.Screen name="Profile" component={ProfileScreenStack} options={{ headerShown: false }}/>
         <Tab.Screen name="Routines" component={ViewRoutineStack} options={{ headerShown: false }}/>
         <Tab.Screen name="Log" component={LogScreenStack} options={{ headerShown: false }}/>
     </Tab.Navigator> 
