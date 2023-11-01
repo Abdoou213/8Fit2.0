@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 
-
-//Define Character component
+//Define Char component 
 const Character = () => {
   return (
     <View style={styles.container}>
