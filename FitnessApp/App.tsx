@@ -83,7 +83,7 @@ export type RootStackParamList = {
     routine: Routine
   },
   //17.
-  ProfileScreenStack: undefined;
+  ProfileScreen: undefined;
   //18.
   Character: undefined;
   //19.

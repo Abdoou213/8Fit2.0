@@ -442,7 +442,7 @@ export const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 24,
         fontWeight: 'bold',
-        marginBTop: 100,
+        marginTop: 20,
         marginBottom: 5,
         textAlign: 'left', 
         justifyContent: 'center',
@@ -454,6 +454,7 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 20,
         padding: 50,
+        paddingBottom: 5,
       },
 
       //Award Character Screen

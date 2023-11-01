@@ -1,26 +1,18 @@
 import * as React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
+import { Props } from '../Components/AppComponents';
 
 //Define Statistics component
-const Statistics = () => {
+const Statistics = ({ navigation }: Props) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Statistics screen</Text>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',}}>
+      <Text style={{ fontSize: 24,
+        fontWeight: 'bold',}}>Statistics screen</Text>
+      <TouchableOpacity style={{width: 300, height: 300, backgroundColor: 'black'}} onPress={() => (navigation.goBack())}>
+            <Text style={{ fontSize: 24,fontWeight: 'bold', color: 'white', textAlign: 'center'}}>Go Back</Text>
+      </TouchableOpacity>
     </View>
   );
 }
-
-//Add style to the component
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-});
 
 export default Statistics;

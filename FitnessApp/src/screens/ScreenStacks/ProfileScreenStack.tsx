@@ -2,8 +2,8 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../App';
 import ProfileScreen from '../Profile';
-import LogScreen from "../Log";
 import CharacterScreen from '../CharacterScreen';
+import Statistics from '../Statistics';
 
 //Create Stack Navigator
 const Stack = createStackNavigator<RootStackParamList>();
@@ -12,8 +12,9 @@ const Stack = createStackNavigator<RootStackParamList>();
 const ProfileScreenStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Profile" component={ProfileScreen}/>
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen}/>
       <Stack.Screen name="Character" component={CharacterScreen}/>
+      <Stack.Screen name="Statistics" component={Statistics}/>
     </Stack.Navigator>
   );
 };

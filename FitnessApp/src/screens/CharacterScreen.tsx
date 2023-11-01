@@ -1,7 +1,6 @@
 import * as React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import { Props } from '../Components/AppComponents';
-import { styles } from '../Misc/ComponentStyles';
 
 //Define Char component 
 const CharacterScreen = ({ navigation }: Props) => {
