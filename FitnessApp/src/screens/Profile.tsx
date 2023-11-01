@@ -6,9 +6,8 @@ import { styles } from '../Misc/ComponentStyles';
 import {  Props } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 //Define Profile component
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }: Props) => {
   const [inputText, setInputText] = useState('Enter your name here'); // Initialize the state with a default string
   
   const handleTextChange = (text: React.SetStateAction<string>) => {
@@ -51,7 +50,7 @@ const ProfileScreen = () => {
       <TouchableOpacity
         key={(0)}
         style={[styles.viewSpecialStatsBox]}
-        onPress={() => (0)}
+        onPress={() => (navigation.navigate('Character'))}
       ></TouchableOpacity>
 
       {/* Button Container */}
