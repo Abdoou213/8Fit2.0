@@ -13,9 +13,10 @@ import { WorkoutSession } from './src/Components/WorkoutSession';
 import { SelectExerciseCategoryParams } from './src/screens/ScreenStacks/SelectExerciseStack';
 import SplashScreen from 'react-native-splash-screen';
 import { Platform } from 'react-native';
+import ProfileScreenStack from './src/screens/ScreenStacks/ProfileScreenStack';
 
 //Set page
-const profileName = 'Profile';
+const profileName = 'ProfileScreen';
 const viewRoutineName = 'Routines';
 const logName = 'Log';
 
@@ -60,7 +61,7 @@ export type RootStackParamList = {
   //9.
   Routines: undefined,
   //10.
-  Profile: undefined,
+  ProfileScreen: undefined,
   //11.
   Log: undefined,
   //12.
@@ -71,7 +72,9 @@ export type RootStackParamList = {
     currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
    },
    //14.
-  ViewPastSession: {sessionId: number};
+  ViewPastSession: {sessionId: number},
+  //17.
+  ProfileScreenStack: undefined;
 };
 
 //Create bottom tab navigator
@@ -107,7 +110,7 @@ const App = () => {
 
       })}>
         {/* Define the screens for the Bottom Tab Navigator */}
-        <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
+        <Tab.Screen name="ProfileScreen" component={ProfileScreenStack} options={{ headerShown: false }}/>
         <Tab.Screen name="Routines" component={ViewRoutineStack} options={{ headerShown: false }}/>
         <Tab.Screen name="Log" component={LogScreenStack} options={{ headerShown: false }}/>
     </Tab.Navigator> 

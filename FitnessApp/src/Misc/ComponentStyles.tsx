@@ -409,4 +409,50 @@ export const styles = StyleSheet.create({
         borderRadius: 8,
         flex: 1
       },
+
+      // Profile Screen Styles
+      banner: {
+        backgroundColor: 'gray', // Change the background color as desired
+        width: '100%',
+        height: 150, // Adjust the height to control the banner size
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomLeftRadius: 5, // Customize the shape of the banner
+        borderBottomRightRadius: 5, // Customize the shape of the banner
+      },
+      profilePictureContainer: {
+        position: 'absolute',
+        top: 170, // Adjust the position of the profile picture relative to the banner
+        left: 40,
+        alignSelf: 'center',
+        backgroundColor: 'white', // Background color for the circular container
+        borderRadius: 50, // Make it a circle by setting borderRadius to half of the width/height
+        width: 100, // Adjust the width and height as needed
+        height: 100,
+        borderWidth: 2, // You can add a border for the circle
+        borderColor: 'black', // Border color for the circle
+      },
+      profilePicture: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 50, // Make it a circle by setting borderRadius to half of the width/height
+        // Add your profile picture image source or content here
+      },
+      profileStatsTitle: {
+        color: '#fff',
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBTop: 100,
+        marginBottom: 5,
+        textAlign: 'left', 
+        justifyContent: 'center',
+      },
+      viewSpecialStatsBox: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        backgroundColor: '#2d2d47',
+        borderRadius: 10,
+        marginBottom: 20,
+        padding: 50,
+      },
 });
