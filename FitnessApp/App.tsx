@@ -14,6 +14,7 @@ import { SelectExerciseCategoryParams } from './src/screens/ScreenStacks/SelectE
 import Character from './src/Components/Character';
 import SplashScreen from 'react-native-splash-screen';
 import { Platform } from 'react-native';
+import ProfileScreenStack from './src/screens/ScreenStacks/ProfileScreenStack';
 
 //Set page
 const profileName = 'Profile';
@@ -72,7 +73,9 @@ export type RootStackParamList = {
     currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
    },
    //14.
-  ViewPastSession: {sessionId: number};
+  ViewPastSession: {sessionId: number},
+  //17.
+  ProfileScreenStack: undefined;
   //15.
   AwardExpToCharScreen: {
     experiencePointsSession: number
@@ -116,7 +119,7 @@ const App = () => {
 
       })}>
         {/* Define the screens for the Bottom Tab Navigator */}
-        <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
+        <Tab.Screen name="Profile" component={ProfileScreenStack} options={{ headerShown: false }}/>
         <Tab.Screen name="Routines" component={ViewRoutineStack} options={{ headerShown: false }}/>
         <Tab.Screen name="Log" component={LogScreenStack} options={{ headerShown: false }}/>
     </Tab.Navigator> 
