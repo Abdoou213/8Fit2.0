@@ -10,8 +10,8 @@ import ImagePicker, { launchImageLibrary } from 'react-native-image-picker';
 //Define Profile component
 const ProfileScreen = ({ navigation }: Props) => {
   const [inputText, setInputText] = useState('Enter your name here'); // Initialize the state with a default string
-  const [bannerImage, setBannerImage] = useState('https://images5.alphacoders.com/132/1329624.png'); // State for the banner image
-  const [profileImage, setProfileImage] = useState('https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/164316223/original/bf227084f4419c3d5ad3f8c32aa5b576da37387b/do-minecraft-8-bit-profile-picture.jpg'); // State for the profile picture
+  const [bannerImage, setBannerImage] = useState(); // State for the banner image
+  const [profileImage, setProfileImage] = useState(); // State for the profile picture
   
   const handleTextChange = (text: React.SetStateAction<string>) => {
     setInputText(text); // Update the state with the new text when it changes
