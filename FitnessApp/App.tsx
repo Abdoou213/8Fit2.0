@@ -74,16 +74,20 @@ export type RootStackParamList = {
    },
    //14.
   ViewPastSession: {sessionId: number},
-  //17.
-  ProfileScreenStack: undefined;
   //15.
   AwardExpToCharScreen: {
     experiencePointsSession: number
-  }
+  },
   //16.
   OngoingSessionStack: {
     routine: Routine
   },
+  //17.
+  ProfileScreenStack: undefined;
+  //18.
+  Character: undefined;
+  //19.
+  Statistics: undefined;
 };
 
 //Create bottom tab navigator
