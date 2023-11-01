@@ -409,6 +409,7 @@ export const styles = StyleSheet.create({
         borderRadius: 8,
         flex: 1
       },
+<<<<<<< HEAD
 
       // Profile Screen Styles
       banner: {
@@ -454,5 +455,30 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 20,
         padding: 50,
+=======
+      
+      //Award Character Screen
+      awardExpScreenStyle: {
+        flex: 1,
+        backgroundColor: '#2d2d47',
+        padding: 20,
+        paddingBottom: 5,
+        alignContent: 'center'
+      },
+      awardExpTextContainer: {
+        flexDirection: 'row',
+        paddingVertical: 2,
+        justifyContent: 'center',
+        paddingHorizontal: 15,
+        borderRadius: 8,
+      },
+      awardExpText: {
+        fontFamily: 'PixelifySansRegular',
+        marginBottom: 8,
+        color: '#fff',
+        textAlign: "center",
+        alignItems: 'center',
+        fontSize: 25
+>>>>>>> origin/main
       },
 });

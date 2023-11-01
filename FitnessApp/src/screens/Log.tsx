@@ -5,6 +5,7 @@ import { WorkoutSession, fetchAllSessions } from '../Components/WorkoutSession';
 import { styles } from '../Misc/ComponentStyles';
 import { Props } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { deleteCharacterAndResetFlag } from '../Components/Character';
 
 const LogScreen = ({ navigation }: Props) => {
   // Attributes

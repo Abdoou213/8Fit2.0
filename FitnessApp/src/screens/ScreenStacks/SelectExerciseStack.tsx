@@ -44,7 +44,7 @@ const SelectExerciseStack = () => {
   }
   return (
     <Stack.Navigator>
-      <Stack.Screen name="SelectExerciseCategory" component={SelectExerciseCategory} 
+      <Stack.Screen name="SelectExerciseCategory" component={SelectExerciseCategory}
         initialParams={{ currWorkoutSession, updateRoutineExercises, routineExercises } as SelectExerciseCategoryParams}  options={{ headerShown: false }}/>
       <Stack.Screen name="CreateExerciseCategory" component={CreateExerciseCategory} options={{ headerShown: false }} />
       <Stack.Screen name="ChooseExerciseFromCategory" component={ChooseExerciseFromCategory} options={{ headerShown: false }} />

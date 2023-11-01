@@ -11,6 +11,7 @@ import { Exercise } from './src/Components/Exercise';
 import { ExerciseCategory } from './src/Components/ExerciseCategory';
 import { WorkoutSession } from './src/Components/WorkoutSession';
 import { SelectExerciseCategoryParams } from './src/screens/ScreenStacks/SelectExerciseStack';
+import Character from './src/Components/Character';
 import SplashScreen from 'react-native-splash-screen';
 import { Platform } from 'react-native';
 import ProfileScreenStack from './src/screens/ScreenStacks/ProfileScreenStack';
@@ -72,9 +73,21 @@ export type RootStackParamList = {
     currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
    },
    //14.
+<<<<<<< HEAD
   ViewPastSession: {sessionId: number},
   //17.
   ProfileScreenStack: undefined;
+=======
+  ViewPastSession: {sessionId: number};
+  //15.
+  AwardExpToCharScreen: {
+    experiencePointsSession: number
+  }
+  //16.
+  OngoingSessionStack: {
+    routine: Routine
+  },
+>>>>>>> origin/main
 };
 
 //Create bottom tab navigator
