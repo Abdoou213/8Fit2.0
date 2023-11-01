@@ -1,10 +1,8 @@
 import * as React from 'react';
-import {Text, View, StyleSheet, ScrollView, RefreshControl, TouchableOpacity, Alert, Image, TextInput } from 'react-native';
-import { useCallback, useEffect, useState } from 'react';
-import { WorkoutSession, fetchAllSessions } from '../Components/WorkoutSession';
+import {Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { useState } from 'react';
 import { styles } from '../Misc/ComponentStyles';
 import {  Props } from '../Components/AppComponents';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Define Profile component
 const ProfileScreen = ({ navigation }: Props) => {
@@ -15,7 +13,6 @@ const ProfileScreen = ({ navigation }: Props) => {
   };
 
   const handleSave = () => {
-    // Handle saving the edited text here, for example, by sending it to an API or saving it to a database
     console.log('Edited Text:', inputText);
   };
 
@@ -25,11 +22,9 @@ const ProfileScreen = ({ navigation }: Props) => {
         <Text style={styles.logHeaderTitle}>Profile</Text>
         <View style={styles.underline}></View>
       </View>
-      {/* Add a View for the banner */}
       <View style={styles.banner}>
         <Text style={styles.profileStatsTitle}>Upload picture</Text>
       </View>
-        {/* Profile Picture Circle */}
         <View style={styles.profilePictureContainer}>
           <View style={styles.profilePicture}></View>        
       </View>
@@ -43,7 +38,7 @@ const ProfileScreen = ({ navigation }: Props) => {
       <TouchableOpacity
         key={null}
         style={[styles.viewSpecialStatsBox]}
-        onPress={() => null}
+        onPress={() => (navigation.navigate('Statistics'))}
       ></TouchableOpacity>
       <Text style={styles.profileStatsTitle}>Character</Text>
       <View style={styles.underline}></View>
@@ -52,13 +47,6 @@ const ProfileScreen = ({ navigation }: Props) => {
         style={[styles.viewSpecialStatsBox]}
         onPress={() => (navigation.navigate('Character'))}
       ></TouchableOpacity>
-
-      {/* Button Container */}
-      <View style={styles.buttonContainer}>
-        {/* Add your buttons or other content here */}
-      </View>
-      <View style={styles.buttonContainer}>
-      </View>
     </View>
   );
 }
