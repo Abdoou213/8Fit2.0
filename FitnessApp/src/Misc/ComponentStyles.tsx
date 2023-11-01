@@ -422,8 +422,8 @@ export const styles = StyleSheet.create({
       },
       profilePictureContainer: {
         position: 'absolute',
-        top: 170, // Adjust the position of the profile picture relative to the banner
-        left: 40,
+        top: -90, // Adjust the position of the profile picture relative to the banner
+        left: 10,
         alignSelf: 'center',
         backgroundColor: 'white', // Background color for the circular container
         borderRadius: 50, // Make it a circle by setting borderRadius to half of the width/height
