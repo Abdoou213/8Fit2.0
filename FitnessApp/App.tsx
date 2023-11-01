@@ -73,12 +73,9 @@ export type RootStackParamList = {
     currWorkoutSession?: WorkoutSession; // Optional WorkoutSession prop
    },
    //14.
-<<<<<<< HEAD
   ViewPastSession: {sessionId: number},
   //17.
   ProfileScreenStack: undefined;
-=======
-  ViewPastSession: {sessionId: number};
   //15.
   AwardExpToCharScreen: {
     experiencePointsSession: number
@@ -87,7 +84,6 @@ export type RootStackParamList = {
   OngoingSessionStack: {
     routine: Routine
   },
->>>>>>> origin/main
 };
 
 //Create bottom tab navigator

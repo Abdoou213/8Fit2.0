@@ -409,7 +409,6 @@ export const styles = StyleSheet.create({
         borderRadius: 8,
         flex: 1
       },
-<<<<<<< HEAD
 
       // Profile Screen Styles
       banner: {
@@ -455,8 +454,8 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 20,
         padding: 50,
-=======
-      
+      },
+
       //Award Character Screen
       awardExpScreenStyle: {
         flex: 1,
@@ -479,6 +478,5 @@ export const styles = StyleSheet.create({
         textAlign: "center",
         alignItems: 'center',
         fontSize: 25
->>>>>>> origin/main
       },
 });
