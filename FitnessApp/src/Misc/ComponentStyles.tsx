@@ -480,4 +480,12 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 25
       },
+      levelUpText: {
+        fontFamily: 'PixelifySansSemiBold',
+        marginBottom: 8,
+        color: '#fff',
+        textAlign: "center",
+        alignItems: 'center',
+        fontSize: 70
+      }
 });

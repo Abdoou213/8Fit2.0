@@ -76,7 +76,7 @@ export type RootStackParamList = {
   ViewPastSession: {sessionId: number},
   //15.
   AwardExpToCharScreen: {
-    experiencePointsSession: number
+    earnedExp: number
   },
   //16.
   OngoingSessionStack: {
@@ -88,6 +88,10 @@ export type RootStackParamList = {
   Character: undefined;
   //19.
   Statistics: undefined;
+  //20.
+  LevelUpScreen: {
+    earnedExp: number
+  };
 };
 
 //Create bottom tab navigator

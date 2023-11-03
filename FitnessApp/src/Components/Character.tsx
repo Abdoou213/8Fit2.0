@@ -66,18 +66,46 @@ type Character = {
       return newChar;
     }
   }
-  
 
-export async function deleteCharacterAndResetFlag(): Promise<void> {
-  try {
-    // Remove the character data from AsyncStorage
-    await AsyncStorage.removeItem('defaultCharacter');
-    await AsyncStorage.setItem('defaultCharacterCreated', 'false');
-    console.log('deleted')
-  } catch (error) {
-    console.error('Error deleting character:', error);
+  // Update character's EXP and level if they have leveled up
+  export async function updateCharacterExpAndLevel(character: Character, earnedExp: number): Promise<Character> {
+
+    const prevLevel = character.level;
+    let updatedExpTotal = character.expTotalAmount + earnedExp;
+    const expBaseFactor = 1.22;
+
+    while (updatedExpTotal >= calculateLevelUpThreshold(character.level, expBaseFactor)) {
+      const newLevel = character.level + 1;
+      character = { ...character, level: newLevel };
+    }
+  
+    const updatedCharacter: Character = { ...character, expTotalAmount: updatedExpTotal };
+    
+    // Save the updated character in AsyncStorage
+    await AsyncStorage.setItem('defaultCharacter', JSON.stringify(updatedCharacter));
+
+    if(updatedCharacter.level > prevLevel){
+      await AsyncStorage.setItem('characterLeveledUp', 'true');
+    }
+      
+    return updatedCharacter;
   }
-}
+  
+  // Calculate the EXP threshold required to level up based on the character's current level, lvl 1 to 2 is 500 EXP
+  function calculateLevelUpThreshold(currentLevel: number, baseFactor: number): number {
+    return Math.floor(300 * Math.pow(baseFactor, currentLevel));
+  }
+
+  export async function deleteCharacterAndResetFlag(): Promise<void> {
+    try {
+      // Remove the character data from AsyncStorage
+      await AsyncStorage.removeItem('defaultCharacter');
+      await AsyncStorage.setItem('defaultCharacterCreated', 'false');
+      console.log('deleted')
+    } catch (error) {
+      console.error('Error deleting character:', error);
+    }
+  }
 
 export default Character;
 

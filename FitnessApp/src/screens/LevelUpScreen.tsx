@@ -8,8 +8,8 @@ import FrameAnimation from '../Components/FrameAnimation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 
-type AwardExpScreenProps = {
-    navigation: StackNavigationProp<RootStackParamList, 'AwardExpToCharScreen', 'CurrentWorkoutSession'>;
+type LevelUpScreenProps = {
+    navigation: StackNavigationProp<RootStackParamList, 'LevelUpScreen', 'CurrentWorkoutSession'>;
     route: {
       params: {
         earnedExp: number
@@ -17,48 +17,52 @@ type AwardExpScreenProps = {
     }
   };
 
-  const AwardExpToCharScreen = ({route, navigation }: AwardExpScreenProps) => {
+const LevelUpScreen = ({ route, navigation }: LevelUpScreenProps) => {
 
     const [character, setCharacter] = useState<Character | null>(null);
     const expGained = route.params.earnedExp;
-
+    //Timeout
     useEffect(() => {
-      // Set a timeout to navigate to another screen after 4,5 seconds
-      const timeout = setTimeout(() => {
-        navigation.navigate('ViewRoutine');
-      }, 4500);
+        // Set a timeout to navigate to another screen after 4,5 seconds
+        const timeout = setTimeout(() => {
+          navigation.navigate('ViewRoutine');
+        }, 4500);
+    
+        return () => {
+          clearTimeout(timeout);
+        };
+      }, [navigation]);
 
-      return () => {
-        clearTimeout(timeout);
-      };
-    }, [navigation]);
+    
 
     //Loads Character
     useEffect(() => {
 
-      const initializeCharacter = async () => {
+        const initializeCharacter = async () => {
         
         const defaultCharacterJSON = await AsyncStorage.getItem('defaultCharacter');
 
         if(defaultCharacterJSON){
-          const defaultCharacter = JSON.parse(defaultCharacterJSON);
-          setCharacter(defaultCharacter);
-          console.log(defaultCharacter)
+            const defaultCharacter = JSON.parse(defaultCharacterJSON);
+            setCharacter(defaultCharacter);
+            console.log(defaultCharacter)
         }
-      };
-      
-      initializeCharacter();
+        };
+        
+        initializeCharacter();
     }, []);
 
-
+    
     if (!character) {
       return null;
     }
 
+    
     return (
       <View style={styles.awardExpScreenStyle}>
-        <View style={{ alignContent: 'center', width: 300, height: 300, marginLeft: 30, flexDirection: 'row'}}>
-          <FrameAnimation frameRateMs={150} animationType='idle' style={{ flex: 1 }}/>
+        <View style={{ alignContent: 'center', width: 300, height: 300, marginLeft: 30, flexDirection: 'column'}}>
+          <FrameAnimation frameRateMs={150} animationType='punching' style={{ flex: 1 }}/>
+          <Text style={styles.levelUpText}>Level Up!</Text>
         </View>
         <View style={styles.underline}></View>
         <View style={styles.awardExpTextContainer}>
@@ -74,4 +78,4 @@ type AwardExpScreenProps = {
       </View>
   );
 };
-export default AwardExpToCharScreen;
+export default LevelUpScreen;
