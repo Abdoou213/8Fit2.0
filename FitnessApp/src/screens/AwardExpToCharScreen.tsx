@@ -23,10 +23,10 @@ type AwardExpScreenProps = {
     const expGained = route.params.earnedExp;
 
     useEffect(() => {
-      // Set a timeout to navigate to another screen after 4,5 seconds
+      // Set a timeout to navigate to another screen after 3 seconds
       const timeout = setTimeout(() => {
         navigation.navigate('ViewRoutine');
-      }, 4500);
+      }, 3000);
 
       return () => {
         clearTimeout(timeout);

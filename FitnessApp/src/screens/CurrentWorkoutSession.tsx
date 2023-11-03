@@ -9,6 +9,7 @@ import { styles } from '../Misc/ComponentStyles';
 import { Routine } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Character, { updateCharacterExpAndLevel } from '../Components/Character';
+import FrameAnimation from '../Components/FrameAnimation';
 
 //CurrentWorkout Screen Properties
 type CurrentWorkoutSessionProps = {
@@ -134,6 +135,9 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
       ListHeaderComponent={
         <Animated.View>
           <View style={styles.headerContainer}>
+            <View style={{ alignContent: 'center', width: 200, height: 100, marginLeft: 85, flexDirection: 'row'}}>
+              <FrameAnimation frameRateMs={300} animationType='workingOut' style={{ flex: 1 }}/>
+            </View>
             <Text style={styles.logHeaderTitle}> {workoutSession ? workoutSession.routine.name : ""} </Text>
             <Text style={styles.currentWorkoutHeaderDate}> {workoutSession ? workoutSession.startTimeString : ""} </Text>
             <View style={styles.underline}></View>
