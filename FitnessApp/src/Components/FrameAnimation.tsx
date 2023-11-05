@@ -49,7 +49,7 @@ const explosionWhiteAnimation = [
   require('../Animations/White/Explosion/levelupFrame8.png'),
 ];
 
-const punchingWhiteAnimation = [
+const punchingWhiteFireEyesAnimation = [
   require('../Animations/White/LevelingUp/levelupFrame1.png'),
   require('../Animations/White/LevelingUp/levelupFrame2.png'),
   require('../Animations/White/LevelingUp/levelupFrame3.png'),
@@ -75,6 +75,16 @@ const explosionEffect = [
   require('../Animations/Effects/Explosion/explosionFrame9.png'),
   require('../Animations/Effects/Explosion/explosionFrame10.png'),
   require('../Animations/Effects/Explosion/explosionFrame11.png'),
+];
+
+const punchingWhiteAnimation = [
+  require('../Animations/White/Punching/punchingNormalFrame1.png'),
+  require('../Animations/White/Punching/punchingNormalFrame2.png'),
+  require('../Animations/White/Punching/punchingNormalFrame3.png'),
+  require('../Animations/White/Punching/punchingNormalFrame4.png'),
+  require('../Animations/White/Punching/punchingNormalFrame3.png'),
+  require('../Animations/White/Punching/punchingNormalFrame2.png'),
+
 ];
 
 class FrameAnimationIdle extends Component<AnimationProps, AnimationState> {
@@ -104,12 +114,14 @@ class FrameAnimationIdle extends Component<AnimationProps, AnimationState> {
       this.animationFrames = explosionWhiteAnimation;
     } else if (animationType === 'spinning') {
       this.animationFrames = spinningIdleWhiteAnimation;
-    } else if (animationType === 'punching') {
-      this.animationFrames = punchingWhiteAnimation;
+    } else if (animationType === 'levelUp') {
+      this.animationFrames = punchingWhiteFireEyesAnimation;
     } else if (animationType === 'idle') {
       this.animationFrames = idleWhiteAnimation;
     }else if (animationType === 'explosionEffect') {
       this.animationFrames = explosionEffect;
+    }else if ( animationType === 'punching'){
+      this.animationFrames = punchingWhiteAnimation;
     }
   }
 

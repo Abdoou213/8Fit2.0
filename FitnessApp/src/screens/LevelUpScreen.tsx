@@ -61,7 +61,7 @@ const LevelUpScreen = ({ route, navigation }: LevelUpScreenProps) => {
     return (
       <View style={styles.awardExpScreenStyle}>
         <View style={{ alignContent: 'center', width: 300, height: 300, marginLeft: 30, flexDirection: 'column'}}>
-          <FrameAnimation frameRateMs={150} animationType='punching' style={{ flex: 1 }}/>
+          <FrameAnimation frameRateMs={150} animationType='levelUp' style={{ flex: 1 }}/>
           <Text style={styles.levelUpText}>Level Up!</Text>
         </View>
         <View style={styles.underline}></View>

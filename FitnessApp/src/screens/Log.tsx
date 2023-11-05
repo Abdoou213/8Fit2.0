@@ -5,7 +5,7 @@ import { WorkoutSession, fetchAllSessions } from '../Components/WorkoutSession';
 import { styles } from '../Misc/ComponentStyles';
 import { Props } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { deleteCharacterAndResetFlag } from '../Components/Character';
+import FrameAnimation from '../Components/FrameAnimation';
 
 const LogScreen = ({ navigation }: Props) => {
   // Attributes
@@ -219,6 +219,9 @@ const renderLogsByMonth = () => {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}></RefreshControl>}
     >
       <View style={styles.headerContainer}>
+        <View style={{ alignContent: 'center', width: 200, height: 100, marginLeft: 85, flexDirection: 'row'}}>
+              <FrameAnimation frameRateMs={300} animationType='punching' style={{ flex: 1 }}/>
+        </View>
         <Text style={styles.logHeaderTitle}>Log</Text>
         <View style={styles.underline}></View>
       </View>
