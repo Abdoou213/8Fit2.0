@@ -5,6 +5,7 @@ import CurrentWorkoutSession from '../CurrentWorkoutSession';
 import SelectExerciseStack from './SelectExerciseStack';
 import AwardExpToCharScreen from '../AwardExpToCharScreen';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import LevelUpScreen from '../LevelUpScreen';
 
 //Create Stack Navigator
 const Stack = createStackNavigator<RootStackParamList>();
@@ -19,6 +20,7 @@ const routine = route.params.routine;
     <Stack.Navigator>
       <Stack.Screen name="CurrentWorkoutSession" component={CurrentWorkoutSession} initialParams={{routine}} options={{ headerShown: false }}/>
       <Stack.Screen name="AwardExpToCharScreen" component={AwardExpToCharScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="LevelUpScreen" component={LevelUpScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="SelectExerciseStack" component={SelectExerciseStack} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );

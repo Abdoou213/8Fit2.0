@@ -4,9 +4,11 @@ import ExerciseBox from '../Components/ExerciseBox';
 import {WorkoutSession, createWorkoutSession, storeSession, finalizeWorkoutSession} from '../Components/WorkoutSession';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { styles } from '../Misc/ComponentStyles';
 import { Routine } from '../Components/AppComponents';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Character, { updateCharacterExpAndLevel } from '../Components/Character';
 
 //CurrentWorkout Screen Properties
 type CurrentWorkoutSessionProps = {
@@ -27,6 +29,8 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
   const initialWorkoutSession = currWorkoutSession ? currWorkoutSession : createWorkoutSession(route.params?.routine as Routine); 
   const [routineLoaded, setRoutineLoaded] = useState<boolean>(false);
 
+  const computeExpProgressCalled = useRef(false);
+
   //2) Create the workoutSession data using the methods
   const [workoutSession, setWorkoutSession] = useState<WorkoutSession>(
     initialWorkoutSession
@@ -35,8 +39,6 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
   useFocusEffect(() => {
     // Load the routine only if it hasn't been loaded yet
     if (!routineLoaded) {
-      // Initialize routine here if it's not available
-      // For example, you can fetch it from storage or wherever it's stored
       setRoutineLoaded(true); // Mark the routine as loaded
     }
     
@@ -53,22 +55,44 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
   };
 
   //Define a function to handle finishing the workout session
-  const handleFinishWorkout = () => {
+  const handleFinishWorkout = async () => {
 
     if (workoutSession) {
       // Update the workoutSession with endTime and duration
       const finalizedSession = finalizeWorkoutSession(workoutSession);
  
-    // Calculate EXP points based on your business logic here
-    const expPoints = calculateExpForWorkout(finalizedSession); // Implement this function
-    // Store the updated session
-    storeSession(finalizedSession);
+      // Calculate EXP points based on your business logic here
+      const expPoints = calculateExpForWorkout(finalizedSession); // Implement this function
+      // Store the updated session
+      storeSession(finalizedSession);
+      
+      await initializeCharacter(expPoints);
+      let didLevelUp = await AsyncStorage.getItem('characterLeveledUp');
+      await AsyncStorage.setItem('characterLeveledUp', 'false');
 
-    // Move to the screen to award EXP points and pass the calculated EXP
-    navigation.navigate('AwardExpToCharScreen', {
-      experiencePointsSession: expPoints,
-    });
+      // Move to the screen to award EXP points and pass the calculated EXP
+      if(didLevelUp === 'true'){       
+        navigation.navigate('LevelUpScreen',{earnedExp: expPoints});
+      }else{
+        navigation.navigate('AwardExpToCharScreen',{earnedExp: expPoints});
+      }
+      
     }  
+  };
+
+  const initializeCharacter = async (expPoints: number) => {
+        
+    const defaultCharacterJSON = await AsyncStorage.getItem('defaultCharacter');
+
+    if(defaultCharacterJSON){
+      const defaultCharacter = JSON.parse(defaultCharacterJSON);
+
+      if(!computeExpProgressCalled.current && defaultCharacter){
+        await updateCharacterExpAndLevel(defaultCharacter, expPoints);
+      }
+      
+      computeExpProgressCalled.current = true;
+    }
   };
 
   //Calculates EXP gained from the session
@@ -90,7 +114,7 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
         }
       }
     }
-  
+
     return totalExp;
   }
 
