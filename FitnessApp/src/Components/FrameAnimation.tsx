@@ -97,7 +97,7 @@ class FrameAnimationIdle extends Component<AnimationProps, AnimationState> {
 
   initAnimationFrames() {
     const animationType = this.props.animationType;
-
+    
     if (animationType === 'workingOut') {
       this.animationFrames = workingOutWhiteAnimation;
     } else if (animationType === 'explosion') {
@@ -129,7 +129,6 @@ class FrameAnimationIdle extends Component<AnimationProps, AnimationState> {
 
   render() {
     const { frameIndex } = this.state;
-
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Image source={this.animationFrames[frameIndex]} style={{ width: 300, height: 300, justifyContent: 'center', alignItems: 'center'}} />
