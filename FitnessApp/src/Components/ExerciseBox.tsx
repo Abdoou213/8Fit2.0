@@ -1,5 +1,5 @@
 import { styles } from '../Misc/ComponentStyles';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import {WorkoutSession} from './WorkoutSession';
 import { Set, generateRandomId} from './AppComponents';
 import {Exercise } from './Exercise';
@@ -85,10 +85,53 @@ export const ExerciseBox = ({exercise, workoutSession, setWorkoutSession }: Exer
         return updatedSession;
       });
     };
-    
+
+  // Function to delete an exercise from the current workout session
+  const handleDeleteExercise = () => {
+    Alert.alert(
+      'Delete Exercise',
+      `Are you sure you want to delete "${exercise.name}" from the current workout session?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          onPress: () => {
+            setWorkoutSession((prevSession) => {
+              const updatedSession = { ...prevSession };
+
+              // Find the exercise
+              const exerciseIndex = updatedSession.exercises.findIndex((ex) => ex.name === exercise.name);
+
+              if (exerciseIndex !== -1) {
+                // Remove the exercise from the exercises array
+                updatedSession.exercises.splice(exerciseIndex, 1);
+
+                console.log('Deleted Exercise:', exercise.name);
+              } else {
+                console.warn('Exercise not found:', exercise.name);
+              }
+
+              return updatedSession;
+            });
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+
     return (
       <View style={styles.exerciseBoxContainer}>
-        <Text style={styles.exerciseTitle}>{exercise.name}</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}} >
+          <Text style={{flex: 1, ...styles.exerciseTitle}}>{exercise.name}</Text>
+          <TouchableOpacity onPress={() => handleDeleteExercise()}>
+                <Text style={styles.deleteSetButtonText}>X</Text>
+          </TouchableOpacity>
+        </View>  
         <View style={styles.underline}></View>
           <View style={styles.setsContainerExerciseBox}>
             {exercise.sets.map((set: Set, index: number) => (
@@ -100,9 +143,12 @@ export const ExerciseBox = ({exercise, workoutSession, setWorkoutSession }: Exer
                 <TextInput keyboardType="numeric" style={styles.setTextExerciseBox} 
                 onChangeText={(value) => handleRepsChange(index, value)}>{set.reps}</TextInput>
                 <Text style={styles.setTextExerciseBox}>reps</Text>
-                <TouchableOpacity style={styles.deleteSetButton} onPress={() => handleDeleteSet(index)}>
-                  <Text style={styles.deleteSetButtonText}>X</Text>
-                </TouchableOpacity>  
+                <View>
+                  <TouchableOpacity style={styles.deleteSetButton} onPress={() => handleDeleteSet(index)}>
+                    <Text style={styles.deleteSetButtonText}>X</Text>
+                  </TouchableOpacity>  
+                </View>
+                
               </View>
             ))}
           </View>

@@ -198,8 +198,6 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         backgroundColor: '#2d2d47',
         color: '#fff',
-        borderColor: '#a6a571',
-        borderWidth: 3
       },
       setExerciseBox: {
         flexDirection: 'row',
