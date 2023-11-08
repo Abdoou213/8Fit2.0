@@ -487,5 +487,55 @@ export const styles = StyleSheet.create({
         textAlign: "center",
         alignItems: 'center',
         fontSize: 70
-      }
+      },
+
+      //Statistics
+      statsheader: {
+        fontSize: 30,
+        margin: 20,
+      },
+      goBackButton: {
+        width: 300,
+        height: 50,
+        backgroundColor: 'black',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+        position: 'absolute',
+        bottom: 20,
+        alignSelf: 'center',
+      },
+      fontFamily: {
+        fontFamily: 'PixelifySansRegular',
+      },
+      iconSize: {
+        fontSize: 40,
+      },
+      statsbuttonText: {
+        fontSize: 24,
+        color: 'white',
+      },
+      statisticRow: {
+        flexDirection: 'row',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      },
+      statisticCell: {
+        flex: 1,
+      },
+      iconCell: {
+        width: 40,
+        alignItems: 'center',
+      },
+      statisticText: {
+        fontSize: 16,
+      },
+      statisticValue: {
+        fontSize: 24,
+      },
+      textRight: {
+        textAlign: 'right',
+      },
 });
