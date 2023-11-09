@@ -490,30 +490,22 @@ export const styles = StyleSheet.create({
       },
 
       //Statistics
+      container: {
+        flex: 1,
+        backgroundColor: '#2d2d47',
+      },
+      closeButtonStats: {
+        color: 'white',
+        padding: 8,
+        borderRadius: 5,
+        marginLeft: 10,
+      },
       statsheader: {
         fontSize: 30,
         margin: 20,
-      },
-      goBackButton: {
-        width: 300,
-        height: 50,
-        backgroundColor: 'black',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 20,
-        position: 'absolute',
-        bottom: 20,
-        alignSelf: 'center',
-      },
-      fontFamily: {
-        fontFamily: 'PixelifySansRegular',
-      },
-      iconSize: {
-        fontSize: 40,
-      },
-      statsbuttonText: {
-        fontSize: 24,
+        textAlign: 'center',
         color: 'white',
+        fontFamily: 'PixelifySansRegular',
       },
       statisticRow: {
         flexDirection: 'row',
@@ -521,21 +513,27 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 20,
         alignItems: 'center',
         justifyContent: 'space-between',
-      },
-      statisticCell: {
-        flex: 1,
+        backgroundColor: 'transparent',
       },
       iconCell: {
         width: 40,
         alignItems: 'center',
       },
+      statisticCell: {
+        flex: 1,
+        marginBottom:10,
+        marginTop:10
+      },
       statisticText: {
         fontSize: 16,
+        fontFamily: 'PixelifySansRegular',
       },
       statisticValue: {
         fontSize: 24,
+        fontFamily: 'PixelifySansRegular',
       },
       textRight: {
         textAlign: 'right',
+        color: 'white',
       },
 });

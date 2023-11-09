@@ -10,6 +10,7 @@ import { Routine } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Character, { updateCharacterExpAndLevel } from '../Components/Character';
 import FrameAnimation from '../Components/FrameAnimation';
+import { getUser, updateUserStats } from '../Components/User';
 
 //CurrentWorkout Screen Properties
 type CurrentWorkoutSessionProps = {
@@ -57,29 +58,38 @@ const CurrentWorkoutSession = ({ route, navigation }: CurrentWorkoutSessionProps
 
   //Define a function to handle finishing the workout session
   const handleFinishWorkout = async () => {
-
     if (workoutSession) {
-      // Update the workoutSession with endTime and duration
       const finalizedSession = finalizeWorkoutSession(workoutSession);
- 
+  
       // Calculate EXP points based on your business logic here
-      const expPoints = calculateExpForWorkout(finalizedSession); // Implement this function
-      // Store the updated session
-      storeSession(finalizedSession);
-      
-      await initializeCharacter(expPoints);
-      let didLevelUp = await AsyncStorage.getItem('characterLeveledUp');
-      await AsyncStorage.setItem('characterLeveledUp', 'false');
-
-      // Move to the screen to award EXP points and pass the calculated EXP
-      if(didLevelUp === 'true'){       
-        navigation.navigate('LevelUpScreen',{earnedExp: expPoints});
-      }else{
-        navigation.navigate('AwardExpToCharScreen',{earnedExp: expPoints});
+      const expPoints = calculateExpForWorkout(finalizedSession);
+  
+      // Use await to get the user data
+      const user = await getUser();
+  
+      if (user) {
+        // Store the updated session
+        storeSession(finalizedSession);
+  
+        // Update the user's stats
+        updateUserStats(user, finalizedSession);
+  
+        await initializeCharacter(expPoints);
+        let didLevelUp = await AsyncStorage.getItem('characterLeveledUp');
+        await AsyncStorage.setItem('characterLeveledUp', 'false');
+  
+        if (didLevelUp === 'true') {
+          navigation.navigate('LevelUpScreen', { earnedExp: expPoints });
+        } else {
+          navigation.navigate('AwardExpToCharScreen', { earnedExp: expPoints });
+        }
+      } else {
+        // Handle the case where user data is not available
+        console.error('User data is not available.');
       }
-      
-    }  
+    }
   };
+  
 
   const initializeCharacter = async (expPoints: number) => {
         

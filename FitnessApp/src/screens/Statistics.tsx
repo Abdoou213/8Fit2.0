@@ -4,96 +4,86 @@ import { Props } from '../Components/AppComponents';
 import { WorkoutSession, fetchAllSessions } from '../Components/WorkoutSession';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from '../Misc/ComponentStyles';
+import User, { getUser } from '../Components/User';
 
 const Statistics = ({ navigation }: Props) => {
-  const [sessions, setSessions] = useState<WorkoutSession[]>([]);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    fetchSessions();
+    const fetchUserAndStats = async () => {
+      const userData = await getUser();
+      if (userData) {
+        setUser(userData);
+      }
+    };
+
+    fetchUserAndStats();
   }, []);
 
-  const fetchSessions = async () => {
-    const sessionsFromStorage = await fetchAllSessions();
-    if (sessionsFromStorage !== null) {
-      setSessions(sessionsFromStorage);
-    }
+  const statisticRows = user && typeof user === 'object'
+    ? [
+      {
+        label: 'Workouts Completed:',
+        value: user.userStats && user.userStats[0],
+        bgColor: 'purple',
+        icon: <MaterialCommunityIcons name="weight-lifter" size={40} color="black" />,
+      },
+      {
+        label: 'Average Workout Duration:',
+        value: user.userStats && user.userStats[1],
+        bgColor: 'orange',
+        icon: <MaterialCommunityIcons name="clock-time-three-outline" size={40} color="black" />,
+      },
+      {
+        label: 'Longest Workout Duration:',
+        value: user.userStats && user.userStats[2],
+        bgColor: 'red',
+        icon: <MaterialCommunityIcons name="timer-sand-empty" size={40} color="black" />,
+      },
+      {
+        label: 'Total Workout Duration:',
+        value: user.userStats && user.userStats[3],
+        bgColor: 'green',
+        icon: <MaterialCommunityIcons name="timer" size={40} color="black" />,
+      },
+      {
+        label: 'Total Weight lifted all time:',
+        value: user.userStats && user.userStats[4],
+        bgColor: 'turquoise',
+        icon: <MaterialCommunityIcons name="dumbbell" size={40} color="black" />,
+      },
+      {
+        label: 'Max Total Weight lifted in single workout:',
+        value: user.userStats && user.userStats[5],
+        bgColor: 'blue',
+        icon: <MaterialCommunityIcons name="arm-flex" size={40} color="black" />,
+      },
+    ]
+    : [];
+
+  // Function to navigate back to the previous screen
+  const goBackToPreviousScreen = () => {
+    navigation.goBack();
   };
 
-  // Calculate statistics
-  const numWorkoutsCompleted = sessions.length;
-  const totalWorkoutTime = sessions.reduce(
-    (total, session) => total + session.duration,
-    0
-  );
-  const averageDuration =
-    numWorkoutsCompleted > 0
-      ? Math.round(totalWorkoutTime / numWorkoutsCompleted)
-      : 0;
-  const maxWeightLifted = sessions.reduce((max, session) => {
-    const maxSessionWeight = Math.max(
-      ...session.exercises.map((exercise) =>
-        Math.max(...exercise.sets.map((set) => set.weight))
-      )
-    );
-    return maxSessionWeight > max ? maxSessionWeight : max;
-  }, 0);
-  const longestDuration = Math.round(
-    Math.max(...sessions.map((session) => session.duration))
-  );
-
-  const statisticRows = [
-    {
-      label: 'Workouts Completed:',
-      value: numWorkoutsCompleted,
-      bgColor: 'yellow',
-      icon: <MaterialCommunityIcons name="weight-lifter" size={40} color="black" />,
-    },
-    {
-      label: 'Total Workout Time (min):',
-      value: totalWorkoutTime,
-      bgColor: 'orange',
-      icon: <MaterialCommunityIcons name="clock-time-three-outline" size={40} color="black" />,
-    },
-    {
-      label: 'Average Duration (min):',
-      value: averageDuration,
-      bgColor: 'red',
-      icon: <MaterialCommunityIcons name="timer-sand-empty" size={40} color="black" />,
-    },
-    {
-      label: 'Max Weight Lifted (lbs):',
-      value: maxWeightLifted,
-      bgColor: 'green',
-      icon: <MaterialCommunityIcons name="dumbbell" size={40} color="black" />,
-    },
-    {
-      label: 'Longest Duration (min):',
-      value: longestDuration,
-      bgColor: 'turquoise',
-      icon: <MaterialCommunityIcons name="timer" size={40} color="black" />,
-    },
-  ];
-
   return (
-    <View style={{ flex: 1, alignItems: 'center' }}>
-      <Text style={[styles.statsheader, styles.fontFamily]}>Statistics</Text>
+    <View style={{ backgroundColor: '#2d2d47' }}>
+      <TouchableOpacity
+        onPress={goBackToPreviousScreen}
+      >
+        <Text style={styles.closeButtonStats}>X</Text>
+      </TouchableOpacity>
+      <Text style={styles.statsheader}>Statistics</Text>
 
       {statisticRows.map((row, index) => (
         <View key={index} style={[styles.statisticRow, { backgroundColor: row.bgColor }]}>
           <View style={styles.iconCell}>{row.icon}</View>
           <View style={styles.statisticCell}>
-            <Text style={[styles.statisticText, styles.fontFamily, styles.textRight]}>{row.label}</Text>
-            <Text style={[styles.statisticValue, styles.fontFamily, styles.textRight]}>{row.value}</Text>
+            <Text style={[styles.statisticText, styles.textRight]}>{row.label}</Text>
+            <Text style={[styles.statisticValue, styles.textRight]}>{row.value}</Text>
           </View>
         </View>
       ))}
-
-      <TouchableOpacity
-        style={styles.goBackButton}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={[styles.statsbuttonText, styles.fontFamily]}>Go Back</Text>
-      </TouchableOpacity>
     </View>
   );
 };
