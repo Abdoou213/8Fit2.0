@@ -81,7 +81,7 @@ const ProfileScreen = ({ navigation }: Props) => {
       <TouchableOpacity
         key={null}
         style={[styles.viewSpecialStatsBox]}
-        onPress={() => (navigation.navigate('Statistics'))}
+        onPress={() => (navigation.navigate('StatisticsStack'))}
     ></TouchableOpacity>
       <Text style={styles.profileStatsTitle}>Character</Text>
       <View style={styles.underline}></View>
