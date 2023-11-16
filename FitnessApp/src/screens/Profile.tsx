@@ -5,6 +5,8 @@ import { styles } from '../Misc/ComponentStyles';
 import {  Props } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImagePicker, { launchImageLibrary } from 'react-native-image-picker';
+import FrameAnimation from '../Components/FrameAnimation';
+import { url } from 'inspector';
 
 
 //Define Profile component
@@ -87,9 +89,14 @@ const ProfileScreen = ({ navigation }: Props) => {
       <View style={styles.underline}></View>
       <TouchableOpacity
         key={(0)}
-        style={[styles.viewSpecialStatsBox]}
         onPress={() => (navigation.navigate('Character'))}
-      ></TouchableOpacity>
+      >
+        <View style={{ width: 100, height: 100 }}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Image source={require('../Animations/White/SpinningIdle/frame10.png')} style={{ width: 300, height: 300}} />
+          </View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }

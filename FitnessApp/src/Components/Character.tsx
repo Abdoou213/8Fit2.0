@@ -92,7 +92,7 @@ type Character = {
   }
   
   // Calculate the EXP threshold required to level up based on the character's current level, lvl 1 to 2 is 500 EXP
-  function calculateLevelUpThreshold(currentLevel: number, baseFactor: number): number {
+  export function calculateLevelUpThreshold(currentLevel: number, baseFactor: number): number {
     return Math.floor(300 * Math.pow(baseFactor, currentLevel));
   }
 

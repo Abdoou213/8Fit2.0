@@ -486,6 +486,15 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 70
       },
+      characterNameText: {
+        fontFamily: 'PixelifySansSemiBold',
+        marginBottom: 8,
+        color: '#fff',
+        textAlign: "center",
+        alignItems: 'center',
+        flex: 1,
+        fontSize: 35
+      },
 
       //Statistics
       container: {
