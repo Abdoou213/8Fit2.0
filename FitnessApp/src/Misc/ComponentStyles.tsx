@@ -486,52 +486,61 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 70
       },
-
-      //Statistics
-      container: {
-        flex: 1,
-        backgroundColor: '#2d2d47',
-      },
-      closeButtonStats: {
-        color: 'white',
-        padding: 8,
-        borderRadius: 5,
-        marginLeft: 10,
-      },
-      statsheader: {
-        fontSize: 30,
-        margin: 20,
-        textAlign: 'center',
-        color: 'white',
-        fontFamily: 'PixelifySansRegular',
-      },
-      statisticRow: {
-        flexDirection: 'row',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: 'transparent',
-      },
-      iconCell: {
-        width: 40,
-        alignItems: 'center',
-      },
-      statisticCell: {
-        flex: 1,
-        marginBottom:10,
-        marginTop:10
-      },
-      statisticText: {
-        fontSize: 16,
-        fontFamily: 'PixelifySansRegular',
-      },
-      statisticValue: {
-        fontSize: 24,
-        fontFamily: 'PixelifySansRegular',
-      },
-      textRight: {
-        textAlign: 'right',
-        color: 'white',
-      },
+        container: {
+          flex: 1,
+          backgroundColor: '#2d2d47',
+        },
+        closeButtonStats: {
+          color: 'white',
+          padding: 8,
+          borderRadius: 5,
+          marginLeft: 10,
+        },
+        statsheader: {
+          fontSize: 30,
+          marginVertical: 20,
+          textAlign: 'center',
+          color: 'white',
+          fontFamily: 'PixelifySansRegular',
+        },
+        statisticRow: {
+          flexDirection: 'row',
+          paddingVertical: 25,
+          paddingHorizontal: 20,
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          backgroundColor: 'transparent',
+        },
+        iconCell: {
+          width: 40,
+          alignItems: 'center',
+        },
+        statisticCell: {
+          flex: 1,
+          marginBottom: 10,
+          marginTop: 10,
+        },
+        statisticText: {
+          fontSize: 20,
+          fontFamily: 'PixelifySansRegular',
+          color: 'white', 
+        },
+        statisticLabel: {
+          fontSize: 26,
+          fontFamily: 'PixelifySansRegular',
+          color: 'white',
+        },
+        statisticValue: {
+          fontSize: 24,
+          fontFamily: 'PixelifySansRegular',
+          color: 'white', 
+        },
+        textRight: {
+          textAlign: 'right',
+          color: 'white',
+        },
+        centeredButton: {
+          alignSelf: 'center',
+        },
+      
 });

@@ -92,6 +92,12 @@ export type RootStackParamList = {
   LevelUpScreen: {
     earnedExp: number
   };
+  StatsWorkoutCompleted: undefined;
+
+  StatisticsStack:undefined;
+  StatsWorkoutDuration: undefined;
+  StatsWorkoutWeight: undefined;
+
 };
 
 //Create bottom tab navigator
