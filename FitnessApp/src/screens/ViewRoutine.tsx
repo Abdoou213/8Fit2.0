@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDefaultCharacter } from '../Components/Character';
 import { createUser } from '../Components/User';
 
+
 //Deletes all currently saved routines
 async function deleteAllRoutines() {
   try {
@@ -199,6 +200,7 @@ async function deleteRoutine(routineToDelete: Routine) {
           </TouchableOpacity>
         </ScrollView>
       )}
+      
       <View style={styles.buttonContainer}>
         {selectedRoutineIndex !== null && (
           <TouchableOpacity

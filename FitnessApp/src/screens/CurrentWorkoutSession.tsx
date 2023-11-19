@@ -12,6 +12,7 @@ import Character, { updateCharacterExpAndLevel } from '../Components/Character';
 import FrameAnimation from '../Components/FrameAnimation';
 import { getUser, updateUserStats } from '../Components/User';
 
+
 //CurrentWorkout Screen Properties
 type CurrentWorkoutSessionProps = {
   navigation: StackNavigationProp<RootStackParamList, 'CurrentWorkoutSession', 'ViewRoutine'>;

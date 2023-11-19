@@ -1,5 +1,5 @@
 import { styles } from '../Misc/ComponentStyles';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import {WorkoutSession} from './WorkoutSession';
 import { Set, generateRandomId} from './AppComponents';
 import {Exercise } from './Exercise';
@@ -132,10 +132,14 @@ export const ExerciseBox = ({exercise, workoutSession, setWorkoutSession }: Exer
                 <Text style={styles.deleteSetButtonText}>X</Text>
           </TouchableOpacity>
         </View>  
-        <View style={styles.underline}></View>
+        <View style={[styles.underline, { marginBottom: 20 }]}></View>
           <View style={styles.setsContainerExerciseBox}>
             {exercise.sets.map((set: Set, index: number) => (
-              <View key={index} style={styles.setExerciseBox}>
+              <ImageBackground
+              key={index}
+              source={require('../Misc/8bitOutline/setBoxColor.png')}
+              style={[styles.setExerciseBoxImage, , { marginBottom: 15 }]}
+              >               
                 <Text style={styles.setTextExerciseBox}>Set {index + 1}</Text>
                 <TextInput keyboardType="numeric" style={styles.setTextExerciseBox} 
                 onChangeText={(value) => handleWeightChange(index, value)}>{set.weight}</TextInput>
@@ -148,8 +152,7 @@ export const ExerciseBox = ({exercise, workoutSession, setWorkoutSession }: Exer
                     <Text style={styles.deleteSetButtonText}>X</Text>
                   </TouchableOpacity>  
                 </View>
-                
-              </View>
+                </ImageBackground>
             ))}
           </View>
         <TouchableOpacity style={styles.addSetButtonExerciseBox} onPress={handleAddSet}>
