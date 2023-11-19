@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import * as CSS from 'csstype';
 
 export const styles = StyleSheet.create({
     scrollViewContainer: {
@@ -210,6 +211,14 @@ export const styles = StyleSheet.create({
         flex: 1,
         borderColor : '#a6a571',
         borderWidth: 2
+      },
+      setExerciseBoxImage: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 5,
+        backgroundColor: '#2d2d47',
+
       },
       setTextExerciseBox: {
         fontSize: 16,
@@ -542,5 +551,16 @@ export const styles = StyleSheet.create({
         centeredButton: {
           alignSelf: 'center',
         },
+        '8bitBoxContainer': {
+          width: 100,
+          height: 100,
+          padding: 10,
+          backgroundColor: '#000',
+          border: '4px solid #fff',
+          borderRadius: 8,
+          boxSizing: 'border-box',
+          boxShadow: '0 0 0 4px #000, 8px 8px 16px rgba(255, 255, 255, 0.1)',
+        },
       
 });
+
