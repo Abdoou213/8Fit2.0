@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Text, View, TouchableOpacity, TextInput, Image } from 'react-native';
-import { useState } from 'react';
+import {Text, View, TouchableOpacity, TextInput, Image, StyleSheet } from 'react-native';
+import { useEffect, useState } from 'react';
 import { styles } from '../Misc/ComponentStyles';
 import {  Props } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,13 +8,37 @@ import ImagePicker, { launchImageLibrary } from 'react-native-image-picker';
 import FrameAnimation from '../Components/FrameAnimation';
 import { url } from 'inspector';
 
+import background from '../Components/Pictures/background.jpg';
+import pfp from '../Components/Pictures/pfp.jpg';
+import { getUser } from '../Components/User';
 
 //Define Profile component
 const ProfileScreen = ({ navigation }: Props) => {
   const [inputText, setInputText] = useState('Enter your name here'); // Initialize the state with a default string
-  const [bannerImage, setBannerImage] = useState(); // State for the banner image
-  const [profileImage, setProfileImage] = useState(); // State for the profile picture
-  
+  const [bannerImage, setBannerImage] = useState<any>(background); // State for the banner image
+  const [profileImage, setProfileImage] = useState<any>(pfp); // State for the profile picture
+
+  // Add useEffect hook to fetch the user's name
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const user = await getUser();
+      if (user) {
+        setInputText(user.username);
+      }
+    };
+
+    fetchUserName();
+  }, []);
+
+  // Function to update the user's name in AsyncStorage
+  const updateUserName = async (newName: string) => {
+    let user = await getUser();
+    if (user) {
+      user.username = newName;
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+    }
+  };
+
   const handleTextChange = (text: React.SetStateAction<string>) => {
     setInputText(text); // Update the state with the new text when it changes
   };
@@ -23,24 +47,22 @@ const ProfileScreen = ({ navigation }: Props) => {
     console.log('Edited Text:', inputText);
   };
 
-  // Function to open the image picker for the banner
   const pickBannerImage = async () => {
     try {
-      const response: any = await launchImageLibrary({ mediaType: 'photo' });
-      if (!response.didCancel) {
-        setBannerImage(response.uri);
+      const response = await launchImageLibrary({ mediaType: 'photo' });
+      if (response.assets) {
+        setBannerImage({ uri: response.assets[0].uri });
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  // Function to open the image picker for the profile picture
   const pickProfileImage = async () => {
     try {
-      const response: any = await launchImageLibrary({ mediaType: 'photo' });
-      if (!response.didCancel) {
-        setProfileImage(response.uri);
+      const response = await launchImageLibrary({ mediaType: 'photo' });
+      if (response.assets) {
+        setProfileImage({ uri: response.assets[0].uri });
       }
     } catch (error) {
       console.error(error);
@@ -56,23 +78,19 @@ const ProfileScreen = ({ navigation }: Props) => {
 
     <TouchableOpacity onPress={pickBannerImage}>
       <View style={styles.banner}>
-        {bannerImage ? (
-          <Image source={{ uri: bannerImage }} style={styles.banner} />
-        ) : (
-          <Text style={styles.buttonText}></Text>
-        )}
+        {/* Check if bannerImage is a local image or a picked image */}
+        <Image source={bannerImage.uri ? { uri: bannerImage.uri } : bannerImage} style={styles.banner} />
       </View>
     </TouchableOpacity>
 
     <TouchableOpacity onPress={pickProfileImage}>
       <View style={styles.profilePictureContainer}>
-        {profileImage ? (
-          <Image source={{ uri: profileImage }} style={styles.profilePicture} />
-        ) : (
-          <Text style={styles.buttonText}></Text>
-        )}
+        {/* Check if profileImage is a local image or a picked image */}
+        <Image source={profileImage.uri ? { uri: profileImage.uri } : profileImage} style={styles.profilePicture} />
       </View>
     </TouchableOpacity>
+
+
       <TextInput
         style={styles.logHeaderTitle}
         onChangeText={handleTextChange}
