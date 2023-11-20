@@ -97,6 +97,7 @@ export type RootStackParamList = {
   StatisticsStack:undefined;
   StatsWorkoutDuration: undefined;
   StatsWorkoutWeight: undefined;
+  StatsMaximums: undefined;
 
 };
 

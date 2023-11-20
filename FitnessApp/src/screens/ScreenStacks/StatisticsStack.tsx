@@ -5,6 +5,7 @@ import StatsWorkoutCompleted from '../StatsWorkoutCompleted';
 import Statistics from '../Statistics';
 import StatsWorkoutDuration from '../StatsWorkoutDuration';
 import StatsWorkoutWeight from '../StatsWorkoutWeight';
+import StatsMaximums from '../StatsMaximums';
 
 //Create Stack Navigator
 const Stack = createStackNavigator<RootStackParamList>();
@@ -17,6 +18,7 @@ const StatisticsStack = () => {
       <Stack.Screen name="StatsWorkoutCompleted" component={StatsWorkoutCompleted} options={{ headerShown: false }} />
       <Stack.Screen name="StatsWorkoutDuration" component={StatsWorkoutDuration} options={{ headerShown: false }} />
       <Stack.Screen name="StatsWorkoutWeight" component={StatsWorkoutWeight} options={{ headerShown: false }} />
+      <Stack.Screen name="StatsMaximums" component={StatsMaximums} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
