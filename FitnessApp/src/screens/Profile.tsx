@@ -9,7 +9,7 @@ import FrameAnimation from '../Components/FrameAnimation';
 import { url } from 'inspector';
 
 import background from '../Components/Pictures/background.jpg';
-import pfp from '../Components/Pictures/pfp2.jpg';
+import pfp from '../Components/Pictures/pfp2.png';
 import { getUser } from '../Components/User';
 
 //Define Profile component
