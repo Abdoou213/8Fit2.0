@@ -4,10 +4,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Props } from '../Components/AppComponents';
 import { styles } from '../Misc/ComponentStyles';
 import User, { getUser } from '../Components/User';
-import { WorkoutSession } from '../Components/WorkoutSession';
+import { WorkoutSession, fetchAllSessions } from '../Components/WorkoutSession';
 
 const StatsMaximums = ({ navigation }: Props) => {
   const [user, setUser] = useState<User | null>(null);
+  const [sessions, setSessions] = useState<WorkoutSession[]>([]); // List of workout sessions
 
   useEffect(() => {
     const fetchUserAndStats = async () => {
@@ -19,6 +20,24 @@ const StatsMaximums = ({ navigation }: Props) => {
     fetchUserAndStats();
   }, []);
 
+  const fetchSessions = async () => {
+    try {
+      const sessionsFromStorage = await fetchAllSessions();
+      console.log('Fetched sessions:', sessionsFromStorage); // Check what is actually being fetched
+      if (sessionsFromStorage !== null) {
+        setSessions(sessionsFromStorage);
+      } else {
+        console.log('No sessions found in storage.');
+      }
+    } catch (error) {
+      console.error('Error fetching sessions:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchSessions();
+  }, []);
+
   const colorArray = ['purple', 'blue', 'green', 'orange', 'red'];
 
   const currentDate = new Date();
@@ -28,8 +47,8 @@ const StatsMaximums = ({ navigation }: Props) => {
   let monthlySessions = 0;
   let weeklySessions = 0;
 
-    if(user != null){
-        for (const item of user.userSessions) {
+    if(user != null){      
+        for (const item of sessions) {
             if (item.startTime <= oneMonthAgo && item.startTime >= currentDate) {
               // If the condition is true, skip the current iteration to exclude the item
               continue;
@@ -37,7 +56,7 @@ const StatsMaximums = ({ navigation }: Props) => {
             // If the condition is false, include the item in the new array
             monthlySessions++;
         }
-        for (const item of user.userSessions) {
+        for (const item of sessions) {
             if (item.startTime <= sevenDaysAgo && item.startTime >= currentDate) {
               // If the condition is true, skip the current iteration to exclude the item
               continue;
