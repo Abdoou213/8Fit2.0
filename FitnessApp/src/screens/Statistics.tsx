@@ -65,8 +65,8 @@ const Statistics = ({ navigation }: Props) => {
         </View>
       </TouchableOpacity>
 
-      {/* Button for StatsMaximums */}
-      <TouchableOpacity onPress={() => navigation.navigate('StatsMaximums')}>
+      {/* Button for StatsRecentActivity */}
+      <TouchableOpacity onPress={() => navigation.navigate('StatsRecentActivity')}>
         <View style={[styles.statisticRow, styles.centeredButton, { backgroundColor: 'orange' }]}>
           <View style={styles.iconCell}>
             <MaterialCommunityIcons name="star" size={40} color="black" />
