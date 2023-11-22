@@ -456,7 +456,7 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 5,
         padding: 10,
-        paddingBottom: 5,
+        paddingBottom: 25,
       },
 
       //Award Character Screen
