@@ -10,6 +10,7 @@ import { url } from 'inspector';
 
 import background from '../Components/Pictures/background.jpg';
 import pfp from '../Components/Pictures/pfp2.png';
+import statsIcon from '../Components/Pictures/statsIcon.png';
 import { getUser } from '../Components/User';
 
 //Define Profile component
@@ -99,10 +100,14 @@ const ProfileScreen = ({ navigation }: Props) => {
       <Text style={styles.profileStatsTitle}>Statistics</Text>
       <View style={styles.underline}></View>
       <TouchableOpacity
-        key={null}
-        style={[styles.viewSpecialStatsBox]}
-        onPress={() => (navigation.navigate('StatisticsStack'))}
-    ></TouchableOpacity>
+         onPress={() => navigation.navigate('StatisticsStack')}
+         style={styles.viewSpecialStatsBox}
+       >
+         <Image
+           source={statsIcon}
+           style={{ width: 75, height: 75 }} // Adjust the style as needed
+         />
+    </TouchableOpacity>
       <Text style={styles.profileStatsTitle}>Character</Text>
       <View style={styles.underline}></View>
       <TouchableOpacity

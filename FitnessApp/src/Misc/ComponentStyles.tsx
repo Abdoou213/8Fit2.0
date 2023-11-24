@@ -419,49 +419,44 @@ export const styles = StyleSheet.create({
 
       // Profile Screen Styles
       banner: {
-        backgroundColor: 'gray', // Change the background color as desired
+        backgroundColor: 'gray',
         width: '100%',
-        height: 150, // Adjust the height to control the banner size
+        height: 150,
         justifyContent: 'center',
         alignItems: 'center',
-        borderBottomLeftRadius: 5, // Customize the shape of the banner
-        borderBottomRightRadius: 5, // Customize the shape of the banner
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
       },
       profilePictureContainer: {
         position: 'absolute',
-        top: -90, // Adjust the position of the profile picture relative to the banner
+        top: -90,
         left: 10,
         alignSelf: 'center',
-        backgroundColor: 'white', // Background color for the circular container
-        borderRadius: 50, // Make it a circle by setting borderRadius to half of the width/height
-        width: 100, // Adjust the width and height as needed
+        backgroundColor: 'white',
+        borderRadius: 50,
+        width: 100,
         height: 100,
-        borderWidth: 2, // You can add a border for the circle
-        borderColor: 'black', // Border color for the circle
+        borderWidth: 2,
+        borderColor: 'black',
       },
       profilePicture: {
         width: '100%',
         height: '100%',
-        borderRadius: 50, // Make it a circle by setting borderRadius to half of the width/height
-        // Add your profile picture image source or content here
+        borderRadius: 50,
       },
       profileStatsTitle: {
         color: '#fff',
         fontSize: 24,
-        fontWeight: 'bold',
-        marginTop: 20,
         marginBottom: 5,
-        textAlign: 'left', 
         justifyContent: 'center',
+        fontFamily: 'PixelifySansRegular',
       },
       viewSpecialStatsBox: {
-        borderWidth: 1,
-        borderColor: '#ccc',
         backgroundColor: '#2d2d47',
         borderRadius: 10,
-        marginBottom: 20,
-        padding: 50,
-        paddingBottom: 5,
+        marginBottom: 5,
+        padding: 10,
+        paddingBottom: 25,
       },
 
       //Award Character Screen
