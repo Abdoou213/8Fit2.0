@@ -4,21 +4,22 @@ import * as CSS from 'csstype';
 export const styles = StyleSheet.create({
     scrollViewContainer: {
         flex: 1,
-        backgroundColor: '#2d2d47',
+        backgroundColor: 'black',
         padding: 20,
         paddingBottom: 70,
+        borderColor: 'white',
       },
       viewRoutineroutineBox: {
         borderWidth: 1,
-        borderColor: '#ccc',
-        backgroundColor: '#2d2d47',
+        borderColor: 'white',
+        backgroundColor: 'black',
         borderRadius: 10,
         marginBottom: 20,
         padding: 20,
       },
       selectedRoutineBox: {
-        backgroundColor: '#2d2d47',
-        borderColor: '#a6a571',
+        backgroundColor: 'black',
+        borderColor: 'white',
         borderWidth: 4,
       },
       routineName: {
@@ -51,11 +52,11 @@ export const styles = StyleSheet.create({
       createRoutineButton: {
         height: 50,
         borderRadius: 10,
-        backgroundColor: '#76ab63',
+        backgroundColor: 'green',
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
-        flex: 0,
+        flex: 1,
       },
       createRoutineButtonText: {
         color: '#fff',
@@ -71,7 +72,7 @@ export const styles = StyleSheet.create({
         right: 20,
       },
       deleteRoutinesButton: {
-        backgroundColor: '#bd1730',
+        backgroundColor: 'red',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 8,
@@ -89,22 +90,25 @@ export const styles = StyleSheet.create({
         paddingVertical: 1
       },
       currentWorkoutButton: {
-        backgroundColor: '#76ab63',
-        paddingVertical: 10,
+        height: 50,
+        borderRadius: 10,
+        backgroundColor: 'blue',
         alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 5,
+        flex: 1,
+        paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 8,
-        flex: 1
       },
       currentWorkoutButtonText: {
         color: '#fff',
         fontFamily: 'PixelifySansRegular',
-        fontSize: 18,
+        fontSize: 20,
         alignItems: 'center'
       },
       screenListContainer: {
         paddingHorizontal: 20,
-        backgroundColor: '#2d2d47',
+        backgroundColor: 'black',
         flex: 1
       },
       inputContainer: {
@@ -129,7 +133,7 @@ export const styles = StyleSheet.create({
       setsContainerExerciseBox: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        borderColor : 'black',
+        borderColor : 'white',
         borderRadius: 10
       },
       setsInputContainer: {
@@ -140,35 +144,38 @@ export const styles = StyleSheet.create({
       //Create Routine
       addButtonCreate: {
         borderRadius: 10,
-        backgroundColor: '#76ab63',
+        backgroundColor: 'green',
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
         paddingVertical: 5,
         marginBottom: 5,
+        height:50,
       },
       saveButtonCreate: {
         borderRadius: 10,
-        backgroundColor: '#76ab63',
+        backgroundColor: 'green',
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
         paddingVertical: 5,
         marginBottom: 5,
+        height:50,
       },
       cancelButtonCreate: {
         borderRadius: 10,
-        backgroundColor: '#bd1730',
+        backgroundColor: 'red',
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
         paddingVertical: 5,
         marginBottom: 5,
+        height:50,
       },
       buttonText: {
         color: '#fff',
         fontFamily: 'PixelifySansRegular',
-        fontSize: 18,
+        fontSize: 20,
       },
       exerciseCreate: {
         marginBottom: 16,
@@ -188,16 +195,17 @@ export const styles = StyleSheet.create({
       },
       setLabelCreate: {
         fontFamily: 'PixelifySansRegular',
+        marginTop: 10,
         marginBottom: 8,
         color: '#fff',
-        fontSize: 14
+        fontSize: 20
       },
       exerciseTitle: {
         fontSize: 20,
         fontFamily: 'PixelifySansRegular',
         marginBottom: 10,
         textAlign: 'center',
-        backgroundColor: '#2d2d47',
+        backgroundColor: 'black',
         color: '#fff',
       },
       setExerciseBox: {
@@ -206,10 +214,10 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 5,
         marginBottom: 5,
-        backgroundColor: '#2d2d47',
+        backgroundColor: 'black',
         paddingVertical: 0,
         flex: 1,
-        borderColor : '#a6a571',
+        borderColor : 'white',
         borderWidth: 2
       },
       setExerciseBoxImage: {
@@ -217,7 +225,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 5,
-        backgroundColor: '#2d2d47',
+        backgroundColor: 'black',
+        borderColor : 'white',
 
       },
       setTextExerciseBox: {
@@ -228,6 +237,7 @@ export const styles = StyleSheet.create({
         color: '#fff',
         flex: 1,
         fontFamily: 'PixelifySansRegular',
+        borderColor : 'white',
       },
       deleteSetButtonText: {
         marginTop: 2.5,
@@ -280,7 +290,7 @@ export const styles = StyleSheet.create({
       },
       underline: {
         borderBottomWidth: 1,
-        borderBottomColor: '#a6a571',
+        borderBottomColor: 'white',
         marginBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',
@@ -288,7 +298,7 @@ export const styles = StyleSheet.create({
       },
       underlineDate: {
         borderBottomWidth: 1,
-        borderBottomColor: '#a6a571',
+        borderBottomColor: 'white',
         marginBottom: 5,
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -304,22 +314,23 @@ export const styles = StyleSheet.create({
       //ExerciseBox
       exerciseBoxContainer: {
         borderWidth: 3,
-        borderColor: '#a6a571',
+        borderColor: 'white',
         borderRadius: 10,
         padding: 20,
         marginBottom: 20,
-        backgroundColor: '#2d2d47'
+        backgroundColor: 'black'
       },
       addSetButtonExerciseBox: {
-        backgroundColor: '#a6a571',
+        backgroundColor: 'black',
         padding: 8,
         borderRadius: 5,
         width: '100%',
         marginTop: 10,
         marginBottom: 10,
+        borderColor : 'white',
       },
       addSetButtonTextExerciseBox: {
-        color: '#2d2d47',
+        color: 'white',
         fontSize: 16,
         fontFamily: 'PixelifySansRegular',
         textAlign: 'center',
@@ -354,15 +365,15 @@ export const styles = StyleSheet.create({
 
       //Current Workout Screen
       finishButtonCurrentWorkout:{
-        backgroundColor: "#a6a571",
+        backgroundColor: "blue",
         padding: 8,
         borderRadius: 5,
         width: "45%",
         justifyContent: "center"
       },
       headerTextCurrentWorkout: {
-        color: '#2d2d47',
-        fontSize: 16,
+        color: 'white',
+        fontSize: 20,
         textAlign: "center",
         fontFamily: 'PixelifySansRegular',
       },
@@ -409,7 +420,7 @@ export const styles = StyleSheet.create({
       },
       createExerciseButton: {
         marginBottom: 15,
-        backgroundColor: '#a6a571',
+        backgroundColor: 'green',
         paddingVertical: 10,
         alignItems: 'center',
         paddingHorizontal: 20,
@@ -452,7 +463,7 @@ export const styles = StyleSheet.create({
         fontFamily: 'PixelifySansRegular',
       },
       viewSpecialStatsBox: {
-        backgroundColor: '#2d2d47',
+        backgroundColor: 'black',
         borderRadius: 10,
         marginBottom: 5,
         padding: 10,
@@ -462,7 +473,7 @@ export const styles = StyleSheet.create({
       //Award Character Screen
       awardExpScreenStyle: {
         flex: 1,
-        backgroundColor: '#2d2d47',
+        backgroundColor: 'black',
         padding: 20,
         paddingBottom: 5,
         alignContent: 'center'
@@ -503,7 +514,7 @@ export const styles = StyleSheet.create({
       //Statistics
       container: {
         flex: 1,
-        backgroundColor: '#2d2d47',
+        backgroundColor: 'black',
       },
       closeButtonStats: {
         color: 'white',

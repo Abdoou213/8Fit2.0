@@ -80,12 +80,14 @@ const CreateRoutine = ({ navigation }: Props) => {
         )}
         keyExtractor={(item) => item.name}
       />
-      <TouchableOpacity style={styles.saveButtonCreate} onPress={handleSaveRoutine}>
-        <Text style={styles.buttonText}>Save Routine</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.cancelButtonCreate} onPress={handleCancel}>
-        <Text style={styles.buttonText}>Cancel</Text>
-      </TouchableOpacity>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <TouchableOpacity style={{ ...styles.saveButtonCreate, width: '48%', marginRight: '2%' }} onPress={handleSaveRoutine}>
+          <Text style={styles.buttonText}>Save Routine</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{ ...styles.cancelButtonCreate, width: '48%', marginLeft: '2%' }} onPress={handleCancel}>
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

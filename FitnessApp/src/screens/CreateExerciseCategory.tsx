@@ -64,7 +64,7 @@ const CreateExerciseCategory =  ({route, navigation}: CreateCategoryProps) => {
         <View style={styles.inputContainer}>      
         <Text style={styles.setLabelCreate}>Create Exercise Category</Text>
         <View style={styles.underline}></View>
-          <Text style={styles.setLabelCreate}>Category Name:</Text>
+          <Text style={styles.setLabelCreate}>Name:</Text>
           <TextInput style={styles.input} value={exerciseCategoryName} onChangeText={setCategoryName} />
           <TouchableOpacity style={styles.addButtonCreate} onPress={handleCreateExerciseCategory}>
             <Text style={styles.buttonText}>Create Category</Text>
