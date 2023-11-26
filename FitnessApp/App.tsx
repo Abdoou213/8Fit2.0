@@ -114,30 +114,36 @@ const App = () => {
   }, [])
   return (
     <NavigationContainer>
+    
     <Tab.Navigator
-      initialRouteName={viewRoutineName}
-      screenOptions={({ route }) => ({
-        //Define the tab icons
-        tabBarIcon: ({ focused, color, size}) => {
-        let iconName: string='';
-        let rn = route.name;
+  initialRouteName={viewRoutineName}
+  screenOptions={({ route }) => ({
+    tabBarStyle: {
+      backgroundColor: 'black', // Set background color to black
+    },
+    tabBarActiveTintColor: 'white', // Set active icon and text color to white
+    tabBarInactiveTintColor: 'white', // Set inactive icon and text color to white
+    tabBarShowLabel: true, // Show labels for the icons
+    tabBarIcon: ({ focused, color, size }) => {
+      let iconName: string = '';
+      let rn = route.name;
 
-        if(rn === viewRoutineName) {
-          iconName = focused ? 'barbell-sharp' : 'barbell-sharp';
-        } else if (rn === profileName){
-          iconName = focused ? 'person' : 'person';
-        } else if (rn === logName){
-          iconName = focused ? 'fitness' : 'fitness';
-        }
-        return <Ionicons name={iconName} size={size} color={color}/>
-        },
+      if (rn === viewRoutineName) {
+        iconName = focused ? 'barbell-sharp' : 'barbell-sharp';
+      } else if (rn === profileName) {
+        iconName = focused ? 'person' : 'person';
+      } else if (rn === logName) {
+        iconName = focused ? 'fitness' : 'fitness';
+      }
+      return <Ionicons name={iconName} size={size} color={color} />;
+    },
+  })}>
+  {/* Define the screens for the Bottom Tab Navigator */}
+  <Tab.Screen name="Profile" component={ProfileScreenStack} options={{ headerShown: false }} />
+  <Tab.Screen name="Routines" component={ViewRoutineStack} options={{ headerShown: false }} />
+  <Tab.Screen name="Log" component={LogScreenStack} options={{ headerShown: false }} />
+</Tab.Navigator>
 
-      })}>
-        {/* Define the screens for the Bottom Tab Navigator */}
-        <Tab.Screen name="Profile" component={ProfileScreenStack} options={{ headerShown: false }}/>
-        <Tab.Screen name="Routines" component={ViewRoutineStack} options={{ headerShown: false }}/>
-        <Tab.Screen name="Log" component={LogScreenStack} options={{ headerShown: false }}/>
-    </Tab.Navigator> 
   </NavigationContainer>
 
   );

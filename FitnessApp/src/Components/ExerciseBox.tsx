@@ -137,7 +137,7 @@ export const ExerciseBox = ({exercise, workoutSession, setWorkoutSession }: Exer
             {exercise.sets.map((set: Set, index: number) => (
               <ImageBackground
               key={index}
-              source={require('../Misc/8bitOutline/setBoxColor.png')}
+              source={require('../Misc/8bitOutline/setBoxOutlineWhite.png')}
               style={[styles.setExerciseBoxImage, , { marginBottom: 15 }]}
               >               
                 <Text style={styles.setTextExerciseBox}>Set {index + 1}</Text>

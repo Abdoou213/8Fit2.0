@@ -136,7 +136,7 @@ const SelectExerciseCategory = ({ route, navigation }: SelectCategoryProps) => {
         }
         ListFooterComponent={(
           <TouchableOpacity style={styles.createExerciseButton} onPress={() => handleCreateCategory()}>
-            <Text style={styles.currentWorkoutButtonText}>Create</Text>
+            <Text style={styles.currentWorkoutButtonText}>Create Category</Text>
           </TouchableOpacity>
         )}
         data={categories}

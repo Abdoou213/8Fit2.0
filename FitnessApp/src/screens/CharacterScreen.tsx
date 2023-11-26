@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {Text, View, TouchableOpacity, TextInput, Alert} from 'react-native';
+import {Text, View, TouchableOpacity, TextInput, Alert, Image} from 'react-native';
 import { Props } from '../Components/AppComponents';
 import FrameAnimation from '../Components/FrameAnimation';
 import { styles } from '../Misc/ComponentStyles';
@@ -74,7 +74,10 @@ const CharacterScreen = ({ navigation }: Props) => {
       </TouchableOpacity>
       <View style={{ alignContent: 'center', width: 300, height: 300, marginLeft: 30, flexDirection: 'column'}}>
         <FrameAnimation frameRateMs={200} animationType='idle' style={{ flex: 1 }}/>
-        <TextInput style={styles.characterNameText} onChangeText={ (value) => handleChangeName(value)}>{character?.name}</TextInput>
+        <View style={{flexDirection: 'row' }}>
+          <TextInput style={styles.characterNameText} onChangeText={ (value) => handleChangeName(value)}>{character?.name}</TextInput>
+          <Image source={require('../Misc/8bitOutline/penWhite.png')}  style={{marginTop: 23}}/>
+        </View>
       </View>
       <View style={styles.underline}></View>
       <View style={styles.awardExpTextContainer}>

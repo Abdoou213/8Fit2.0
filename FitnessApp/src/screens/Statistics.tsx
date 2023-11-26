@@ -31,48 +31,48 @@ const Statistics = ({ navigation }: Props) => {
 
       <TouchableOpacity onPress={() => navigation.navigate('StatsWorkoutCompleted')}>
         <Text style={[styles.statsheader, { paddingBottom: 40  }]}>Statistics</Text>
-        <View style={[styles.statisticRow, styles.centeredButton, { backgroundColor: 'purple' }]}>
+        <View style={[styles.statisticRow, { backgroundColor: 'purple' }]}>
           <View style={styles.iconCell}>
             <MaterialCommunityIcons name="weight-lifter" size={40} color="black" />
           </View>
           <View style={styles.statisticCell}>
-            <Text style={[styles.statisticLabel, styles.textRight]}>Workout Completed</Text>
+            <Text style={[styles.statsheader, styles.textRight]}>Workout Completed</Text>
           </View>
         </View>
       </TouchableOpacity>
 
       {/* Button for StatsWorkoutDuration */}
       <TouchableOpacity onPress={() => navigation.navigate('StatsWorkoutDuration')}>
-        <View style={[styles.statisticRow, styles.centeredButton, { backgroundColor: 'blue' }]}>
+        <View style={[styles.statisticRow, { backgroundColor: 'blue' }]}>
           <View style={styles.iconCell}>
             <MaterialCommunityIcons name="timer" size={40} color="black" />
           </View>
           <View style={styles.statisticCell}>
-            <Text style={[styles.statisticLabel, styles.textRight]}>Workout Duration</Text>
+            <Text style={[styles.statsheader, styles.textRight]}>Workout Duration</Text>
           </View>
         </View>
       </TouchableOpacity>
 
       {/* Button for StatsWorkoutWeight */}
       <TouchableOpacity onPress={() => navigation.navigate('StatsWorkoutWeight')}>
-        <View style={[styles.statisticRow, styles.centeredButton, { backgroundColor: 'green' }]}>
+        <View style={[styles.statisticRow, { backgroundColor: 'green' }]}>
           <View style={styles.iconCell}>
             <MaterialCommunityIcons name="dumbbell" size={40} color="black" />
           </View>
           <View style={styles.statisticCell}>
-            <Text style={[styles.statisticLabel, styles.textRight]}>Workout Weight</Text>
+            <Text style={[styles.statsheader, styles.textRight]}>Workout Weight</Text>
           </View>
         </View>
       </TouchableOpacity>
 
       {/* Button for StatsRecentActivity */}
       <TouchableOpacity onPress={() => navigation.navigate('StatsRecentActivity')}>
-        <View style={[styles.statisticRow, styles.centeredButton, { backgroundColor: 'orange' }]}>
+        <View style={[styles.statisticRow, { backgroundColor: 'orange' }]}>
           <View style={styles.iconCell}>
             <MaterialCommunityIcons name="star" size={40} color="black" />
           </View>
           <View style={styles.statisticCell}>
-            <Text style={[styles.statisticLabel, styles.textRight]}>Recent Activity</Text>
+            <Text style={[styles.statsheader, styles.textRight]}>Recent Activity</Text>
           </View>
         </View>
       </TouchableOpacity>
