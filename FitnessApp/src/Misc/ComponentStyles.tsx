@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
       currentWorkoutButton: {
         height: 50,
         borderRadius: 10,
-        backgroundColor: 'blue',
+        backgroundColor: 'green',
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
@@ -327,7 +327,8 @@ export const styles = StyleSheet.create({
         width: '100%',
         marginTop: 10,
         marginBottom: 10,
-        borderColor : 'white',
+        borderWidth: 0.5,
+        borderColor: 'white',
       },
       addSetButtonTextExerciseBox: {
         color: 'white',
@@ -365,11 +366,13 @@ export const styles = StyleSheet.create({
 
       //Current Workout Screen
       finishButtonCurrentWorkout:{
-        backgroundColor: "blue",
+        backgroundColor: "black",
         padding: 8,
         borderRadius: 5,
         width: "45%",
-        justifyContent: "center"
+        justifyContent: "center",
+        borderWidth: 0.75,
+        borderColor: 'white',
       },
       headerTextCurrentWorkout: {
         color: 'white',
