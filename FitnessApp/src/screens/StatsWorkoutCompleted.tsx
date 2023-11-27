@@ -39,13 +39,11 @@ const StatsWorkoutCompleted = ({ navigation }: Props) => {
       if (user.routineCount.hasOwnProperty(routineName)) {
         const routineCount = user.routineCount[routineName];
 
-        const userStatsValue = user.userStats && user.userStats.length > 0 ? user.userStats[0] : 0;
-
         const bgColor = colorArray[colorIndex % colorArray.length];
 
         statisticRows.push({
           label: `${routineName} Completed:`,
-          value: userStatsValue,
+          value: routineCount, // Use routineCount instead of userStatsValue
           bgColor,
           icon: <MaterialCommunityIcons name="weight-lifter" size={40} color="black" />,
         });
