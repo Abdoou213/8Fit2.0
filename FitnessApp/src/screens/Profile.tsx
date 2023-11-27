@@ -4,10 +4,7 @@ import { useEffect, useState } from 'react';
 import { styles } from '../Misc/ComponentStyles';
 import {  Props } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ImagePicker, { launchImageLibrary } from 'react-native-image-picker';
-import FrameAnimation from '../Components/FrameAnimation';
-import { url } from 'inspector';
-
+import  { launchImageLibrary } from 'react-native-image-picker';
 import background from '../Components/Pictures/background.jpg';
 import pfp from '../Components/Pictures/pfp2.png';
 import statsIcon from '../Components/Pictures/statsIcon.png';

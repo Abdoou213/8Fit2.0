@@ -1,7 +1,7 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
-import { ScrollView, Animated, View, Text, FlatList, ActivityIndicator, Button, TouchableOpacity } from "react-native";
+import { Animated, View, Text, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
 import {ExerciseBoxPastSession} from "../Components/ExerciseBox";
 import { styles } from "../Misc/ComponentStyles";
 import { WorkoutSession, fetchAllSessions } from "../Components/WorkoutSession";

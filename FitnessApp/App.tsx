@@ -4,14 +4,12 @@ import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import LogScreenStack from './src/screens/ScreenStacks/LogScreenStack';
-import Profile from './src/screens/Profile';
 import ViewRoutineStack from './src/screens/ScreenStacks/ViewRoutineStack';
 import { Routine } from './src/Components/AppComponents';
 import { Exercise } from './src/Components/Exercise';
 import { ExerciseCategory } from './src/Components/ExerciseCategory';
 import { WorkoutSession } from './src/Components/WorkoutSession';
 import { SelectExerciseCategoryParams } from './src/screens/ScreenStacks/SelectExerciseStack';
-import Character from './src/Components/Character';
 import SplashScreen from 'react-native-splash-screen';
 import { Platform } from 'react-native';
 import ProfileScreenStack from './src/screens/ScreenStacks/ProfileScreenStack';
