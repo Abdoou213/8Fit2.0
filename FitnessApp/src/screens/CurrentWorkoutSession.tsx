@@ -8,7 +8,7 @@ import { useRef, useState } from 'react';
 import { styles } from '../Misc/ComponentStyles';
 import { Routine } from '../Components/AppComponents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Character, { updateCharacterExpAndLevel } from '../Components/Character';
+import { updateCharacterExpAndLevel } from '../Components/Character';
 import FrameAnimation from '../Components/FrameAnimation';
 import { getUser, updateUserStats } from '../Components/User';
 

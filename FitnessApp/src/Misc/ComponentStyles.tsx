@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import * as CSS from 'csstype';
 
 export const styles = StyleSheet.create({
     scrollViewContainer: {

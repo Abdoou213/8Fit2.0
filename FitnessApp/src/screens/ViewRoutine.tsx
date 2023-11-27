@@ -180,14 +180,12 @@ async function deleteRoutine(routineToDelete: Routine) {
               <View style={styles.underline}></View>
               <View style={styles.exerciseList}>
                 {routine.exercises.map((exercise) => (
-                  <View>
-                    <View key={exercise.name} style={styles.exerciseInListDisplayed}>
-                      
-                      <Text style={styles.setInfo}>{exercise.name}</Text>
-                      <Text style={styles.setInfo}> x {exercise.setsCount} Sets</Text>
-                    </View>
-
+                  <View key={exercise.name}>
+                  <View style={styles.exerciseInListDisplayed}>
+                    <Text style={styles.setInfo}>{exercise.name}</Text>
+                    <Text style={styles.setInfo}> x {exercise.setsCount} Sets</Text>
                   </View>
+                </View>
                   
                 ))}
               </View>

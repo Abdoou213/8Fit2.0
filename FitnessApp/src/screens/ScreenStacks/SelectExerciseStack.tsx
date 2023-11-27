@@ -8,6 +8,8 @@ import { WorkoutSession } from '../../Components/WorkoutSession';
 import { Exercise } from '../../Components/Exercise';
 import CreateExercise from '../CreateExercise';
 import CreateExerciseCategory from '../CreateExerciseCategory';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Non-serializable values were found in the navigation state.']);
 
 //Create Stack Navigator
 const Stack = createStackNavigator<RootStackParamList>();
