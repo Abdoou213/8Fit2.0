@@ -21,7 +21,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'FitnessApp' do
+target '8Fit' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -43,7 +43,7 @@ target 'FitnessApp' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'FitnessAppTests' do
+  target '8FitTests' do
     inherit! :complete
     # Pods for testing
   end

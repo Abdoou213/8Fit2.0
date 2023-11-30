@@ -55,7 +55,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
-        flex: 1,
       },
       createRoutineButtonText: {
         color: '#fff',

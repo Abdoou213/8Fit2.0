@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "FitnessApp.app"
-               BlueprintName = "FitnessApp"
-               ReferencedContainer = "container:FitnessApp.xcodeproj">
+               BuildableName = "8Fit.app"
+               BlueprintName = "8Fit"
+               ReferencedContainer = "container:8Fit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "FitnessAppTests.xctest"
-               BlueprintName = "FitnessAppTests"
-               ReferencedContainer = "container:FitnessApp.xcodeproj">
+               BuildableName = "8FitTests.xctest"
+               BlueprintName = "8FitTests"
+               ReferencedContainer = "container:8Fit.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "FitnessApp.app"
-            BlueprintName = "FitnessApp"
-            ReferencedContainer = "container:FitnessApp.xcodeproj">
+            BuildableName = "8Fit.app"
+            BlueprintName = "8Fit"
+            ReferencedContainer = "container:8Fit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "FitnessApp.app"
-            BlueprintName = "FitnessApp"
-            ReferencedContainer = "container:FitnessApp.xcodeproj">
+            BuildableName = "8Fit.app"
+            BlueprintName = "8Fit"
+            ReferencedContainer = "container:8Fit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
